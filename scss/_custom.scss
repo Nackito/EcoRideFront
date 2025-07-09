@@ -12,3 +12,111 @@ $font-family-serif: "Kanit", serif !default;
 @import "../node_modules/bootstrap/scss/bootstrap";
 
 // Then add additional custom code here
+
+// Personnalisation de la navbar
+.navbar {
+  .navbar-brand {
+    color: $secondary !important;
+    font-weight: bold;
+  }
+
+  .nav-link {
+    color: $dark !important;
+
+    &:hover {
+      color: $primary !important;
+    }
+  }
+
+  .dropdown-toggle {
+    color: $dark !important;
+
+    &:hover {
+      color: $primary !important;
+    }
+  }
+
+  .dropdown-item {
+    color: $dark !important;
+
+    &:hover {
+      color: $primary !important;
+      background-color: rgba(69, 233, 40, 0.1);
+    }
+  }
+}
+
+// Personnalisation des icônes Bootstrap
+.bi {
+  font-size: 1.5rem; // Augmente la taille de toutes les icônes Bootstrap
+}
+
+// Ou pour cibler spécifiquement l'icône person-circle
+.bi-person-circle {
+  font-size: 2rem; // Taille encore plus grande pour l'icône utilisateur
+}
+
+// Styles responsifs pour les icônes
+@media (max-width: 768px) {
+  .bi {
+    font-size: 1.25rem;
+  }
+
+  .bi-person-circle {
+    font-size: 1.5rem;
+  }
+}
+
+// Styles pour le menu burger - transformation du dropdown
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    .nav-item.dropdown {
+      // Masquer le dropdown toggle sur mobile
+      .dropdown-toggle {
+        display: none;
+      }
+
+      // Afficher les éléments du dropdown comme des nav-items normaux
+      .dropdown-menu {
+        display: block !important;
+        position: static !important;
+        background-color: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+
+        .dropdown-item {
+          color: $dark !important;
+          padding: 0.5rem 1rem !important;
+          border-radius: 0 !important;
+          background-color: transparent !important;
+
+          &:hover {
+            color: $primary !important;
+            background-color: rgba(69, 233, 40, 0.1) !important;
+          }
+        }
+
+        .dropdown-divider {
+          display: none; // Masquer les séparateurs sur mobile
+        }
+      }
+    }
+  }
+}
+
+// Styles pour desktop (garder le comportement dropdown normal)
+@media (min-width: 992px) {
+  .navbar-collapse {
+    .nav-item.dropdown {
+      .dropdown-menu {
+        display: none; // Comportement normal du dropdown sur desktop
+
+        &.show {
+          display: block;
+        }
+      }
+    }
+  }
+}
