@@ -120,3 +120,97 @@ $font-family-serif: "Kanit", serif !default;
     }
   }
 }
+
+// Styles pour le footer avec inner shadow
+footer {
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6); // Inner shadow avec opacity 0.6
+  padding: 2rem 0; // Ajout de padding pour mieux voir l'effet
+  background-color: #f8f9fa; // Couleur de fond pour contraster avec l'ombre
+  border-top: 1px solid #dee2e6; // Bordure subtile pour définir la séparation
+
+  // Centrer verticalement le contenu des colonnes
+  .row {
+    align-items: center;
+  }
+
+  // Styles pour la colonne des icônes sociales
+  .col-6:last-child {
+    display: flex;
+    justify-content: flex-end; // Alignement à droite sur desktop
+    align-items: center; // Centrer verticalement
+  }
+}
+
+// Styles pour les icônes sociales du footer
+.social-icons {
+  display: flex;
+  gap: 1rem;
+
+  .social-icon {
+    color: $dark;
+    font-size: 1.5rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: $primary;
+    }
+  }
+}
+
+// Styles pour le footer link
+.footer-link {
+  color: $dark;
+  text-decoration: none;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: $primary;
+  }
+}
+
+// Styles responsifs pour les icônes sociales
+@media (max-width: 767.98px) {
+  .social-icons {
+    flex-direction: column; // Vertical sur mobile
+    align-items: flex-start;
+    gap: 0.5rem;
+
+    .social-icon {
+      font-size: 1.25rem;
+    }
+  }
+
+  // Alignement sur mobile - une seule ligne
+  footer .col-6:last-child {
+    justify-content: flex-end; // Alignement à droite sur mobile
+    margin-top: 0; // Pas d'espacement vertical
+  }
+
+  // Réduire l'espacement vertical du footer sur mobile
+  footer {
+    padding: 1.5rem 0; // Padding réduit sur mobile
+
+    .row {
+      margin: 0; // Enlever les marges
+    }
+
+    p {
+      margin-bottom: 0.25rem; // Réduire l'espacement entre les paragraphes
+      font-size: 0.875rem; // Taille de police réduite
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .social-icons {
+    flex-direction: row; // Horizontal sur desktop
+    justify-content: flex-end; // Alignement à droite
+    align-items: center; // Centrer verticalement
+    gap: 1.5rem;
+
+    .social-icon {
+      font-size: 2rem !important; // Taille augmentée pour desktop avec !important
+    }
+  }
+}
