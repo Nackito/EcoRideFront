@@ -13,6 +13,21 @@ $font-family-serif: "Kanit", serif !default;
 
 // Then add additional custom code here
 
+// Styles pour le conteneur du formulaire
+.form-container {
+  background-color: white;
+  border-radius: 12px;
+  padding: 1rem; // Padding réduit
+  margin: -100px auto 2rem auto; // Marge négative pour superposer le hero
+  max-width: 600px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative; // Position relative
+  z-index: 10; // Z-index pour passer au-dessus du hero
+}
+
 // Personnalisation de la navbar
 .navbar {
   .navbar-brand {
@@ -212,5 +227,203 @@ footer {
     .social-icon {
       font-size: 2rem !important; // Taille augmentée pour desktop avec !important
     }
+  }
+}
+
+// Styles pour la section hero
+.hero {
+  width: 100%;
+  height: 240px;
+  background-color: $secondary;
+  display: flex;
+  align-items: flex-start; // Aligner le texte vers le haut
+  justify-content: center;
+  margin: 0 auto;
+  padding-top: 2rem; // Ajouter du padding pour remonter le texte
+  position: relative; // Position relative pour le z-index
+
+  p {
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+  }
+}
+
+// Styles pour le formulaire de recherche
+.search-form {
+  width: 80%; // Le formulaire occupe 80% du conteneur
+
+  .form-group {
+    margin-bottom: 1rem; // Marge réduite entre les groupes
+  }
+
+  .form-control {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    width: 100%; // Les champs occupent toute la largeur disponible
+
+    // Shadow au bottom pour les champs
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    &:focus {
+      border-color: $primary;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1),
+        0 0 0 0.2rem rgba(69, 233, 40, 0.25);
+      outline: none;
+    }
+
+    &::placeholder {
+      color: #6c757d;
+    }
+  }
+
+  .search-btn {
+    background-color: $secondary;
+    border-color: $secondary;
+    color: white;
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    width: 100%;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: $dark;
+      border-color: $secondary;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+// Styles pour les champs avec icônes intégrées
+.input-with-icon {
+  position: relative;
+
+  .input-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $secondary;
+    font-size: 1rem;
+    z-index: 2;
+    pointer-events: none; // L'icône ne bloque pas les clics
+  }
+
+  .form-control.with-icon {
+    padding-left: 2.5rem; // Espace pour l'icône
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding-top: 0.65rem;
+    padding-bottom: 0.65rem;
+    padding-right: 0.8rem;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    width: 100%;
+
+    // Shadow au bottom pour les champs
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    &:focus {
+      border-color: $primary;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1),
+        0 0 0 0.2rem rgba(69, 233, 40, 0.25);
+      outline: none;
+    }
+
+    &::placeholder {
+      color: #6c757d;
+    }
+  }
+}
+
+// Styles pour desktop - formulaire horizontal
+@media (min-width: 768px) {
+  .form-container {
+    max-width: 1000px; // Augmenter la largeur du conteneur pour avoir plus d'espace
+    margin: -40px auto 2rem auto; // Réduire la marge négative pour faire descendre le formulaire
+  }
+
+  .search-form {
+    display: flex;
+    flex-wrap: nowrap; // Empêcher le retour à la ligne
+    gap: 0.75rem; // Réduire l'espacement
+    align-items: end; // Aligner les éléments par le bas
+    width: 100%; // Prendre toute la largeur disponible
+
+    .form-group {
+      flex: 1; // Chaque groupe prend une part égale
+      margin-bottom: 0; // Supprimer la marge verticale
+      min-width: 120px; // Largeur minimale réduite
+
+      &:last-child {
+        flex: 0 0 140px; // Le bouton a une largeur fixe
+      }
+    }
+
+    .form-control {
+      margin-bottom: 0;
+      font-size: 0.9rem; // Réduire la taille de police
+      padding: 0.65rem 0.8rem; // Réduire le padding
+    }
+
+    .search-btn {
+      width: 100%; // Le bouton prend toute la largeur de son conteneur
+      padding: 0.65rem 1rem; // Réduire le padding
+      font-size: 0.95rem; // Réduire la taille de police
+    }
+  }
+}
+
+// Styles responsifs pour le formulaire
+@media (max-width: 768px) {
+  .form-container {
+    margin: -100px 1rem 2rem 1rem; // Marge négative ajustée pour mobile
+    padding: 1rem; // Padding réduit pour mobile aussi
+  }
+
+  .search-form {
+    width: 90%; // Largeur légèrement augmentée sur mobile
+
+    .form-group {
+      margin-bottom: 0.75rem; // Marge encore plus réduite sur mobile
+    }
+
+    .form-control {
+      font-size: 0.9rem;
+    }
+
+    .search-btn {
+      font-size: 1rem;
+      padding: 0.625rem 1.5rem;
+    }
+  }
+}
+
+// Styles spécifiques pour le champ date
+.date-input {
+  // Masquer l'icône native du sélecteur de date
+  &::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  // Pour Firefox
+  &::-moz-calendar-picker-indicator {
+    opacity: 0;
   }
 }
