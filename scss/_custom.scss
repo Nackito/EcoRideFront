@@ -427,3 +427,61 @@ footer {
     opacity: 0;
   }
 }
+
+// Styles pour la section1 et section2
+.section2 {
+  background: $secondary;
+}
+// Styles pour les icônes de la section1
+.section1 {
+  .bi {
+    color: $secondary; // Même couleur que les icônes du formulaire
+    font-size: 2rem; // Taille adaptée pour les icônes de section
+    margin-bottom: 1rem; // Espacement sous l'icône
+    display: block; // Pour que margin-bottom fonctionne
+  }
+
+  // Styles pour les colonnes de la section
+  .col-lg-4 {
+    text-align: center; // Centrer le contenu
+    padding: 2rem 1rem; // Espacement autour du contenu
+
+    p:first-of-type {
+      font-weight: 600; // Titre en gras
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: $dark;
+    }
+
+    p:last-of-type {
+      color: #6c757d; // Couleur plus douce pour la description
+      line-height: 1.5;
+    }
+  }
+}
+
+// Styles pour la section2
+.section2 {
+  padding: 3rem 0; // Padding vertical pour la section
+
+  .col-lg-6 {
+    padding: 2rem 1rem; // Espacement autour du contenu
+
+    .p1:first-of-type {
+      font-weight: 600; // Poids semibold
+      font-size: 24px; // Taille de texte 24px
+      margin-bottom: 1rem;
+      color: white; // Texte blanc sur fond secondary
+    }
+
+    p:last-of-type {
+      color: rgba(
+        255,
+        255,
+        255,
+        0.8
+      ); // Texte blanc semi-transparent pour la description
+      line-height: 1.5;
+    }
+  }
+}

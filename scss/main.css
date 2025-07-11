@@ -12299,4 +12299,46 @@ footer .col-6:last-child {
 }
 .date-input::-moz-calendar-picker-indicator {
   opacity: 0;
+}
+
+.section2 {
+  background: #267917;
+}
+
+.section1 .bi {
+  color: #267917;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+.section1 .col-lg-4 {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+.section1 .col-lg-4 p:first-of-type {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: #1a1a1a;
+}
+.section1 .col-lg-4 p:last-of-type {
+  color: #6c757d;
+  line-height: 1.5;
+}
+
+.section2 {
+  padding: 3rem 0;
+}
+.section2 .col-lg-6 {
+  padding: 2rem 1rem;
+}
+.section2 .col-lg-6 .p1:first-of-type {
+  font-weight: 600;
+  font-size: 24px;
+  margin-bottom: 1rem;
+  color: white;
+}
+.section2 .col-lg-6 p:last-of-type {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
 }/*# sourceMappingURL=main.css.map */
