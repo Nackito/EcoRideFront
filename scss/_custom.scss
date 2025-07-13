@@ -35,8 +35,21 @@ $font-family-serif: "Kanit", serif !default;
     font-weight: bold;
   }
 
+  // Alignement vertical des éléments de navigation
+  .navbar-nav {
+    align-items: center;
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+    }
+  }
+
   .nav-link {
     color: $dark !important;
+    display: flex;
+    align-items: center;
+    min-height: 3rem; // Hauteur minimale pour s'aligner avec la grande icône
 
     &:hover {
       color: $primary !important;
@@ -45,6 +58,9 @@ $font-family-serif: "Kanit", serif !default;
 
   .dropdown-toggle {
     color: $dark !important;
+    display: flex;
+    align-items: center;
+    min-height: 3rem; // Hauteur minimale pour s'aligner avec la grande icône
 
     &:hover {
       color: $primary !important;
@@ -84,14 +100,34 @@ $font-family-serif: "Kanit", serif !default;
 
 // Styles pour le menu burger - transformation du dropdown
 @media (max-width: 991.98px) {
+  // Reset des styles d'alignement pour mobile
+  .navbar-nav {
+    align-items: stretch !important; // Reset l'alignement pour mobile
+
+    .nav-item {
+      display: block !important; // Reset l'affichage flex pour mobile
+    }
+  }
+
+  .nav-link {
+    display: block !important; // Reset l'affichage flex pour mobile
+    min-height: auto !important; // Reset la hauteur minimale
+    padding: 0.5rem 1rem !important; // Padding uniforme pour tous les liens
+
+    // Masquer les icônes dans le menu burger
+    .bi {
+      display: none !important;
+    }
+  }
+
   .navbar-collapse {
     .nav-item.dropdown {
       // Masquer le dropdown toggle sur mobile
       .dropdown-toggle {
-        display: none;
+        display: none !important;
       }
 
-      // Afficher les éléments du dropdown comme des nav-items normaux
+      // Transformer le dropdown en menu normal sur mobile
       .dropdown-menu {
         display: block !important;
         position: static !important;
@@ -100,12 +136,18 @@ $font-family-serif: "Kanit", serif !default;
         box-shadow: none !important;
         padding: 0 !important;
         margin: 0 !important;
+        float: none !important;
+        width: auto !important;
 
         .dropdown-item {
           color: $dark !important;
-          padding: 0.5rem 1rem !important;
+          padding: 0.5rem 1rem !important; // Même padding que les nav-link
           border-radius: 0 !important;
           background-color: transparent !important;
+          display: block !important;
+          width: 100% !important;
+          margin: 0 !important;
+          text-decoration: none !important;
 
           &:hover {
             color: $primary !important;
@@ -114,7 +156,7 @@ $font-family-serif: "Kanit", serif !default;
         }
 
         .dropdown-divider {
-          display: none; // Masquer les séparateurs sur mobile
+          display: none !important; // Masquer les séparateurs sur mobile
         }
       }
     }
@@ -429,10 +471,6 @@ footer {
 }
 
 // Styles pour la section1 et section2
-.section2 {
-  background: $secondary;
-}
-// Styles pour les icônes de la section1
 .section1 {
   .bi {
     color: $secondary; // Même couleur que les icônes du formulaire
@@ -462,12 +500,13 @@ footer {
 
 // Styles pour la section2
 .section2 {
+  background: $secondary;
   padding: 3rem 0; // Padding vertical pour la section
 
   .col-lg-6 {
     padding: 2rem 1rem; // Espacement autour du contenu
 
-    .p1:first-of-type {
+    p:first-of-type {
       font-weight: 600; // Poids semibold
       font-size: 24px; // Taille de texte 24px
       margin-bottom: 1rem;
@@ -484,4 +523,25 @@ footer {
       line-height: 1.5;
     }
   }
+}
+
+// Styles pour l'effet de survol du container de compte
+.hover-bg {
+  transition: background-color 0.3s ease;
+  border-radius: 8px;
+
+  &:hover {
+    background-color: $secondary;
+  }
+}
+
+// Styles pour l'icône de profil utilisateur
+.profile-icon {
+  font-size: 3rem !important; // Taille d'icône plus grande pour la page account
+}
+
+// Styles pour l'icône de profil dans la navbar
+.navbar-profile-icon {
+  font-size: 1.5rem !important; // Taille d'icône adaptée pour la navbar
+  color: $secondary;
 }
