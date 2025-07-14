@@ -12388,4 +12388,75 @@ footer .col-6:last-child {
 .navbar-profile-icon {
   font-size: 1.5rem !important;
   color: #267917;
+}
+
+.elevation-5 {
+  box-shadow: 0px 8px 10px -6px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14), 0px 6px 30px 5px rgba(0, 0, 0, 0.12);
+  transition: box-shadow 0.3s ease;
+}
+.elevation-5:hover {
+  box-shadow: 0px 12px 15px -8px rgba(0, 0, 0, 0.25), 0px 20px 30px 3px rgba(0, 0, 0, 0.18), 0px 8px 38px 7px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 767.98px) {
+  .card.elevation-5 {
+    height: 150px !important;
+    width: 280px !important;
+    margin: 0 auto 1rem auto;
+    overflow: hidden;
+  }
+  .card.elevation-5 .card-body {
+    padding: 0.75rem !important;
+    font-size: 0.8rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .card.elevation-5 .card-body .card-text {
+    font-size: 0.75rem !important;
+    margin-bottom: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .card.elevation-5 .card-body .card-text {
+    display: flex !important;
+    align-items: center !important;
+  }
+  .card.elevation-5 .card-body .card-text .bi-arrow-right-short {
+    margin: 0 0.5rem !important;
+    vertical-align: middle !important;
+  }
+  .card.elevation-5 .card-body .row {
+    margin: 0 !important;
+  }
+  .card.elevation-5 .card-body .row .col,
+  .card.elevation-5 .card-body .row .col-auto {
+    padding: 0 0.25rem !important;
+  }
+  .card.elevation-5 .card-body p {
+    font-size: 0.7rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+  .card.elevation-5 .card-body hr {
+    margin: 0.5rem 0 !important;
+  }
+  .card.elevation-5 .card-body .hover-bg {
+    padding: 0.5rem !important;
+    margin-top: auto;
+  }
+  .card.elevation-5 .card-body .hover-bg .row {
+    align-items: center;
+  }
+  .card.elevation-5 .card-body .hover-bg .profile-icon {
+    font-size: 1.5rem !important;
+  }
+  .card.elevation-5 .card-body .hover-bg h3, .card.elevation-5 .card-body .hover-bg .h3 {
+    font-size: 0.85rem !important;
+    margin: 0 !important;
+  }
+  .card.elevation-5 .card-body .hover-bg .bi-car-front {
+    font-size: 1rem !important;
+  }
 }/*# sourceMappingURL=main.css.map */
