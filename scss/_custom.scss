@@ -581,10 +581,8 @@ footer {
         white-space: nowrap; // Empêcher le retour à la ligne
         overflow: hidden;
         text-overflow: ellipsis; // Ajouter "..." si le texte est trop long
-      }
 
-      // Alignement des icônes flèches dans les cartes
-      .card-text {
+        // Alignement des icônes flèches dans les cartes
         display: flex !important;
         align-items: center !important;
 
