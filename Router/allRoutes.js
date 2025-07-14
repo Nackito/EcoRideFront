@@ -8,8 +8,18 @@ export const allRoutes = [
     "Resultats de recherche",
     "/pages/ride-sharing.html"
   ),
-  new Route("/signin", "Connexion", "/pages/auth/signin.html"),
-  new Route("/signup", "Inscription", "/pages/auth/signup.html"),
+  new Route(
+    "/signin",
+    "Connexion",
+    "/pages/auth/signin.html",
+    "/js/auth/signin.js"
+  ),
+  new Route(
+    "/signup",
+    "Inscription",
+    "/pages/auth/signup.html",
+    "/js/auth/signup.js"
+  ),
   new Route("/account", "Mon profil", "/pages/auth/account.html"),
   new Route("/detail-ride", "Détail du trajet", "/pages/detail-ride.html"),
 ];

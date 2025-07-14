@@ -31,6 +31,7 @@
         id="PasswordInput"
         name="Password"
       />
+      <div class="valid-feedback text-dark">Le mot de passe est robuste</div>
     </div>
     <div class="mb-3">
       <label for="ConfirmationPasswordInput" class="form-label text-white"
@@ -42,10 +43,17 @@
         id="ConfirmationPasswordInput"
         name="ConfirmationPassword"
       />
+      <div class="invalid-feedback">
+        Les mots de passe ne correspondent pas. Veuillez réessayer.
+      </div>
     </div>
 
     <div class="text-center">
-      <button type="submit" class="btn btn-dark text-secondary">
+      <button
+        type="submit"
+        class="btn btn-dark text-secondary"
+        id="btn-validation-inscription"
+      >
         Créez mon compte
       </button>
     </div>
