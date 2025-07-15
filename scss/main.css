@@ -12457,4 +12457,149 @@ footer .col-6:last-child {
   .card.elevation-5 .card-body .hover-bg .bi-car-front {
     font-size: 1rem !important;
   }
+}
+@media (max-width: 768px) {
+  .vehicle-management .card {
+    margin-bottom: 0.75rem !important;
+  }
+  .vehicle-management .card-body {
+    padding: 0.5rem !important;
+  }
+  .vehicle-management .bi-car-front {
+    font-size: 1.5rem !important;
+  }
+  .vehicle-management .dropdown-menu {
+    font-size: 0.9rem;
+  }
+  .vehicle-management #addVehicleBtn {
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+  }
+}
+@media (max-width: 768px) {
+  .vehicle-management .card {
+    margin-bottom: 0.5rem !important;
+  }
+  .vehicle-management .card .card-body {
+    padding: 0.5rem !important;
+    min-height: auto !important;
+  }
+  .vehicle-management .card .row {
+    margin: 0 !important;
+  }
+  .vehicle-management .card .row.align-items-center {
+    min-height: auto !important;
+  }
+  .vehicle-management .card .col-2,
+  .vehicle-management .card .col-7,
+  .vehicle-management .card .col-3 {
+    padding-left: 0.25rem !important;
+    padding-right: 0.25rem !important;
+  }
+  .vehicle-management .card h6, .vehicle-management .card .h6 {
+    font-size: 0.9rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 0.125rem !important;
+  }
+  .vehicle-management .card small, .vehicle-management .card .small {
+    font-size: 0.75rem !important;
+    line-height: 1.1 !important;
+  }
+  .vehicle-management .card .bi-car-front {
+    font-size: 1.25rem !important;
+  }
+  .vehicle-management .card .btn-sm, .vehicle-management .card .btn-group-sm > .btn {
+    padding: 0.25rem 0.5rem !important;
+    font-size: 0.8rem !important;
+  }
+}
+
+#vehicleModal .modal-content,
+#deleteModal .modal-content {
+  border: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+#vehicleModal .modal-header,
+#deleteModal .modal-header {
+  background: linear-gradient(135deg, #45e928 0%, #267917 100%);
+  color: white;
+  border-radius: 1rem 1rem 0 0;
+}
+#vehicleModal .modal-header .modal-title,
+#deleteModal .modal-header .modal-title {
+  color: white !important;
+}
+#vehicleModal .modal-header .btn-close,
+#deleteModal .modal-header .btn-close {
+  filter: brightness(0) invert(1);
+}
+#vehicleModal .form-label .text-danger,
+#deleteModal .form-label .text-danger {
+  font-size: 0.8rem;
+}
+#vehicleModal .form-control,
+#vehicleModal .form-select,
+#deleteModal .form-control,
+#deleteModal .form-select {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+#vehicleModal .form-control:focus,
+#vehicleModal .form-select:focus,
+#deleteModal .form-control:focus,
+#deleteModal .form-select:focus {
+  border-color: #45e928;
+  box-shadow: 0 0 0 0.2rem rgba(69, 233, 40, 0.25);
+}
+
+.alert {
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+}
+.alert.alert-success {
+  background-color: rgba(69, 233, 40, 0.1);
+  color: #267917;
+  border-left: 4px solid #45e928;
+}
+
+.dropdown-menu {
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 0.5rem;
+}
+.dropdown-menu .dropdown-item {
+  padding: 0.5rem 1rem;
+  transition: background-color 0.2s ease;
+}
+.dropdown-menu .dropdown-item:hover {
+  background-color: rgba(69, 233, 40, 0.1);
+}
+.dropdown-menu .dropdown-item.text-danger:hover {
+  background-color: rgba(220, 53, 69, 0.1);
+}
+.dropdown-menu .dropdown-item {
+  border: none;
+  background: none;
+  text-align: left;
+  width: 100%;
+}
+.dropdown-menu .dropdown-item:focus {
+  outline: none;
+  box-shadow: none;
+}
+.dropdown-menu button.dropdown-item {
+  border: none;
+  background: transparent;
+  text-align: left;
+  width: 100%;
+  color: inherit;
+  font-size: inherit;
+}
+.dropdown-menu button.dropdown-item:hover, .dropdown-menu button.dropdown-item:focus {
+  background-color: var(--bs-dropdown-link-hover-bg);
+  color: var(--bs-dropdown-link-hover-color);
+}
+.dropdown-menu button.dropdown-item.text-danger:hover, .dropdown-menu button.dropdown-item.text-danger:focus {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
 }/*# sourceMappingURL=main.css.map */

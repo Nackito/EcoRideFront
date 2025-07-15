@@ -1,0 +1,584 @@
+<div class="container mt-4 mb-5 vehicle-management mobile-friendly">
+  <!-- Header avec bouton retour -->
+  <div class="d-flex align-items-center mb-3 mb-md-4">
+    <a href="/account" class="text-decoration-none text-dark me-3">
+      <i class="bi bi-arrow-left fs-4"></i>
+    </a>
+    <a href="/account" class="text-decoration-none text-dark">
+      <h4 class="mb-0 fs-5 fw-bold text-primary d-block d-md-none">
+        Mes véhicules
+      </h4>
+      <h2 class="mb-0 fs-3 fw-bold text-primary d-none d-md-block">
+        Gestion des véhicules
+      </h2>
+    </a>
+  </div>
+
+  <!-- Bouton d'ajout de véhicule -->
+  <div class="mb-4">
+    <button class="btn btn-success w-100 w-md-auto" id="addVehicleBtn">
+      <i class="bi bi-plus-circle me-2"></i>
+      <span class="d-none d-md-inline">Ajouter un véhicule</span>
+      <span class="d-inline d-md-none">Ajouter</span>
+    </button>
+  </div>
+
+  <!-- Liste des véhicules existants -->
+  <div id="vehiclesList">
+    <!-- Véhicule 1 -->
+    <div class="card rounded-4 mb-3" data-vehicle-id="1">
+      <div class="card-body p-2 p-md-4">
+        <div class="row align-items-center g-2 g-md-3">
+          <div class="col-2 col-md-1 text-center">
+            <i class="bi bi-car-front fs-4 fs-md-2 text-primary"></i>
+          </div>
+          <div class="col-7 col-md-8">
+            <!-- Version mobile -->
+            <div class="d-block d-md-none">
+              <h6 class="fw-bold mb-0">Tesla Model 3</h6>
+              <small class="text-muted">2022 • Électrique • 4 places</small>
+            </div>
+            <!-- Version desktop -->
+            <div class="d-none d-md-block">
+              <h5 class="fw-bold mb-1">Tesla Model 3</h5>
+              <p class="text-muted mb-0">
+                2022 • Électrique • 4 places disponibles
+              </p>
+            </div>
+          </div>
+          <div class="col-3 col-md-3 text-end">
+            <div class="dropdown">
+              <button
+                class="btn btn-outline-secondary btn-sm"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="bi bi-three-dots-vertical"></i>
+              </button>
+              <ul class="dropdown-menu">
+                <li>
+                  <button
+                    class="dropdown-item"
+                    type="button"
+                    onclick="editVehicle(1)"
+                  >
+                    <i class="bi bi-pencil me-2"></i>Modifier
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="dropdown-item text-danger"
+                    type="button"
+                    onclick="deleteVehicle(1)"
+                  >
+                    <i class="bi bi-trash me-2"></i>Supprimer
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Véhicule 2 -->
+    <div class="card rounded-4 mb-3" data-vehicle-id="2">
+      <div class="card-body p-2 p-md-4">
+        <div class="row align-items-center g-2 g-md-3">
+          <div class="col-2 col-md-1 text-center">
+            <i class="bi bi-car-front fs-4 fs-md-2 text-secondary"></i>
+          </div>
+          <div class="col-7 col-md-8">
+            <!-- Version mobile -->
+            <div class="d-block d-md-none">
+              <h6 class="fw-bold mb-0">Renault Clio</h6>
+              <small class="text-muted">2020 • Essence • 4 places</small>
+            </div>
+            <!-- Version desktop -->
+            <div class="d-none d-md-block">
+              <h5 class="fw-bold mb-1">Renault Clio</h5>
+              <p class="text-muted mb-0">
+                2020 • Essence • 4 places disponibles
+              </p>
+            </div>
+          </div>
+          <div class="col-3 col-md-3 text-end">
+            <div class="dropdown">
+              <button
+                class="btn btn-outline-secondary btn-sm"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="bi bi-three-dots-vertical"></i>
+              </button>
+              <ul class="dropdown-menu">
+                <li>
+                  <button
+                    class="dropdown-item"
+                    type="button"
+                    onclick="editVehicle(2)"
+                  >
+                    <i class="bi bi-pencil me-2"></i>Modifier
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="dropdown-item text-danger"
+                    type="button"
+                    onclick="deleteVehicle(2)"
+                  >
+                    <i class="bi bi-trash me-2"></i>Supprimer
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal d'ajout/modification de véhicule -->
+<div
+  class="modal fade"
+  id="vehicleModal"
+  tabindex="-1"
+  aria-labelledby="vehicleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title fw-bold text-primary" id="vehicleModalLabel">
+          Ajouter un véhicule
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body p-4">
+        <form id="vehicleForm">
+          <input type="hidden" id="vehicleId" value="" />
+
+          <!-- Marque -->
+          <div class="mb-3">
+            <label for="brand" class="form-label fw-semibold"
+              >Marque <span class="text-danger">*</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="brand"
+              placeholder="Ex: Tesla, Renault, Peugeot..."
+              required
+            />
+          </div>
+
+          <!-- Modèle -->
+          <div class="mb-3">
+            <label for="model" class="form-label fw-semibold"
+              >Modèle <span class="text-danger">*</span></label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="model"
+              placeholder="Ex: Model 3, Clio, 208..."
+              required
+            />
+          </div>
+
+          <!-- Année et Type -->
+          <div class="row mb-3">
+            <div class="col-6">
+              <label for="year" class="form-label fw-semibold"
+                >Année <span class="text-danger">*</span></label
+              >
+              <select class="form-select" id="year" required>
+                <option value="">Choisir...</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+                <option value="2020">2020</option>
+                <option value="2019">2019</option>
+                <option value="2018">2018</option>
+                <option value="2017">2017</option>
+                <option value="2016">2016</option>
+                <option value="2015">2015</option>
+              </select>
+            </div>
+            <div class="col-6">
+              <label for="fuelType" class="form-label fw-semibold"
+                >Type <span class="text-danger">*</span></label
+              >
+              <select class="form-select" id="fuelType" required>
+                <option value="">Choisir...</option>
+                <option value="electric">Électrique</option>
+                <option value="hybrid">Hybride</option>
+                <option value="petrol">Essence</option>
+                <option value="diesel">Diesel</option>
+                <option value="gas">GPL</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Nombre de places -->
+          <div class="mb-3">
+            <label for="seats" class="form-label fw-semibold"
+              >Nombre de places disponibles
+              <span class="text-danger">*</span></label
+            >
+            <select class="form-select" id="seats" required>
+              <option value="">Choisir...</option>
+              <option value="1">1 place</option>
+              <option value="2">2 places</option>
+              <option value="3">3 places</option>
+              <option value="4">4 places</option>
+              <option value="5">5 places</option>
+              <option value="6">6 places</option>
+              <option value="7">7 places</option>
+              <option value="8">8 places</option>
+            </select>
+            <small class="text-muted"
+              >Nombre de passagers que vous pouvez transporter (sans compter le
+              conducteur)</small
+            >
+          </div>
+
+          <!-- Couleur -->
+          <div class="mb-3">
+            <label for="color" class="form-label fw-semibold">Couleur</label>
+            <input
+              type="text"
+              class="form-control"
+              id="color"
+              placeholder="Ex: Blanc, Noir, Rouge..."
+            />
+          </div>
+
+          <!-- Immatriculation -->
+          <div class="mb-3">
+            <label for="license" class="form-label fw-semibold"
+              >Immatriculation</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="license"
+              placeholder="Ex: AB-123-CD"
+            />
+            <small class="text-muted"
+              >Cette information ne sera pas visible publiquement</small
+            >
+          </div>
+
+          <!-- Description -->
+          <div class="mb-3">
+            <label for="description" class="form-label fw-semibold"
+              >Description</label
+            >
+            <textarea
+              class="form-control"
+              id="description"
+              rows="3"
+              placeholder="Informations supplémentaires sur votre véhicule..."
+            ></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer border-0 pt-0">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          data-bs-dismiss="modal"
+        >
+          Annuler
+        </button>
+        <button type="button" class="btn btn-primary" onclick="saveVehicle()">
+          <i class="bi bi-check-lg me-2"></i>Sauvegarder
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de confirmation de suppression -->
+<div
+  class="modal fade"
+  id="deleteModal"
+  tabindex="-1"
+  aria-labelledby="deleteModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content rounded-4">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title fw-bold text-danger" id="deleteModalLabel">
+          Supprimer le véhicule
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body p-4">
+        <p>Êtes-vous sûr de vouloir supprimer ce véhicule ?</p>
+        <p class="text-muted small">Cette action est irréversible.</p>
+      </div>
+      <div class="modal-footer border-0 pt-0">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          data-bs-dismiss="modal"
+        >
+          Annuler
+        </button>
+        <button type="button" class="btn btn-danger" onclick="confirmDelete()">
+          <i class="bi bi-trash me-2"></i>Supprimer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Variables globales
+  let currentVehicleId = null;
+  let vehicleToDelete = null;
+
+  // Données de démonstration
+  const vehicles = {
+    1: {
+      brand: "Tesla",
+      model: "Model 3",
+      year: "2022",
+      fuelType: "electric",
+      seats: "4",
+      color: "Blanc",
+      license: "TE-123-SL",
+      description: "Véhicule électrique très confortable et silencieux.",
+    },
+    2: {
+      brand: "Renault",
+      model: "Clio",
+      year: "2020",
+      fuelType: "petrol",
+      seats: "4",
+      color: "Rouge",
+      license: "RN-456-CL",
+      description: "Petite voiture idéale pour les trajets urbains.",
+    },
+  };
+
+  // Initialisation
+  document.addEventListener("DOMContentLoaded", function () {
+    // Bouton d'ajout de véhicule
+    document
+      .getElementById("addVehicleBtn")
+      .addEventListener("click", function () {
+        openVehicleModal();
+      });
+  });
+
+  // Ouvrir le modal d'ajout/modification
+  function openVehicleModal(vehicleId = null) {
+    currentVehicleId = vehicleId;
+    const modal = new bootstrap.Modal(document.getElementById("vehicleModal"));
+    const modalTitle = document.getElementById("vehicleModalLabel");
+    const form = document.getElementById("vehicleForm");
+
+    // Reset du formulaire
+    form.reset();
+    document.getElementById("vehicleId").value = vehicleId || "";
+
+    if (vehicleId && vehicles[vehicleId]) {
+      // Mode modification
+      modalTitle.textContent = "Modifier le véhicule";
+      const vehicle = vehicles[vehicleId];
+
+      document.getElementById("brand").value = vehicle.brand;
+      document.getElementById("model").value = vehicle.model;
+      document.getElementById("year").value = vehicle.year;
+      document.getElementById("fuelType").value = vehicle.fuelType;
+      document.getElementById("seats").value = vehicle.seats;
+      document.getElementById("color").value = vehicle.color;
+      document.getElementById("license").value = vehicle.license;
+      document.getElementById("description").value = vehicle.description;
+    } else {
+      // Mode ajout
+      modalTitle.textContent = "Ajouter un véhicule";
+    }
+
+    modal.show();
+  }
+
+  // Modifier un véhicule
+  function editVehicle(vehicleId) {
+    openVehicleModal(vehicleId);
+  }
+
+  // Supprimer un véhicule
+  function deleteVehicle(vehicleId) {
+    vehicleToDelete = vehicleId;
+    const modal = new bootstrap.Modal(document.getElementById("deleteModal"));
+    modal.show();
+  }
+
+  // Confirmer la suppression
+  function confirmDelete() {
+    if (vehicleToDelete) {
+      // Supprimer de la liste visuelle
+      const vehicleElement = document.querySelector(
+        `[data-vehicle-id="${vehicleToDelete}"]`
+      );
+      if (vehicleElement) {
+        vehicleElement.remove();
+      }
+
+      // Supprimer des données
+      delete vehicles[vehicleToDelete];
+
+      // Fermer le modal
+      const modal = bootstrap.Modal.getInstance(
+        document.getElementById("deleteModal")
+      );
+      modal.hide();
+
+      vehicleToDelete = null;
+
+      // Afficher un message de succès (optionnel)
+      showToast("Véhicule supprimé avec succès", "success");
+    }
+  }
+
+  // Sauvegarder un véhicule
+  function saveVehicle() {
+    const form = document.getElementById("vehicleForm");
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const formData = {
+      brand: document.getElementById("brand").value,
+      model: document.getElementById("model").value,
+      year: document.getElementById("year").value,
+      fuelType: document.getElementById("fuelType").value,
+      seats: document.getElementById("seats").value,
+      color: document.getElementById("color").value,
+      license: document.getElementById("license").value,
+      description: document.getElementById("description").value,
+    };
+
+    if (currentVehicleId) {
+      // Modification
+      vehicles[currentVehicleId] = formData;
+      updateVehicleInList(currentVehicleId, formData);
+      showToast("Véhicule modifié avec succès", "success");
+    } else {
+      // Ajout
+      const newId =
+        Math.max(...Object.keys(vehicles).map((id) => parseInt(id)), 0) + 1;
+      vehicles[newId] = formData;
+      addVehicleToList(newId, formData);
+      showToast("Véhicule ajouté avec succès", "success");
+    }
+
+    // Fermer le modal
+    const modal = bootstrap.Modal.getInstance(
+      document.getElementById("vehicleModal")
+    );
+    modal.hide();
+  }
+
+  // Ajouter un véhicule à la liste
+  function addVehicleToList(vehicleId, vehicleData) {
+    const fuelTypeText = getFuelTypeText(vehicleData.fuelType);
+    const vehiclesList = document.getElementById("vehiclesList");
+
+    const vehicleHTML = `
+    <div class="card rounded-4 elevation-5 mb-3" data-vehicle-id="${vehicleId}">
+      <div class="card-body p-2 p-md-4">
+        <div class="row align-items-center g-2 g-md-3">
+          <div class="col-2 col-md-1 text-center">
+            <i class="bi bi-car-front fs-4 fs-md-2 text-primary"></i>
+          </div>
+          <div class="col-7 col-md-8">
+            <div class="d-block d-md-none">
+              <h6 class="fw-bold mb-0">${vehicleData.brand} ${vehicleData.model}</h6>
+              <small class="text-muted">${vehicleData.year} • ${fuelTypeText} • ${vehicleData.seats} places</small>
+            </div>
+            <div class="d-none d-md-block">
+              <h5 class="fw-bold mb-1">${vehicleData.brand} ${vehicleData.model}</h5>
+              <p class="text-muted mb-0">${vehicleData.year} • ${fuelTypeText} • ${vehicleData.seats} places disponibles</p>
+            </div>
+          </div>
+          <div class="col-3 col-md-3 text-end">
+            <div class="dropdown">
+              <button class="btn btn-outline-secondary btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-three-dots-vertical"></i>
+              </button>
+              <ul class="dropdown-menu">
+                <li><button class="dropdown-item" type="button" onclick="editVehicle(${vehicleId})"><i class="bi bi-pencil me-2"></i>Modifier</button></li>
+                <li><button class="dropdown-item text-danger" type="button" onclick="deleteVehicle(${vehicleId})"><i class="bi bi-trash me-2"></i>Supprimer</button></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+    vehiclesList.insertAdjacentHTML("beforeend", vehicleHTML);
+  }
+
+  // Mettre à jour un véhicule dans la liste
+  function updateVehicleInList(vehicleId, vehicleData) {
+    const vehicleElement = document.querySelector(
+      `[data-vehicle-id="${vehicleId}"]`
+    );
+    if (vehicleElement) {
+      vehicleElement.remove();
+      addVehicleToList(vehicleId, vehicleData);
+    }
+  }
+
+  // Obtenir le texte du type de carburant
+  function getFuelTypeText(fuelType) {
+    const fuelTypes = {
+      electric: "Électrique",
+      hybrid: "Hybride",
+      petrol: "Essence",
+      diesel: "Diesel",
+      gas: "GPL",
+    };
+    return fuelTypes[fuelType] || fuelType;
+  }
+
+  // Afficher un toast (notification)
+  function showToast(message, type = "info") {
+    // Créer un toast simple
+    const toast = document.createElement("div");
+    toast.className = `alert alert-${
+      type === "success" ? "success" : "info"
+    } position-fixed top-0 start-50 translate-middle-x mt-3`;
+    toast.style.zIndex = "9999";
+    toast.textContent = message;
+
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+      toast.remove();
+    }, 3000);
+  }
+</script>

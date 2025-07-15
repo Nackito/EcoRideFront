@@ -634,3 +634,197 @@ footer {
     }
   }
 }
+
+// Styles pour la page de gestion des véhicules
+.vehicle-management {
+  @media (max-width: 768px) {
+    // Cards de véhicules plus compactes sur mobile
+    .card {
+      margin-bottom: 0.75rem !important;
+    }
+
+    .card-body {
+      padding: 0.5rem !important;
+    }
+
+    // Ajustement des icônes de véhicules
+    .bi-car-front {
+      font-size: 1.5rem !important;
+    }
+
+    // Dropdown menu mobile-friendly
+    .dropdown-menu {
+      font-size: 0.9rem;
+    }
+
+    // Bouton d'ajout pleine largeur sur mobile
+    #addVehicleBtn {
+      font-size: 0.9rem;
+      padding: 0.75rem 1rem;
+    }
+  }
+
+  // Optimisation spéciale pour la hauteur des cartes véhicules sur mobile
+  @media (max-width: 768px) {
+    .card {
+      // Réduire encore plus les marges sur mobile
+      margin-bottom: 0.5rem !important;
+
+      .card-body {
+        // Padding minimal sur mobile
+        padding: 0.5rem !important;
+        min-height: auto !important;
+      }
+
+      // Réduire l'espacement dans les rows
+      .row {
+        margin: 0 !important;
+
+        &.align-items-center {
+          min-height: auto !important;
+        }
+      }
+
+      // Optimiser les colonnes
+      .col-2,
+      .col-7,
+      .col-3 {
+        padding-left: 0.25rem !important;
+        padding-right: 0.25rem !important;
+      }
+
+      // Textes plus compacts
+      h6 {
+        font-size: 0.9rem !important;
+        line-height: 1.2 !important;
+        margin-bottom: 0.125rem !important;
+      }
+
+      small {
+        font-size: 0.75rem !important;
+        line-height: 1.1 !important;
+      }
+
+      // Icône de véhicule plus petite
+      .bi-car-front {
+        font-size: 1.25rem !important;
+      }
+
+      // Bouton dropdown plus petit
+      .btn-sm {
+        padding: 0.25rem 0.5rem !important;
+        font-size: 0.8rem !important;
+      }
+    }
+  }
+}
+
+// Styles pour les modals de véhicules
+#vehicleModal,
+#deleteModal {
+  .modal-content {
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .modal-header {
+    background: linear-gradient(135deg, #45e928 0%, #267917 100%);
+    color: white;
+    border-radius: 1rem 1rem 0 0;
+
+    .modal-title {
+      color: white !important;
+    }
+
+    .btn-close {
+      filter: brightness(0) invert(1);
+    }
+  }
+
+  // Styles pour les champs requis
+  .form-label {
+    .text-danger {
+      font-size: 0.8rem;
+    }
+  }
+
+  // Animation des inputs
+  .form-control,
+  .form-select {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+    &:focus {
+      border-color: $primary;
+      box-shadow: 0 0 0 0.2rem rgba(69, 233, 40, 0.25);
+    }
+  }
+}
+
+// Toast notifications
+.alert {
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+
+  &.alert-success {
+    background-color: rgba(69, 233, 40, 0.1);
+    color: $secondary;
+    border-left: 4px solid $primary;
+  }
+}
+
+// Amélioration du dropdown
+.dropdown-menu {
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 0.5rem;
+
+  .dropdown-item {
+    padding: 0.5rem 1rem;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: rgba(69, 233, 40, 0.1);
+    }
+
+    &.text-danger:hover {
+      background-color: rgba(220, 53, 69, 0.1);
+    }
+  }
+
+  // Styles pour les boutons dans les dropdown-menu de ma page vehicules management
+  .dropdown-item {
+    // S'assurer que les boutons ont le même style que les liens
+    border: none;
+    background: none;
+    text-align: left;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+
+  // Boutons dans les menus dropdown
+  button.dropdown-item {
+    border: none;
+    background: transparent;
+    text-align: left;
+    width: 100%;
+    color: inherit;
+    font-size: inherit;
+
+    &:hover,
+    &:focus {
+      background-color: var(--bs-dropdown-link-hover-bg);
+      color: var(--bs-dropdown-link-hover-color);
+    }
+
+    &.text-danger:hover,
+    &.text-danger:focus {
+      background-color: rgba(220, 53, 69, 0.1);
+      color: #dc3545;
+    }
+  }
+}
