@@ -782,6 +782,10 @@ footer {
   .dropdown-item {
     padding: 0.5rem 1rem;
     transition: background-color 0.2s ease;
+    border: none;
+    background: none;
+    text-align: left;
+    width: 100%;
 
     &:hover {
       background-color: rgba(69, 233, 40, 0.1);
@@ -790,15 +794,6 @@ footer {
     &.text-danger:hover {
       background-color: rgba(220, 53, 69, 0.1);
     }
-  }
-
-  // Styles pour les boutons dans les dropdown-menu de ma page vehicules management
-  .dropdown-item {
-    // S'assurer que les boutons ont le même style que les liens
-    border: none;
-    background: none;
-    text-align: left;
-    width: 100%;
 
     &:focus {
       outline: none;
@@ -988,5 +983,194 @@ footer {
       width: 1rem;
       text-align: center;
     }
+  }
+}
+
+// Styles pour la page de gestion de covoiturage
+.carpooling-management {
+  // Cards d'action cliquables
+  .action-card {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 768px) {
+    // Cards plus compactes sur mobile
+    .card {
+      margin-bottom: 0.75rem !important;
+    }
+
+    .card-body {
+      padding: 0.75rem !important;
+    }
+
+    // Actions cards plus petites sur mobile
+    .action-card {
+      .card-body {
+        padding: 1rem !important;
+      }
+
+      i {
+        font-size: 2rem !important;
+        margin-bottom: 0.5rem !important;
+      }
+
+      h5 {
+        font-size: 1rem !important;
+        margin-bottom: 0.5rem !important;
+      }
+
+      p {
+        font-size: 0.8rem !important;
+      }
+    }
+
+    // Trajets actifs plus compacts
+    .bg-light,
+    .bg-success {
+      .card-body {
+        padding: 0.5rem !important;
+      }
+    }
+
+    // Boutons plus petits
+    .btn-sm {
+      font-size: 0.8rem !important;
+      padding: 0.25rem 0.5rem !important;
+    }
+
+    // Badges plus petits
+    .badge {
+      font-size: 0.7rem !important;
+    }
+
+    // Statistiques compactes
+    .bg-primary,
+    .bg-success,
+    .bg-warning,
+    .bg-info {
+      &.bg-opacity-10 {
+        .p-2 {
+          padding: 0.5rem !important;
+        }
+
+        .fw-bold {
+          font-size: 0.9rem !important;
+        }
+
+        small {
+          font-size: 0.7rem !important;
+        }
+      }
+    }
+  }
+
+  // Styles pour les différents statuts de trajets
+  .trip-card {
+    &[data-status="waiting"] {
+      border-left: 4px solid #ffc107;
+    }
+
+    &[data-status="ongoing"] {
+      border-left: 4px solid #198754;
+    }
+
+    &[data-status="scheduled"] {
+      border-left: 4px solid #0d6efd;
+    }
+  }
+
+  // Modals responsives
+  @media (max-width: 576px) {
+    .modal-dialog {
+      margin: 1rem;
+      max-width: calc(100% - 2rem);
+    }
+
+    .modal-body {
+      padding: 1rem !important;
+    }
+
+    .alert {
+      font-size: 0.85rem;
+      padding: 0.5rem;
+    }
+  }
+}
+
+// Amélioration des modals pour cette page
+#cancelModal,
+#startModal {
+  .modal-content {
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .alert {
+    border: none;
+    border-radius: 0.5rem;
+
+    &.alert-warning {
+      background-color: rgba(255, 193, 7, 0.1);
+      border-left: 4px solid #ffc107;
+    }
+
+    &.alert-info {
+      background-color: rgba(13, 110, 253, 0.1);
+      border-left: 4px solid #0d6efd;
+    }
+  }
+
+  .form-check-input:checked {
+    background-color: $primary;
+    border-color: $primary;
+  }
+}
+
+// Toast améliorés
+.alert.position-fixed {
+  max-width: 90%;
+  font-weight: 500;
+  border: none;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  &.alert-success {
+    background: linear-gradient(
+      135deg,
+      rgba(25, 135, 84, 0.1) 0%,
+      rgba(25, 135, 84, 0.05) 100%
+    );
+    border-left: 4px solid #198754;
+    color: #0f5132;
+  }
+
+  &.alert-warning {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 193, 7, 0.1) 0%,
+      rgba(255, 193, 7, 0.05) 100%
+    );
+    border-left: 4px solid #ffc107;
+    color: #664d03;
+  }
+
+  &.alert-info {
+    background: linear-gradient(
+      135deg,
+      rgba(13, 110, 253, 0.1) 0%,
+      rgba(13, 110, 253, 0.05) 100%
+    );
+    border-left: 4px solid #0d6efd;
+    color: #084298;
   }
 }

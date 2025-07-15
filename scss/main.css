@@ -12570,18 +12570,16 @@ footer .col-6:last-child {
 .dropdown-menu .dropdown-item {
   padding: 0.5rem 1rem;
   transition: background-color 0.2s ease;
+  border: none;
+  background: none;
+  text-align: left;
+  width: 100%;
 }
 .dropdown-menu .dropdown-item:hover {
   background-color: rgba(69, 233, 40, 0.1);
 }
 .dropdown-menu .dropdown-item.text-danger:hover {
   background-color: rgba(220, 53, 69, 0.1);
-}
-.dropdown-menu .dropdown-item {
-  border: none;
-  background: none;
-  text-align: left;
-  width: 100%;
 }
 .dropdown-menu .dropdown-item:focus {
   outline: none;
@@ -12718,4 +12716,141 @@ footer .col-6:last-child {
 .carpooling-history .dropdown-menu .dropdown-item .bi {
   width: 1rem;
   text-align: center;
+}
+
+.carpooling-management .action-card {
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.carpooling-management .action-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.carpooling-management .action-card:active {
+  transform: translateY(0);
+}
+@media (max-width: 768px) {
+  .carpooling-management .card {
+    margin-bottom: 0.75rem !important;
+  }
+  .carpooling-management .card-body {
+    padding: 0.75rem !important;
+  }
+  .carpooling-management .action-card .card-body {
+    padding: 1rem !important;
+  }
+  .carpooling-management .action-card i {
+    font-size: 2rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  .carpooling-management .action-card h5, .carpooling-management .action-card .h5 {
+    font-size: 1rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  .carpooling-management .action-card p {
+    font-size: 0.8rem !important;
+  }
+  .carpooling-management .bg-light .card-body,
+  .carpooling-management .bg-success .card-body {
+    padding: 0.5rem !important;
+  }
+  .carpooling-management .btn-sm, .carpooling-management .btn-group-sm > .btn {
+    font-size: 0.8rem !important;
+    padding: 0.25rem 0.5rem !important;
+  }
+  .carpooling-management .badge {
+    font-size: 0.7rem !important;
+  }
+  .carpooling-management .bg-primary.bg-opacity-10 .p-2,
+  .carpooling-management .bg-success.bg-opacity-10 .p-2,
+  .carpooling-management .bg-warning.bg-opacity-10 .p-2,
+  .carpooling-management .bg-info.bg-opacity-10 .p-2 {
+    padding: 0.5rem !important;
+  }
+  .carpooling-management .bg-primary.bg-opacity-10 .fw-bold,
+  .carpooling-management .bg-success.bg-opacity-10 .fw-bold,
+  .carpooling-management .bg-warning.bg-opacity-10 .fw-bold,
+  .carpooling-management .bg-info.bg-opacity-10 .fw-bold {
+    font-size: 0.9rem !important;
+  }
+  .carpooling-management .bg-primary.bg-opacity-10 small, .carpooling-management .bg-primary.bg-opacity-10 .small,
+  .carpooling-management .bg-success.bg-opacity-10 small,
+  .carpooling-management .bg-success.bg-opacity-10 .small,
+  .carpooling-management .bg-warning.bg-opacity-10 small,
+  .carpooling-management .bg-warning.bg-opacity-10 .small,
+  .carpooling-management .bg-info.bg-opacity-10 small,
+  .carpooling-management .bg-info.bg-opacity-10 .small {
+    font-size: 0.7rem !important;
+  }
+}
+.carpooling-management .trip-card[data-status=waiting] {
+  border-left: 4px solid #ffc107;
+}
+.carpooling-management .trip-card[data-status=ongoing] {
+  border-left: 4px solid #198754;
+}
+.carpooling-management .trip-card[data-status=scheduled] {
+  border-left: 4px solid #0d6efd;
+}
+@media (max-width: 576px) {
+  .carpooling-management .modal-dialog {
+    margin: 1rem;
+    max-width: calc(100% - 2rem);
+  }
+  .carpooling-management .modal-body {
+    padding: 1rem !important;
+  }
+  .carpooling-management .alert {
+    font-size: 0.85rem;
+    padding: 0.5rem;
+  }
+}
+
+#cancelModal .modal-content,
+#startModal .modal-content {
+  border: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+#cancelModal .alert,
+#startModal .alert {
+  border: none;
+  border-radius: 0.5rem;
+}
+#cancelModal .alert.alert-warning,
+#startModal .alert.alert-warning {
+  background-color: rgba(255, 193, 7, 0.1);
+  border-left: 4px solid #ffc107;
+}
+#cancelModal .alert.alert-info,
+#startModal .alert.alert-info {
+  background-color: rgba(13, 110, 253, 0.1);
+  border-left: 4px solid #0d6efd;
+}
+#cancelModal .form-check-input:checked,
+#startModal .form-check-input:checked {
+  background-color: #45e928;
+  border-color: #45e928;
+}
+
+.alert.position-fixed {
+  max-width: 90%;
+  font-weight: 500;
+  border: none;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.alert.position-fixed.alert-success {
+  background: linear-gradient(135deg, rgba(25, 135, 84, 0.1) 0%, rgba(25, 135, 84, 0.05) 100%);
+  border-left: 4px solid #198754;
+  color: #0f5132;
+}
+.alert.position-fixed.alert-warning {
+  background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 193, 7, 0.05) 100%);
+  border-left: 4px solid #ffc107;
+  color: #664d03;
+}
+.alert.position-fixed.alert-info {
+  background: linear-gradient(135deg, rgba(13, 110, 253, 0.1) 0%, rgba(13, 110, 253, 0.05) 100%);
+  border-left: 4px solid #0d6efd;
+  color: #084298;
 }/*# sourceMappingURL=main.css.map */
