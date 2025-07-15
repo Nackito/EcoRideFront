@@ -6,10 +6,28 @@ const btnValidationConnexion = document.getElementById(
   "btn-validation-Connexion"
 );
 
-inputMail.addEventListener("keyup", validateForm);
-inputPassword.addEventListener("keyup", validateForm);
+//inputMail.addEventListener("keyup", validateForm);
+//inputPassword.addEventListener("keyup", validateForm);
+btnValidationConnexion.addEventListener("click", checkCredentials);
 
-function validateForm() {
+function checkCredentials() {
+  // Ici, il faudrait normalement vérifier les identifiants avec le backend
+
+  if (inputMail.value == "ted@mail.com" && inputPassword.value == "Azerty.11") {
+    // Il faudra récupérer le vrai token
+    const token = "fpojkfvpokvfedokspfkokfvfdokvkvdpf";
+    setToken(token); // Fonction définie dans script.js pour gérer les cookies
+    // Placer ce token en cookie
+
+    // Redirection vers la page d'accueil ou une autre page
+    window.location.replace("/"); // Remplacez par la route de votre page d'accueil
+  } else {
+    inputMail.classList.add("is-invalid");
+    inputPassword.classList.add("is-invalid");
+  }
+}
+
+/*function validateForm() {
   const mailOk = validateMail(inputMail);
 
   if (mailOk) {
@@ -44,4 +62,4 @@ function validateRequired(input) {
     input.classList.add("is-invalid");
     return false;
   }
-}
+}*/
