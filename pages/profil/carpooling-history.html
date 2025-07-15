@@ -1,0 +1,657 @@
+<div class="container mt-4 mb-5 carpooling-history mobile-friendly">
+  <!-- Header avec bouton retour -->
+  <div class="d-flex align-items-center mb-3 mb-md-4">
+    <a href="/account" class="text-decoration-none text-dark me-3">
+      <i class="bi bi-arrow-left fs-4"></i>
+    </a>
+    <a href="/account" class="text-decoration-none text-dark">
+      <h4 class="mb-0 fs-5 fw-bold text-primary d-block d-md-none">
+        Historique
+      </h4>
+      <h2 class="mb-0 fs-3 fw-bold text-primary d-none d-md-block">
+        Historique de covoiturage
+      </h2>
+    </a>
+  </div>
+
+  <!-- Filtres -->
+  <div class="card rounded-4 elevation-2 mb-4">
+    <div class="card-body p-2 p-md-4">
+      <h6 class="fw-semibold mb-3 d-block d-md-none">
+        <i class="bi bi-funnel me-2"></i>Filtrer
+      </h6>
+      <h5 class="fw-semibold mb-3 d-none d-md-block">
+        <i class="bi bi-funnel me-2"></i>Filtres
+      </h5>
+
+      <!-- Version mobile -->
+      <div class="d-block d-md-none">
+        <div class="row g-2 mb-3">
+          <div class="col-6">
+            <select class="form-select form-select-sm" id="statusFilterMobile">
+              <option value="all">Tous</option>
+              <option value="completed">Terminés</option>
+              <option value="cancelled">Annulés</option>
+              <option value="upcoming">À venir</option>
+            </select>
+          </div>
+          <div class="col-6">
+            <select class="form-select form-select-sm" id="roleFilterMobile">
+              <option value="all">Conducteur/Passager</option>
+              <option value="driver">Conducteur</option>
+              <option value="passenger">Passager</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Version desktop -->
+      <div class="d-none d-md-block">
+        <div class="row g-3">
+          <div class="col-md-3">
+            <label for="statusFilter" class="form-label small fw-semibold"
+              >Statut</label
+            >
+            <select class="form-select form-select-sm" id="statusFilter">
+              <option value="all">Tous les trajets</option>
+              <option value="completed">Terminés</option>
+              <option value="cancelled">Annulés</option>
+              <option value="upcoming">À venir</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label for="roleFilter" class="form-label small fw-semibold"
+              >Rôle</label
+            >
+            <select class="form-select form-select-sm" id="roleFilter">
+              <option value="all">Conducteur et Passager</option>
+              <option value="driver">Conducteur uniquement</option>
+              <option value="passenger">Passager uniquement</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label for="periodFilter" class="form-label small fw-semibold"
+              >Période</label
+            >
+            <select class="form-select form-select-sm" id="periodFilter">
+              <option value="all">Toute période</option>
+              <option value="month">Ce mois</option>
+              <option value="quarter">3 derniers mois</option>
+              <option value="year">Cette année</option>
+            </select>
+          </div>
+          <div class="col-md-3 d-flex align-items-end">
+            <button
+              class="btn btn-outline-secondary btn-sm w-100"
+              onclick="clearFilters()"
+            >
+              <i class="bi bi-arrow-counterclockwise me-1"></i>Réinitialiser
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Statistiques rapides -->
+  <div class="card rounded-4 elevation-2 mb-4">
+    <div class="card-body p-2 p-md-4">
+      <h6 class="fw-semibold mb-3 d-block d-md-none">
+        <i class="bi bi-bar-chart me-2"></i>Résumé
+      </h6>
+      <h5 class="fw-semibold mb-3 d-none d-md-block">
+        <i class="bi bi-bar-chart me-2"></i>Statistiques
+      </h5>
+
+      <!-- Version mobile -->
+      <div class="d-block d-md-none">
+        <div class="row text-center g-2">
+          <div class="col-4">
+            <div class="p-2 bg-primary bg-opacity-10 rounded-2">
+              <div class="fw-bold">24</div>
+              <small class="text-muted">Trajets</small>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="p-2 bg-success bg-opacity-10 rounded-2">
+              <div class="fw-bold">18</div>
+              <small class="text-muted">Terminés</small>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="p-2 bg-warning bg-opacity-10 rounded-2">
+              <div class="fw-bold">€127</div>
+              <small class="text-muted">Économies</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Version desktop -->
+      <div class="d-none d-md-block">
+        <div class="row text-center">
+          <div class="col-md-3">
+            <div class="p-3 bg-primary bg-opacity-10 rounded-3">
+              <i class="bi bi-car-front fs-2 text-primary mb-2"></i>
+              <h5 class="fw-bold">24</h5>
+              <p class="text-muted small mb-0">Trajets total</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="p-3 bg-success bg-opacity-10 rounded-3">
+              <i class="bi bi-check-circle fs-2 text-success mb-2"></i>
+              <h5 class="fw-bold">18</h5>
+              <p class="text-muted small mb-0">Trajets terminés</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="p-3 bg-warning bg-opacity-10 rounded-3">
+              <i class="bi bi-currency-euro fs-2 text-warning mb-2"></i>
+              <h5 class="fw-bold">€127</h5>
+              <p class="text-muted small mb-0">Économies réalisées</p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="p-3 bg-info bg-opacity-10 rounded-3">
+              <i class="bi bi-geo-alt fs-2 text-info mb-2"></i>
+              <h5 class="fw-bold">2,450km</h5>
+              <p class="text-muted small mb-0">Distance parcourue</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Liste des trajets -->
+  <div id="tripsList">
+    <!-- Trajet terminé - Conducteur -->
+    <div
+      class="card rounded-4 elevation-2 mb-3 trip-card"
+      data-status="completed"
+      data-role="driver"
+    >
+      <div class="card-body p-2 p-md-4">
+        <!-- Version mobile -->
+        <div class="d-block d-md-none">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <div class="flex-grow-1">
+              <div class="d-flex align-items-center mb-1">
+                <small class="fw-bold">Paris</small>
+                <i class="bi bi-arrow-right mx-1 text-muted"></i>
+                <small class="fw-bold">Lyon</small>
+              </div>
+              <small class="text-muted">15 déc 2024 • 14h30</small>
+            </div>
+            <span class="badge bg-success ms-2">Terminé</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+              <i class="bi bi-person-driving text-primary me-1"></i>
+              <small>Conducteur • 3 passagers</small>
+            </div>
+            <small class="fw-bold text-success">+€45</small>
+          </div>
+        </div>
+
+        <!-- Version desktop -->
+        <div class="d-none d-md-block">
+          <div class="row align-items-center">
+            <div class="col-md-1 text-center">
+              <i class="bi bi-person-driving fs-3 text-primary"></i>
+            </div>
+            <div class="col-md-4">
+              <h6 class="fw-bold mb-1">Paris → Lyon</h6>
+              <p class="text-muted small mb-0">15 décembre 2024 • 14h30</p>
+            </div>
+            <div class="col-md-2 text-center">
+              <small class="text-muted">3 passagers</small>
+            </div>
+            <div class="col-md-2 text-center">
+              <span class="badge bg-success">Terminé</span>
+            </div>
+            <div class="col-md-2 text-center">
+              <span class="fw-bold text-success">+€45</span>
+            </div>
+            <div class="col-md-1 text-center">
+              <button
+                class="btn btn-outline-secondary btn-sm"
+                onclick="viewTripDetails(1)"
+              >
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trajet terminé - Passager -->
+    <div
+      class="card rounded-4 elevation-2 mb-3 trip-card"
+      data-status="completed"
+      data-role="passenger"
+    >
+      <div class="card-body p-2 p-md-4">
+        <!-- Version mobile -->
+        <div class="d-block d-md-none">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <div class="flex-grow-1">
+              <div class="d-flex align-items-center mb-1">
+                <small class="fw-bold">Marseille</small>
+                <i class="bi bi-arrow-right mx-1 text-muted"></i>
+                <small class="fw-bold">Nice</small>
+              </div>
+              <small class="text-muted">12 déc 2024 • 09h15</small>
+            </div>
+            <span class="badge bg-success ms-2">Terminé</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+              <i class="bi bi-person-sitting text-secondary me-1"></i>
+              <small>Passager • avec Marie D.</small>
+            </div>
+            <small class="fw-bold text-danger">-€18</small>
+          </div>
+        </div>
+
+        <!-- Version desktop -->
+        <div class="d-none d-md-block">
+          <div class="row align-items-center">
+            <div class="col-md-1 text-center">
+              <i class="bi bi-person-sitting fs-3 text-secondary"></i>
+            </div>
+            <div class="col-md-4">
+              <h6 class="fw-bold mb-1">Marseille → Nice</h6>
+              <p class="text-muted small mb-0">12 décembre 2024 • 09h15</p>
+            </div>
+            <div class="col-md-2 text-center">
+              <small class="text-muted">avec Marie D.</small>
+            </div>
+            <div class="col-md-2 text-center">
+              <span class="badge bg-success">Terminé</span>
+            </div>
+            <div class="col-md-2 text-center">
+              <span class="fw-bold text-danger">-€18</span>
+            </div>
+            <div class="col-md-1 text-center">
+              <button
+                class="btn btn-outline-secondary btn-sm"
+                onclick="viewTripDetails(2)"
+              >
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trajet à venir - Conducteur -->
+    <div
+      class="card rounded-4 elevation-2 mb-3 trip-card"
+      data-status="upcoming"
+      data-role="driver"
+    >
+      <div class="card-body p-2 p-md-4">
+        <!-- Version mobile -->
+        <div class="d-block d-md-none">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <div class="flex-grow-1">
+              <div class="d-flex align-items-center mb-1">
+                <small class="fw-bold">Lyon</small>
+                <i class="bi bi-arrow-right mx-1 text-muted"></i>
+                <small class="fw-bold">Toulouse</small>
+              </div>
+              <small class="text-muted">20 déc 2024 • 16h00</small>
+            </div>
+            <span class="badge bg-primary ms-2">À venir</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+              <i class="bi bi-person-driving text-primary me-1"></i>
+              <small>Conducteur • 2/3 places</small>
+            </div>
+            <small class="fw-bold text-primary">€35</small>
+          </div>
+        </div>
+
+        <!-- Version desktop -->
+        <div class="d-none d-md-block">
+          <div class="row align-items-center">
+            <div class="col-md-1 text-center">
+              <i class="bi bi-person-driving fs-3 text-primary"></i>
+            </div>
+            <div class="col-md-4">
+              <h6 class="fw-bold mb-1">Lyon → Toulouse</h6>
+              <p class="text-muted small mb-0">20 décembre 2024 • 16h00</p>
+            </div>
+            <div class="col-md-2 text-center">
+              <small class="text-muted">2/3 places</small>
+            </div>
+            <div class="col-md-2 text-center">
+              <span class="badge bg-primary">À venir</span>
+            </div>
+            <div class="col-md-2 text-center">
+              <span class="fw-bold text-primary">€35</span>
+            </div>
+            <div class="col-md-1 text-center">
+              <div class="dropdown">
+                <button
+                  class="btn btn-outline-secondary btn-sm"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                >
+                  <i class="bi bi-three-dots-vertical"></i>
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <button class="dropdown-item" onclick="viewTripDetails(3)">
+                      <i class="bi bi-eye me-2"></i>Voir
+                    </button>
+                  </li>
+                  <li>
+                    <button class="dropdown-item" onclick="editTrip(3)">
+                      <i class="bi bi-pencil me-2"></i>Modifier
+                    </button>
+                  </li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li>
+                    <button
+                      class="dropdown-item text-danger"
+                      onclick="cancelTrip(3)"
+                    >
+                      <i class="bi bi-x-circle me-2"></i>Annuler
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trajet annulé -->
+    <div
+      class="card rounded-4 elevation-2 mb-3 trip-card"
+      data-status="cancelled"
+      data-role="driver"
+    >
+      <div class="card-body p-2 p-md-4">
+        <!-- Version mobile -->
+        <div class="d-block d-md-none">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <div class="flex-grow-1">
+              <div class="d-flex align-items-center mb-1">
+                <small class="fw-bold text-muted">Bordeaux</small>
+                <i class="bi bi-arrow-right mx-1 text-muted"></i>
+                <small class="fw-bold text-muted">Nantes</small>
+              </div>
+              <small class="text-muted">10 déc 2024 • 11h00</small>
+            </div>
+            <span class="badge bg-danger ms-2">Annulé</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+              <i class="bi bi-person-driving text-muted me-1"></i>
+              <small class="text-muted">Conducteur</small>
+            </div>
+            <small class="text-muted">€0</small>
+          </div>
+        </div>
+
+        <!-- Version desktop -->
+        <div class="d-none d-md-block">
+          <div class="row align-items-center">
+            <div class="col-md-1 text-center">
+              <i class="bi bi-person-driving fs-3 text-muted"></i>
+            </div>
+            <div class="col-md-4">
+              <h6 class="fw-bold mb-1 text-muted">Bordeaux → Nantes</h6>
+              <p class="text-muted small mb-0">10 décembre 2024 • 11h00</p>
+            </div>
+            <div class="col-md-2 text-center">
+              <small class="text-muted">-</small>
+            </div>
+            <div class="col-md-2 text-center">
+              <span class="badge bg-danger">Annulé</span>
+            </div>
+            <div class="col-md-2 text-center">
+              <span class="text-muted">€0</span>
+            </div>
+            <div class="col-md-1 text-center">
+              <button
+                class="btn btn-outline-secondary btn-sm"
+                onclick="viewTripDetails(4)"
+              >
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Message si aucun trajet -->
+  <div id="noTripsMessage" class="text-center py-5 d-none">
+    <i class="bi bi-car-front-fill fs-1 text-muted mb-3"></i>
+    <h5 class="text-muted">Aucun trajet trouvé</h5>
+    <p class="text-muted">
+      Essayez de modifier vos filtres ou
+      <a href="/offer-seats" class="text-decoration-none"
+        >créez votre premier trajet</a
+      >
+    </p>
+  </div>
+</div>
+
+<script>
+  // Données de démonstration
+  const trips = [
+    {
+      id: 1,
+      from: "Paris",
+      to: "Lyon",
+      date: "2024-12-15",
+      time: "14:30",
+      role: "driver",
+      status: "completed",
+      passengers: 3,
+      maxPassengers: 3,
+      price: 45,
+      driver: "Vous",
+    },
+    {
+      id: 2,
+      from: "Marseille",
+      to: "Nice",
+      date: "2024-12-12",
+      time: "09:15",
+      role: "passenger",
+      status: "completed",
+      passengers: 1,
+      maxPassengers: 3,
+      price: -18,
+      driver: "Marie D.",
+    },
+    {
+      id: 3,
+      from: "Lyon",
+      to: "Toulouse",
+      date: "2024-12-20",
+      time: "16:00",
+      role: "driver",
+      status: "upcoming",
+      passengers: 2,
+      maxPassengers: 3,
+      price: 35,
+      driver: "Vous",
+    },
+    {
+      id: 4,
+      from: "Bordeaux",
+      to: "Nantes",
+      date: "2024-12-10",
+      time: "11:00",
+      role: "driver",
+      status: "cancelled",
+      passengers: 0,
+      maxPassengers: 3,
+      price: 0,
+      driver: "Vous",
+    },
+  ];
+
+  // Initialisation
+  document.addEventListener("DOMContentLoaded", function () {
+    // Synchroniser les filtres mobile et desktop
+    syncFilters();
+
+    // Événements pour les filtres
+    document
+      .getElementById("statusFilter")
+      ?.addEventListener("change", filterTrips);
+    document
+      .getElementById("roleFilter")
+      ?.addEventListener("change", filterTrips);
+    document
+      .getElementById("periodFilter")
+      ?.addEventListener("change", filterTrips);
+
+    document
+      .getElementById("statusFilterMobile")
+      ?.addEventListener("change", filterTrips);
+    document
+      .getElementById("roleFilterMobile")
+      ?.addEventListener("change", filterTrips);
+  });
+
+  // Synchroniser les filtres entre mobile et desktop
+  function syncFilters() {
+    const statusFilter = document.getElementById("statusFilter");
+    const roleFilter = document.getElementById("roleFilter");
+    const statusFilterMobile = document.getElementById("statusFilterMobile");
+    const roleFilterMobile = document.getElementById("roleFilterMobile");
+
+    if (statusFilter && statusFilterMobile) {
+      statusFilter.addEventListener("change", () => {
+        statusFilterMobile.value = statusFilter.value;
+        filterTrips();
+      });
+
+      statusFilterMobile.addEventListener("change", () => {
+        statusFilter.value = statusFilterMobile.value;
+        filterTrips();
+      });
+    }
+
+    if (roleFilter && roleFilterMobile) {
+      roleFilter.addEventListener("change", () => {
+        roleFilterMobile.value = roleFilter.value;
+        filterTrips();
+      });
+
+      roleFilterMobile.addEventListener("change", () => {
+        roleFilter.value = roleFilterMobile.value;
+        filterTrips();
+      });
+    }
+  }
+
+  // Filtrer les trajets
+  function filterTrips() {
+    const statusFilter =
+      document.getElementById("statusFilter")?.value ||
+      document.getElementById("statusFilterMobile")?.value ||
+      "all";
+    const roleFilter =
+      document.getElementById("roleFilter")?.value ||
+      document.getElementById("roleFilterMobile")?.value ||
+      "all";
+
+    const tripCards = document.querySelectorAll(".trip-card");
+    let visibleCount = 0;
+
+    tripCards.forEach((card) => {
+      const cardStatus = card.dataset.status;
+      const cardRole = card.dataset.role;
+
+      let shouldShow = true;
+
+      if (statusFilter !== "all" && cardStatus !== statusFilter) {
+        shouldShow = false;
+      }
+
+      if (roleFilter !== "all" && cardRole !== roleFilter) {
+        shouldShow = false;
+      }
+
+      if (shouldShow) {
+        card.style.display = "block";
+        visibleCount++;
+      } else {
+        card.style.display = "none";
+      }
+    });
+
+    // Afficher/masquer le message "aucun trajet"
+    const noTripsMessage = document.getElementById("noTripsMessage");
+    if (visibleCount === 0) {
+      noTripsMessage.classList.remove("d-none");
+    } else {
+      noTripsMessage.classList.add("d-none");
+    }
+  }
+
+  // Réinitialiser les filtres
+  function clearFilters() {
+    document.getElementById("statusFilter").value = "all";
+    document.getElementById("roleFilter").value = "all";
+    document.getElementById("periodFilter").value = "all";
+    document.getElementById("statusFilterMobile").value = "all";
+    document.getElementById("roleFilterMobile").value = "all";
+
+    filterTrips();
+  }
+
+  // Voir les détails d'un trajet
+  function viewTripDetails(tripId) {
+    console.log("Voir détails du trajet:", tripId);
+    // Redirection vers la page de détail
+    window.location.href = `/detail-ride?id=${tripId}`;
+  }
+
+  // Modifier un trajet
+  function editTrip(tripId) {
+    console.log("Modifier le trajet:", tripId);
+    // Redirection vers la page de modification
+    window.location.href = `/edit-trip?id=${tripId}`;
+  }
+
+  // Annuler un trajet
+  function cancelTrip(tripId) {
+    if (confirm("Êtes-vous sûr de vouloir annuler ce trajet ?")) {
+      console.log("Annuler le trajet:", tripId);
+      // Ici, vous pouvez ajouter la logique pour annuler le trajet
+      showToast("Trajet annulé avec succès", "warning");
+    }
+  }
+
+  // Afficher un toast (notification)
+  function showToast(message, type = "info") {
+    const toast = document.createElement("div");
+    toast.className = `alert alert-${
+      type === "warning" ? "warning" : "info"
+    } position-fixed top-0 start-50 translate-middle-x mt-3`;
+    toast.style.zIndex = "9999";
+    toast.textContent = message;
+
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+      toast.remove();
+    }, 3000);
+  }
+</script>

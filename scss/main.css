@@ -12602,4 +12602,120 @@ footer .col-6:last-child {
 .dropdown-menu button.dropdown-item.text-danger:hover, .dropdown-menu button.dropdown-item.text-danger:focus {
   background-color: rgba(220, 53, 69, 0.1);
   color: #dc3545;
+}
+
+@media (max-width: 768px) {
+  .carpooling-history .trip-card {
+    margin-bottom: 0.75rem !important;
+  }
+  .carpooling-history .trip-card .card-body {
+    padding: 0.75rem !important;
+  }
+  .carpooling-history .trip-card .badge {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+  }
+  .carpooling-history .trip-card small, .carpooling-history .trip-card .small {
+    font-size: 0.75rem !important;
+    line-height: 1.2;
+  }
+  .carpooling-history .trip-card .bi {
+    font-size: 0.9rem !important;
+  }
+  .carpooling-history .trip-card .d-flex {
+    margin-bottom: 0.5rem !important;
+  }
+  .carpooling-history .form-select-sm {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.5rem;
+  }
+  .carpooling-history .bg-primary.bg-opacity-10,
+  .carpooling-history .bg-success.bg-opacity-10,
+  .carpooling-history .bg-warning.bg-opacity-10,
+  .carpooling-history .bg-info.bg-opacity-10 {
+    padding: 0.5rem !important;
+  }
+  .carpooling-history .bg-primary.bg-opacity-10 .fw-bold,
+  .carpooling-history .bg-success.bg-opacity-10 .fw-bold,
+  .carpooling-history .bg-warning.bg-opacity-10 .fw-bold,
+  .carpooling-history .bg-info.bg-opacity-10 .fw-bold {
+    font-size: 0.9rem;
+  }
+  .carpooling-history .bg-primary.bg-opacity-10 small, .carpooling-history .bg-primary.bg-opacity-10 .small,
+  .carpooling-history .bg-success.bg-opacity-10 small,
+  .carpooling-history .bg-success.bg-opacity-10 .small,
+  .carpooling-history .bg-warning.bg-opacity-10 small,
+  .carpooling-history .bg-warning.bg-opacity-10 .small,
+  .carpooling-history .bg-info.bg-opacity-10 small,
+  .carpooling-history .bg-info.bg-opacity-10 .small {
+    font-size: 0.7rem;
+  }
+}
+.carpooling-history .trip-card {
+  transition: transform 0.2s ease-in-out;
+}
+.carpooling-history .trip-card:hover {
+  transform: translateY(-2px);
+}
+.carpooling-history .trip-card[data-status=cancelled] {
+  opacity: 0.7;
+}
+.carpooling-history .trip-card[data-status=cancelled] .card-body {
+  background-color: #f8f9fa;
+}
+.carpooling-history .trip-card[data-status=upcoming] {
+  border-left: 4px solid #45e928;
+}
+.carpooling-history .trip-card[data-status=completed] {
+  border-left: 4px solid #28a745;
+}
+.carpooling-history .bi-person-driving {
+  color: #45e928 !important;
+}
+.carpooling-history .bi-person-sitting {
+  color: #267917 !important;
+}
+.carpooling-history .text-success {
+  font-weight: 600;
+}
+.carpooling-history .text-danger {
+  font-weight: 600;
+}
+.carpooling-history .text-primary {
+  font-weight: 600;
+}
+.carpooling-history #noTripsMessage .bi-car-front-fill {
+  opacity: 0.3;
+}
+@media (min-width: 769px) {
+  .carpooling-history .form-label {
+    margin-bottom: 0.25rem;
+    font-size: 0.85rem;
+  }
+  .carpooling-history .form-select-sm {
+    font-size: 0.9rem;
+  }
+}
+
+.badge.bg-success {
+  background-color: #28a745 !important;
+}
+.badge.bg-primary {
+  background-color: #45e928 !important;
+}
+.badge.bg-danger {
+  background-color: #dc3545 !important;
+}
+.badge.bg-warning {
+  background-color: #ffc107 !important;
+  color: #000 !important;
+}
+
+.carpooling-history .dropdown-menu .dropdown-item {
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+}
+.carpooling-history .dropdown-menu .dropdown-item .bi {
+  width: 1rem;
+  text-align: center;
 }/*# sourceMappingURL=main.css.map */

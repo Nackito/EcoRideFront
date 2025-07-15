@@ -37,6 +37,11 @@ export const allRoutes = [
     "Gestion des véhicules",
     "/pages/profil/vehicle-management.html"
   ),
+  new Route(
+    "/carpooling-history",
+    "Historique de covoiturage",
+    "/pages/profil/carpooling-history.html"
+  ),
 ];
 //Le titre s'affiche comme ceci : Route.titre - websitename
 export const websiteName = "EcoRide";
