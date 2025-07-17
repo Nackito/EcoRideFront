@@ -778,6 +778,20 @@ footer {
   border: none;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   border-radius: 0.5rem;
+  // Positionnement pour éviter le débordement
+  right: 0 !important;
+  left: auto !important;
+  transform: none !important;
+  min-width: 200px;
+  max-width: 250px;
+  margin-top: 0.5rem;
+
+  // S'assurer que le dropdown reste dans les limites de l'écran
+  @media (max-width: 576px) {
+    right: -10px !important;
+    min-width: 180px;
+    max-width: 200px;
+  }
 
   .dropdown-item {
     padding: 0.5rem 1rem;

@@ -1,4 +1,12 @@
 const tokenCookieName = "accesstoken";
+const logoutButtonId = document.getElementById("btn-logout");
+
+logoutButtonId.addEventListener("click", signout);
+
+function signout() {
+  eraseCookie(tokenCookieName);
+  window.location.reload(); // Reload the page to reflect the logout
+}
 
 function setToken(token) {
   setCookie(tokenCookieName, token, 7);
