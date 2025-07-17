@@ -80,42 +80,59 @@ function showAndHideElementsForRoles() {
   let allElementsToEdit = document.querySelectorAll("[data-show]");
 
   allElementsToEdit.forEach((element) => {
-    switch (element.dataset.show) {
-      case "disconnected":
-        if (userConnected) {
-          element.classList.add("d-none");
-        }
-        break;
-      case "connected":
-        if (!userConnected) {
-          element.classList.add("d-none");
-        }
-        break;
-      case "admin":
-        if (!userConnected || role != "admin") {
-          element.classList.add("d-none");
-        }
-        break;
-      case "employed":
-        if (!userConnected || role != "employed") {
-          element.classList.add("d-none");
-        }
-        break;
-      case "driver":
-        if (!userConnected || role != "driver") {
-          element.classList.add("d-none");
-        }
-        break;
-      case "passenger":
-        if (!userConnected || role != "passenger") {
-          element.classList.add("d-none");
-        }
-        break;
-      case "driverPassenger":
-        if (!userConnected || role != "driverPassenger") {
-          element.classList.add("d-none");
-        }
-        break;
+    // Récupérer la valeur de data-show et séparer les rôles par des espaces
+    const allowedRoles = element.dataset.show
+      .split(" ")
+      .filter((role) => role.trim());
+
+    let shouldHide = true;
+
+    // Vérifier chaque rôle autorisé
+    allowedRoles.forEach((allowedRole) => {
+      switch (allowedRole) {
+        case "disconnected":
+          if (!userConnected) {
+            shouldHide = false;
+          }
+          break;
+        case "connected":
+          if (userConnected) {
+            shouldHide = false;
+          }
+          break;
+        case "admin":
+          if (userConnected && role === "admin") {
+            shouldHide = false;
+          }
+          break;
+        case "employed":
+          if (userConnected && role === "employed") {
+            shouldHide = false;
+          }
+          break;
+        case "driver":
+          if (userConnected && role === "driver") {
+            shouldHide = false;
+          }
+          break;
+        case "passenger":
+          if (userConnected && role === "passenger") {
+            shouldHide = false;
+          }
+          break;
+        case "driverPassenger":
+          if (userConnected && role === "driverPassenger") {
+            shouldHide = false;
+          }
+          break;
+      }
+    });
+
+    // Appliquer la visibilité
+    if (shouldHide) {
+      element.classList.add("d-none");
+    } else {
+      element.classList.remove("d-none");
     }
   });
 }

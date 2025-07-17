@@ -19,7 +19,7 @@ function checkCredentials() {
     setToken(token); // Fonction définie dans script.js pour gérer les cookies
     // Placer ce token en cookie
 
-    setCookie(RoleCookieName, "admin", 7); // Exemple de cookie pour le rôle, à adapter selon vos besoins
+    setCookie(RoleCookieName, "passenger", 7); // Exemple de cookie pour le rôle, à adapter selon vos besoins
     // Redirection vers la page d'accueil ou une autre page
     window.location.replace("/"); // Remplacez par la route de votre page d'accueil
   } else {

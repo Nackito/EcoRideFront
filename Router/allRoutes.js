@@ -23,13 +23,19 @@ export const allRoutes = [
     ["disconnected"],
     "/js/auth/signup.js"
   ),
-  new Route("/account", "Mon profil", "/pages/auth/account.html"),
-  new Route("/detail-ride", "Détail du trajet", "/pages/detail-ride.html"),
+  new Route("/account", "Mon profil", "/pages/auth/account.html", [
+    "driverPassenger",
+    "driver",
+    "passenger",
+    "employed",
+    "admin",
+  ]),
+  new Route("/detail-ride", "Détail du trajet", "/pages/detail-ride.html", []),
   new Route(
     "/personal-info",
     "Mes informations personnelles",
     "/pages/profil/personal-info.html",
-    ["driverPassenger", "driver", "passenger" /*, "admin"*/] // Autorisé aux conducteurs, passagers et employés
+    ["passenger", "driver", "employed", "driverPassenger" /*, "admin"*/]
   ),
   new Route(
     "/carpooling-preferences",
@@ -47,7 +53,7 @@ export const allRoutes = [
     "/carpooling-history",
     "Historique de covoiturage",
     "/pages/profil/carpooling-history.html",
-    ["driverPassenger", "driver" /*, "admin"*/] // Autorisé aux conducteurs, passagers et employés
+    ["driverPassenger", "driver", "passenger" /*, "admin"*/] // Autorisé aux conducteurs, passagers et employés
   ),
   new Route(
     "/carpooling-management",
