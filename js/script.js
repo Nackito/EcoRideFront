@@ -1,10 +1,16 @@
 const tokenCookieName = "accesstoken";
+const RoleCookieName = "role"; // Cookie for user role, if needed
 const logoutButtonId = document.getElementById("btn-logout");
 
 logoutButtonId.addEventListener("click", signout);
 
+function getRole() {
+  return getCookie(RoleCookieName);
+}
+
 function signout() {
   eraseCookie(tokenCookieName);
+  eraseCookie(RoleCookieName); // Erase the role cookie if it exists
   window.location.reload(); // Reload the page to reflect the logout
 }
 
@@ -49,8 +55,67 @@ function isConnected() {
   }
 }
 
-if (isConnected()) {
+// exemple à supprimer
+/*if (isConnected()) {
   alert("Je suis connecté");
 } else {
   alert("Je ne suis pas connecté");
+}*/
+
+/*
+disconnected
+connected (admin, employed, driver, passenger ou driverPassenger)
+          - admin
+          - employed
+          - driver
+          - passenger
+          - driverPassenger
+
+*/
+
+function showAndHideElementsForRoles() {
+  const userConnected = isConnected();
+  const role = getRole();
+
+  let allElementsToEdit = document.querySelectorAll("[data-show]");
+
+  allElementsToEdit.forEach((element) => {
+    switch (element.dataset.show) {
+      case "disconnected":
+        if (userConnected) {
+          element.classList.add("d-none");
+        }
+        break;
+      case "connected":
+        if (!userConnected) {
+          element.classList.add("d-none");
+        }
+        break;
+      case "admin":
+        if (!userConnected || role != "admin") {
+          element.classList.add("d-none");
+        }
+        break;
+      case "employed":
+        if (!userConnected || role != "employed") {
+          element.classList.add("d-none");
+        }
+        break;
+      case "driver":
+        if (!userConnected || role != "driver") {
+          element.classList.add("d-none");
+        }
+        break;
+      case "passenger":
+        if (!userConnected || role != "passenger") {
+          element.classList.add("d-none");
+        }
+        break;
+      case "driverPassenger":
+        if (!userConnected || role != "driverPassenger") {
+          element.classList.add("d-none");
+        }
+        break;
+    }
+  });
 }

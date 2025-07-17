@@ -60,19 +60,19 @@
                   <i class="bi bi-person-circle profile-icon"></i>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
-                  <li>
+                  <li data-show="disconnected">
                     <a class="dropdown-item" href="/signin">Connexion</a>
                   </li>
-                  <li>
+                  <li data-show="connected">
                     <button class="dropdown-item nav-link" id="btn-logout">
                       Deconnexion
                     </button>
                   </li>
-                  <li>
+                  <li data-show="disconnected">
                     <a class="dropdown-item" href="/signup">Inscription</a>
                   </li>
-                  <li><hr class="dropdown-divider" /></li>
-                  <li>
+                  <li data-show="connected"><hr class="dropdown-divider" /></li>
+                  <li data-show="connected">
                     <a class="dropdown-item" href="/account">Mon compte</a>
                   </li>
                 </ul>
