@@ -1,0 +1,245 @@
+<div class="container mt-4 mb-5">
+  <!-- Header avec bouton retour -->
+  <div class="d-flex align-items-center mb-4">
+    <a href="/account" class="text-decoration-none text-dark me-3">
+      <i class="bi bi-arrow-left fs-4"></i>
+    </a>
+    <a href="/account" class="text-decoration-none text-dark me-3">
+      <h2 class="mb-0 fs-3 fw-bold text-primary">Préférences de covoiturage</h2>
+    </a>
+  </div>
+
+  <!-- Section Préférences -->
+  <div class="card rounded-4 elevation-5 mb-4">
+    <div class="card-body p-4">
+      <div class="text-center mb-4">
+        <i class="bi bi-car-front profile-icon text-secondary mb-3"></i>
+        <h3 class="fw-bold">Mes préférences</h3>
+        <p class="text-muted">Configurez vos préférences pour le covoiturage</p>
+      </div>
+
+      <!-- Préférence Fumeur -->
+      <div class="mb-4">
+        <h5 class="fw-semibold mb-3">
+          <i class="bi bi-lungs me-2 text-primary"></i>
+          Tabac
+        </h5>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-check form-check-inline me-4">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="smoking"
+                id="non-smoker"
+                value="non-smoker"
+                checked
+              />
+              <label class="form-check-label fw-medium" for="non-smoker">
+                <i class="bi bi-slash-circle me-1 text-success"></i>
+                Non-fumeur
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="smoking"
+                id="smoker"
+                value="smoker"
+              />
+              <label class="form-check-label fw-medium" for="smoker">
+                <i class="bi bi-check-circle me-1 text-warning"></i>
+                Fumeur
+              </label>
+            </div>
+          </div>
+        </div>
+        <small class="text-muted"
+          >Cette information sera visible par les autres utilisateurs</small
+        >
+      </div>
+
+      <hr class="my-4" />
+
+      <!-- Préférence Animaux -->
+      <div class="mb-4">
+        <h5 class="fw-semibold mb-3">
+          <i class="bi bi-heart me-2 text-primary"></i>
+          Animaux de compagnie
+        </h5>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-check form-check-inline me-4">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="pets"
+                id="no-pets"
+                value="no-pets"
+                checked
+              />
+              <label class="form-check-label fw-medium" for="no-pets">
+                <i class="bi bi-x-circle me-1 text-danger"></i>
+                Pas d'animaux
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="pets"
+                id="pets-allowed"
+                value="pets-allowed"
+              />
+              <label class="form-check-label fw-medium" for="pets-allowed">
+                <i class="bi bi-check-circle me-1 text-success"></i>
+                Animaux acceptés
+              </label>
+            </div>
+          </div>
+        </div>
+        <small class="text-muted"
+          >Indiquez si vous acceptez les animaux dans votre véhicule</small
+        >
+      </div>
+
+      <hr class="my-4" />
+
+      <!-- Préférences additionnelles -->
+      <div class="mb-4">
+        <h5 class="fw-semibold mb-3">
+          <i class="bi bi-gear me-2 text-primary"></i>
+          Préférences additionnelles
+        </h5>
+
+        <!-- Musique -->
+        <div class="row mb-3">
+          <div class="col-sm-6">
+            <h6 class="fw-semibold text-secondary">
+              Musique pendant le trajet
+            </h6>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-check form-switch">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="music"
+                checked
+              />
+              <label class="form-check-label" for="music"> Autorisée </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Discussion -->
+        <div class="row mb-3">
+          <div class="col-sm-6">
+            <h6 class="fw-semibold text-secondary">Discussion</h6>
+          </div>
+          <div class="col-sm-6">
+            <select class="form-select form-select-sm">
+              <option value="normal" selected>Conversation normale</option>
+              <option value="quiet">Trajet silencieux</option>
+              <option value="sociable">Très sociable</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Climatisation -->
+        <div class="row mb-3">
+          <div class="col-sm-6">
+            <h6 class="fw-semibold text-secondary">Climatisation</h6>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-check form-switch">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="aircon"
+                checked
+              />
+              <label class="form-check-label" for="aircon"> Disponible </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="my-4" />
+
+      <!-- Section Restrictions -->
+      <div class="mb-4">
+        <h5 class="fw-semibold mb-3">
+          <i class="bi bi-exclamation-triangle me-2 text-warning"></i>
+          Restrictions
+        </h5>
+
+        <div class="row mb-3">
+          <div class="col-12">
+            <label for="restrictions" class="form-label fw-medium"
+              >Autres restrictions ou préférences</label
+            >
+            <textarea
+              class="form-control"
+              id="restrictions"
+              rows="3"
+              placeholder="Ex: Pas de nourriture dans le véhicule, trajets de nuit uniquement, etc."
+            ></textarea>
+            <small class="text-muted"
+              >Ces informations seront visibles lors de la réservation</small
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Statistiques de compatibilité -->
+  <div class="card rounded-4 elevation-5 mb-4">
+    <div class="card-body p-4">
+      <h5 class="fw-semibold mb-3">
+        <i class="bi bi-graph-up me-2 text-success"></i>
+        Compatibilité
+      </h5>
+
+      <div class="row text-center">
+        <div class="col-4">
+          <div class="p-3">
+            <i class="bi bi-people-fill fs-2 text-primary mb-2 d-block"></i>
+            <h6 class="fw-bold mb-1">87%</h6>
+            <small class="text-muted">Compatibilité moyenne</small>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="p-3">
+            <i class="bi bi-star-fill fs-2 text-warning mb-2 d-block"></i>
+            <h6 class="fw-bold mb-1">4.8</h6>
+            <small class="text-muted">Note moyenne</small>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="p-3">
+            <i
+              class="bi bi-check-circle-fill fs-2 text-success mb-2 d-block"
+            ></i>
+            <h6 class="fw-bold mb-1">23</h6>
+            <small class="text-muted">Trajets réussis</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Boutons d'action -->
+  <div class="d-flex gap-3 justify-content-center">
+    <button type="button" class="btn btn-outline-secondary px-4">
+      <i class="bi bi-arrow-counterclockwise me-2"></i>
+      Réinitialiser
+    </button>
+    <button type="button" class="btn btn-primary px-4">
+      <i class="bi bi-check-lg me-2"></i>
+      Sauvegarder
+    </button>
+  </div>
+</div>
