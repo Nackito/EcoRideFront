@@ -4,6 +4,10 @@
   "description": "Ce site est un site de covoiturage",
   "main": "index.js",
   "scripts": {
+    "start": "live-server --port=3000",
+    "build": "sass scss/main.scss styles/main.css --style compressed",
+    "watch": "sass scss/main.scss styles/main.css --watch",
+    "serve": "http-server -p 3000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
