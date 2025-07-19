@@ -118,10 +118,15 @@ function registerUser() {
       return response.json();
     })
     .then((result) => {
-      console.log("Succès:", result);
-      alert("Inscription réussie ! " + result.message);
+      //console.log("Succès:", result);
+      alert(
+        "Bravo " +
+          inputPseudo.value +
+          ", Inscription réussie ! " +
+          result.message
+      );
       // Rediriger vers la page de connexion ou autre
-      // window.location.href = "/connexion.html";
+      window.location.href = "/signin"; // Remplacez par la route de votre page de connexion
     })
     .catch((error) => {
       console.error("Erreur:", error);
