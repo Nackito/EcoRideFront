@@ -29,7 +29,7 @@ function checkCredentials() {
     redirect: "follow",
   };
 
-  fetch("http://localhost:8000/api/login", requestOptions)
+  fetch(apiUrl + "/login", requestOptions)
     .then((response) => {
       if (!response.ok) {
         inputMail.classList.add("is-invalid");

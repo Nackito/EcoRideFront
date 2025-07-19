@@ -163,7 +163,7 @@ function registerUser() {
     redirect: "follow",
   };
 
-  fetch("http://localhost:8000/api/registration", requestOptions)
+  fetch(apiUrl + "/registration", requestOptions)
     .then((response) => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

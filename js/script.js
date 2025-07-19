@@ -1,6 +1,7 @@
 const tokenCookieName = "accesstoken";
 const RoleCookieName = "role"; // Cookie for user role, if needed
 const logoutButtonId = document.getElementById("btn-logout");
+const apiUrl = "http://localhost:8000/api"; // Base URL for API requests
 
 logoutButtonId.addEventListener("click", signout);
 
