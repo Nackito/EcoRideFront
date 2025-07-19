@@ -35,31 +35,31 @@ export const allRoutes = [
     "/personal-info",
     "Mes informations personnelles",
     "/pages/profil/personal-info.html",
-    ["passenger", "driver", "employed", "driverPassenger" /*, "admin"*/]
+    ["passenger", "driver", "employed", "driver_passenger" /*, "admin"*/]
   ),
   new Route(
     "/carpooling-preferences",
     "Préférences de covoiturage",
     "/pages/profil/carpooling-preferences.html",
-    ["driverPassenger", "driver" /*, "admin"*/] // Autorisé aux conducteurs, passagers et employés
+    ["driver_passenger", "driver" /*, "admin"*/] // Autorisé aux conducteurs, passagers et employés
   ),
   new Route(
     "/vehicle-management",
     "Gestion des véhicules",
     "/pages/profil/vehicle-management.html",
-    ["driverPassenger", "driver" /*, "admin"*/] // Autorisé aux conducteurs, passagers et employés
+    ["driver_passenger", "driver" /*, "admin"*/] // Autorisé aux conducteurs, passagers et employés
   ),
   new Route(
     "/carpooling-history",
     "Historique de covoiturage",
     "/pages/profil/carpooling-history.html",
-    ["driverPassenger", "driver", "passenger" /*, "admin"*/] // Autorisé aux conducteurs, passagers et employés
+    ["driver_passenger", "driver", "passenger" /*, "admin"*/] // Autorisé aux conducteurs, passagers et employés
   ),
   new Route(
     "/carpooling-management",
     "Gestion de covoiturage",
     "/pages/profil/carpooling-management.html",
-    ["driverPassenger", "driver" /*, "admin"*/] // Autorisé aux conducteurs, passagers et employés
+    ["driver_passenger", "driver" /*, "admin"*/] // Autorisé aux conducteurs, passagers et employés
   ),
 ];
 //Le titre s'affiche comme ceci : Route.titre - websitename
