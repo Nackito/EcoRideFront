@@ -6,6 +6,8 @@ const inputPassword = document.getElementById("PasswordInput");
 const inputConfirmationPasswor = document.getElementById(
   "ConfirmationPasswordInput"
 );
+const roleDriver = document.getElementById("roleDriver");
+const rolePassenger = document.getElementById("rolePassenger");
 const btnValidationInscription = document.getElementById(
   "btn-validation-inscription"
 );
@@ -15,6 +17,8 @@ inputPseudo.addEventListener("keyup", validateForm);
 inputMail.addEventListener("keyup", validateForm);
 inputPassword.addEventListener("keyup", validateForm);
 inputConfirmationPasswor.addEventListener("keyup", validateForm);
+roleDriver.addEventListener("change", validateForm);
+rolePassenger.addEventListener("change", validateForm);
 
 btnValidationInscription.addEventListener("click", function (event) {
   event.preventDefault(); // Empêcher le rechargement de la page
@@ -29,8 +33,9 @@ function validateForm() {
     inputPassword,
     inputConfirmationPasswor
   );
+  const rolesOk = validateRoles();
 
-  if (pseudoOk && mailOk && passwordOk && confirmationPasswordOk) {
+  if (pseudoOk && mailOk && passwordOk && confirmationPasswordOk && rolesOk) {
     btnValidationInscription.disabled = false; // Si tous les champs sont valides, on active le bouton;
   } else {
     btnValidationInscription.disabled = true; // Sinon on le désactive
@@ -92,15 +97,40 @@ function validateRequired(input) {
   }
 }
 
+function validateRoles() {
+  if (roleDriver.checked || rolePassenger.checked) {
+    roleDriver.classList.remove("is-invalid");
+    rolePassenger.classList.remove("is-invalid");
+    return true;
+  } else {
+    roleDriver.classList.add("is-invalid");
+    rolePassenger.classList.add("is-invalid");
+    return false;
+  }
+}
+
 function registerUser() {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
+
+  // Construire le tableau des rôles sélectionnés
+  const selectedRoles = [];
+  if (roleDriver.checked) {
+    selectedRoles.push("ROLE_DRIVER");
+  }
+  if (rolePassenger.checked) {
+    selectedRoles.push("ROLE_PASSENGER");
+  }
+
+  // Ajouter toujours ROLE_USER comme rôle de base
+  selectedRoles.push("ROLE_USER");
 
   // Récupérer les valeurs des champs du formulaire
   const raw = JSON.stringify({
     pseudo: inputPseudo.value,
     email: inputMail.value,
     password: inputPassword.value,
+    roles: selectedRoles,
   });
 
   const requestOptions = {

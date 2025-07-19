@@ -34,6 +34,7 @@ function checkCredentials() {
       if (!response.ok) {
         inputMail.classList.add("is-invalid");
         inputPassword.classList.add("is-invalid");
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
       return response.json();
     })
@@ -43,12 +44,22 @@ function checkCredentials() {
       setToken(token); // Fonction définie dans script.js pour gérer les cookies
       // Placer ce token en cookie
 
-      setCookie(RoleCookieName, result.user.roles[0], 7); // Exemple de cookie pour le rôle, à adapter selon vos besoins
+      setCookie(RoleCookieName, result.user.roles, 7); // Exemple de cookie pour le rôle, à adapter selon vos besoins
       // Redirection vers la page d'accueil ou une autre page
       window.location.replace("/"); // Remplacez par la route de votre page d'accueil
     })
     .catch((error) => {
       console.error("Erreur:", error);
-      alert("Erreur lors de la connexion : " + error.message);
+      inputMail.classList.add("is-invalid");
+      inputPassword.classList.add("is-invalid");
+
+      // Afficher un message d'erreur approprié
+      if (error.message.includes("401")) {
+        alert(
+          "Identifiants incorrects. Vérifiez votre email/pseudo et mot de passe."
+        );
+      } else {
+        alert("Erreur lors de la connexion : " + error.message);
+      }
     });
 }
