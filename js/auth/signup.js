@@ -9,10 +9,17 @@ const inputConfirmationPasswor = document.getElementById(
 const btnValidationInscription = document.getElementById(
   "btn-validation-inscription"
 );
+const signupForm = document.getElementById("signup-form");
+
 inputPseudo.addEventListener("keyup", validateForm);
 inputMail.addEventListener("keyup", validateForm);
 inputPassword.addEventListener("keyup", validateForm);
 inputConfirmationPasswor.addEventListener("keyup", validateForm);
+
+btnValidationInscription.addEventListener("click", function (event) {
+  event.preventDefault(); // Empêcher le rechargement de la page
+  registerUser();
+});
 
 function validateForm() {
   const pseudoOk = validateRequired(inputPseudo);
@@ -83,4 +90,41 @@ function validateRequired(input) {
     input.classList.add("is-invalid");
     return false;
   }
+}
+
+function registerUser() {
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  // Récupérer les valeurs des champs du formulaire
+  const raw = JSON.stringify({
+    pseudo: inputPseudo.value,
+    email: inputMail.value,
+    password: inputPassword.value,
+  });
+
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  fetch("http://localhost:8000/api/registration", requestOptions)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((result) => {
+      console.log("Succès:", result);
+      alert("Inscription réussie ! " + result.message);
+      // Rediriger vers la page de connexion ou autre
+      // window.location.href = "/connexion.html";
+    })
+    .catch((error) => {
+      console.error("Erreur:", error);
+      alert("Erreur lors de l'inscription : " + error.message);
+    });
 }
