@@ -39,14 +39,62 @@ function checkCredentials() {
       return response.json();
     })
     .then((result) => {
-      // Il faudra récupérer le vrai token
+      console.log("Réponse complète:", result); // Pour débugger
+
+      // Récupérer le token
       const token = result.token;
       setToken(token); // Fonction définie dans script.js pour gérer les cookies
-      // Placer ce token en cookie
 
-      setCookie(RoleCookieName, result.user.roles, 7); // Exemple de cookie pour le rôle, à adapter selon vos besoins
-      // Redirection vers la page d'accueil ou une autre page
-      window.location.replace("/"); // Remplacez par la route de votre page d'accueil
+      // Stocker les informations utilisateur
+      if (result.user) {
+        localStorage.setItem("user", JSON.stringify(result.user));
+
+        // Récupérer TOUS les rôles de l'utilisateur
+        const userRoles = result.user.roles;
+        console.log("Rôles de l'utilisateur:", userRoles);
+
+        // Stocker tous les rôles dans localStorage
+        localStorage.setItem("userRoles", JSON.stringify(userRoles));
+
+        // Définir le rôle principal pour le cookie (priorité: ADMIN > DRIVER > PASSENGER > USER)
+        let mainRole = "user"; // Valeur par défaut
+
+        if (userRoles.includes("ROLE_ADMIN")) {
+          mainRole = "admin";
+        } else if (
+          userRoles.includes("ROLE_DRIVER") &&
+          userRoles.includes("ROLE_PASSENGER")
+        ) {
+          mainRole = "driver_passenger"; // Pour les utilisateurs avec les deux rôles
+        } else if (userRoles.includes("ROLE_DRIVER")) {
+          mainRole = "driver";
+        } else if (userRoles.includes("ROLE_PASSENGER")) {
+          mainRole = "passenger";
+        }
+
+        setCookie(RoleCookieName, mainRole, 7);
+
+        // Créer des cookies individuels pour chaque rôle (plus pratique pour les conditions)
+        setCookie(
+          "isDriver",
+          userRoles.includes("ROLE_DRIVER") ? "true" : "false",
+          7
+        );
+        setCookie(
+          "isPassenger",
+          userRoles.includes("ROLE_PASSENGER") ? "true" : "false",
+          7
+        );
+        setCookie(
+          "isAdmin",
+          userRoles.includes("ROLE_ADMIN") ? "true" : "false",
+          7
+        );
+      }
+
+      alert("Connexion réussie !");
+      // Redirection vers la page d'accueil
+      window.location.replace("/");
     })
     .catch((error) => {
       console.error("Erreur:", error);

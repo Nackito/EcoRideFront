@@ -56,10 +56,10 @@
       <div class="form-check">
         <input
           class="form-check-input"
-          type="checkbox"
+          type="radio"
           value="driver"
           id="roleDriver"
-          name="roles"
+          name="role"
         />
         <label class="form-check-label text-white" for="roleDriver">
           Conducteur - Je propose des trajets
@@ -68,18 +68,28 @@
       <div class="form-check">
         <input
           class="form-check-input"
-          type="checkbox"
+          type="radio"
           value="passenger"
           id="rolePassenger"
-          name="roles"
+          name="role"
         />
         <label class="form-check-label text-white" for="rolePassenger">
           Passager - Je recherche des trajets
         </label>
       </div>
-      <div class="invalid-feedback">
-        Veuillez sélectionner au moins un rôle.
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          value="both"
+          id="roleBoth"
+          name="role"
+        />
+        <label class="form-check-label text-white" for="roleBoth">
+          Les deux - Je peux conduire et être passager
+        </label>
       </div>
+      <div class="invalid-feedback">Veuillez sélectionner un rôle.</div>
     </div>
 
     <div class="text-center">

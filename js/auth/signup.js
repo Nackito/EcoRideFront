@@ -3,11 +3,20 @@
 const inputPseudo = document.getElementById("PseudoInput");
 const inputMail = document.getElementById("EmailInput");
 const inputPassword = document.getElementById("PasswordInput");
-const inputConfirmationPasswor = document.getElementById(
+const inputConfirmationPassword = document.getElementById(
   "ConfirmationPasswordInput"
 );
+
+// Récupérer les boutons radio pour les rôles
 const roleDriver = document.getElementById("roleDriver");
 const rolePassenger = document.getElementById("rolePassenger");
+const roleBoth = document.getElementById("roleBoth");
+
+function getSelectedRole() {
+  const selectedRadio = document.querySelector('input[name="role"]:checked');
+  return selectedRadio ? selectedRadio.value : null;
+}
+
 const btnValidationInscription = document.getElementById(
   "btn-validation-inscription"
 );
@@ -16,9 +25,11 @@ const signupForm = document.getElementById("signup-form");
 inputPseudo.addEventListener("keyup", validateForm);
 inputMail.addEventListener("keyup", validateForm);
 inputPassword.addEventListener("keyup", validateForm);
-inputConfirmationPasswor.addEventListener("keyup", validateForm);
+inputConfirmationPassword.addEventListener("keyup", validateForm);
+// Ajouter les listeners sur chaque bouton radio
 roleDriver.addEventListener("change", validateForm);
 rolePassenger.addEventListener("change", validateForm);
+roleBoth.addEventListener("change", validateForm);
 
 btnValidationInscription.addEventListener("click", function (event) {
   event.preventDefault(); // Empêcher le rechargement de la page
@@ -31,11 +42,11 @@ function validateForm() {
   const passwordOk = validatePassword(inputPassword);
   const confirmationPasswordOk = validateConfirmationPassword(
     inputPassword,
-    inputConfirmationPasswor
+    inputConfirmationPassword
   );
-  const rolesOk = validateRoles();
+  const roleOk = validateRole();
 
-  if (pseudoOk && mailOk && passwordOk && confirmationPasswordOk && rolesOk) {
+  if (pseudoOk && mailOk && passwordOk && confirmationPasswordOk && roleOk) {
     btnValidationInscription.disabled = false; // Si tous les champs sont valides, on active le bouton;
   } else {
     btnValidationInscription.disabled = true; // Sinon on le désactive
@@ -97,14 +108,19 @@ function validateRequired(input) {
   }
 }
 
-function validateRoles() {
-  if (roleDriver.checked || rolePassenger.checked) {
+function validateRole() {
+  const selectedRole = getSelectedRole();
+  if (selectedRole) {
+    // Retirer les classes d'erreur de tous les boutons radio
     roleDriver.classList.remove("is-invalid");
     rolePassenger.classList.remove("is-invalid");
+    roleBoth.classList.remove("is-invalid");
     return true;
   } else {
+    // Ajouter les classes d'erreur à tous les boutons radio
     roleDriver.classList.add("is-invalid");
     rolePassenger.classList.add("is-invalid");
+    roleBoth.classList.add("is-invalid");
     return false;
   }
 }
@@ -113,24 +129,31 @@ function registerUser() {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  // Construire le tableau des rôles sélectionnés
-  const selectedRoles = [];
-  if (roleDriver.checked) {
-    selectedRoles.push("ROLE_DRIVER");
-  }
-  if (rolePassenger.checked) {
-    selectedRoles.push("ROLE_PASSENGER");
+  // Construire le tableau des rôles selon la sélection
+  const selectedRoleValue = getSelectedRole();
+  const roles = ["ROLE_USER"]; // Rôle de base obligatoire
+
+  if (selectedRoleValue === "driver") {
+    roles.push("ROLE_DRIVER");
+  } else if (selectedRoleValue === "passenger") {
+    roles.push("ROLE_PASSENGER");
+  } else if (selectedRoleValue === "both") {
+    roles.push("ROLE_DRIVER");
+    roles.push("ROLE_PASSENGER");
   }
 
-  // Ajouter toujours ROLE_USER comme rôle de base
-  selectedRoles.push("ROLE_USER");
+  // Vérifier qu'un rôle a été sélectionné
+  if (!selectedRoleValue) {
+    alert("Veuillez sélectionner un rôle avant de vous inscrire.");
+    return;
+  }
 
   // Récupérer les valeurs des champs du formulaire
   const raw = JSON.stringify({
     pseudo: inputPseudo.value,
     email: inputMail.value,
     password: inputPassword.value,
-    roles: selectedRoles,
+    roles: roles, // Envoyer le tableau de rôles comme attendu par l'API
   });
 
   const requestOptions = {
