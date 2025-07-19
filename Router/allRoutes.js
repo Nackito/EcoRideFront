@@ -24,7 +24,7 @@ export const allRoutes = [
     "/js/auth/signup.js"
   ),
   new Route("/account", "Mon profil", "/pages/auth/account.html", [
-    "driverPassenger",
+    "driver_passenger",
     "driver",
     "passenger",
     "employed",

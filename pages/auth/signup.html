@@ -50,46 +50,48 @@
 
     <!-- Nouveau champ pour le choix du rôle -->
     <div class="mb-3">
-      <label class="form-label text-white"
-        >Je souhaite m'inscrire en tant que :</label
-      >
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          value="driver"
-          id="roleDriver"
-          name="role"
-        />
-        <label class="form-check-label text-white" for="roleDriver">
-          Conducteur - Je propose des trajets
-        </label>
-      </div>
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          value="passenger"
-          id="rolePassenger"
-          name="role"
-        />
-        <label class="form-check-label text-white" for="rolePassenger">
-          Passager - Je recherche des trajets
-        </label>
-      </div>
-      <div class="form-check">
-        <input
-          class="form-check-input"
-          type="radio"
-          value="both"
-          id="roleBoth"
-          name="role"
-        />
-        <label class="form-check-label text-white" for="roleBoth">
-          Les deux - Je peux conduire et être passager
-        </label>
-      </div>
-      <div class="invalid-feedback">Veuillez sélectionner un rôle.</div>
+      <fieldset>
+        <legend class="form-label text-white">
+          Je souhaite m'inscrire en tant que :
+        </legend>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            value="driver"
+            id="roleDriver"
+            name="role"
+          />
+          <label class="form-check-label text-white" for="roleDriver">
+            Conducteur - Je propose des trajets
+          </label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            value="passenger"
+            id="rolePassenger"
+            name="role"
+          />
+          <label class="form-check-label text-white" for="rolePassenger">
+            Passager - Je recherche des trajets
+          </label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            value="both"
+            id="roleBoth"
+            name="role"
+          />
+          <label class="form-check-label text-white" for="roleBoth">
+            Les deux - Je peux conduire et être passager
+          </label>
+        </div>
+        <div class="invalid-feedback">Veuillez sélectionner un rôle.</div>
+      </fieldset>
     </div>
 
     <div class="text-center">

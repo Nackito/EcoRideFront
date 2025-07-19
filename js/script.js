@@ -121,8 +121,8 @@ function showAndHideElementsForRoles() {
             shouldHide = false;
           }
           break;
-        case "driverPassenger":
-          if (userConnected && role === "driverPassenger") {
+        case "driver_passenger":
+          if (userConnected && role === "driver_passenger") {
             shouldHide = false;
           }
           break;
