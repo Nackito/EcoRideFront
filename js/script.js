@@ -1,9 +1,32 @@
 const tokenCookieName = "accesstoken";
 const RoleCookieName = "role"; // Cookie for user role, if needed
-const logoutButtonId = document.getElementById("btn-logout");
 const apiUrl = "http://localhost:8000/api"; // Base URL for API requests
 
-logoutButtonId.addEventListener("click", signout);
+// Utiliser la délégation d'événements pour gérer les boutons de déconnexion
+// Cela fonctionne même pour les éléments ajoutés dynamiquement
+document.addEventListener("click", function (event) {
+  // Vérifier si l'élément cliqué a la classe btn-logout
+  if (
+    event.target.classList.contains("btn-logout") ||
+    event.target.id === "btn-logout-account" ||
+    event.target.id === "btn-logout-nav"
+  ) {
+    event.preventDefault();
+    signout();
+  }
+});
+
+// Également garder l'ancienne méthode pour les boutons présents dès le chargement
+document.addEventListener("DOMContentLoaded", function () {
+  // Trouver tous les boutons de déconnexion (navbar et pages)
+  const logoutButtons = document.querySelectorAll(".btn-logout");
+
+  logoutButtons.forEach((button) => {
+    if (button) {
+      button.addEventListener("click", signout);
+    }
+  });
+});
 
 function getRole() {
   return getCookie(RoleCookieName);
@@ -134,6 +157,21 @@ function showAndHideElementsForRoles() {
       element.classList.add("d-none");
     } else {
       element.classList.remove("d-none");
+    }
+  });
+
+  // Réattacher les event listeners aux nouveaux boutons de déconnexion
+  attachLogoutListeners();
+}
+
+// Fonction pour attacher les event listeners aux boutons de déconnexion
+function attachLogoutListeners() {
+  const logoutButtons = document.querySelectorAll(".btn-logout");
+
+  logoutButtons.forEach((button) => {
+    if (button && !button.hasAttribute("data-logout-attached")) {
+      button.addEventListener("click", signout);
+      button.setAttribute("data-logout-attached", "true"); // Marquer comme attaché
     }
   });
 }
