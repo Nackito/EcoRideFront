@@ -14,18 +14,9 @@ jobs:
           server: ftp-ecoridenack.alwaysdata.net
           username: ecoridenack
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /www/
-          protocol: ftps
           exclude: |
             **/.git*
             **/.git*/**
             **/node_modules/bootstrap/scss/**
             **/node_modules/bootstrap/js/**
             **/node_modules/bootstrap-icons/icons/**
-            **/.github/**
-            **/*.md
-            **/.DS_Store
-            **/Thumbs.db
-            **/package-lock.json
-            **/yarn.lock
-            **/*.log
