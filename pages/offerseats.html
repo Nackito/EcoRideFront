@@ -11,6 +11,7 @@
           class="form-control with-icon"
           id="departure"
           placeholder="Départ"
+          required
         />
       </div>
     </div>
@@ -46,12 +47,24 @@
           placeholder="Nombre de passagers"
           min="1"
           max="8"
+          required
         />
       </div>
     </div>
     <div class="form-group">
       <div class="input-with-icon">
-        <i class="bi bi-currency-euro input-icon"></i>
+        <i class="bi bi-block input-icon"></i>
+        <input
+          type="time"
+          class="form-control with-icon"
+          id="departure-time"
+          placeholder="Heure de départ"
+        />
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="input-with-icon">
+        <i class="bi bi-euro input-icon"></i>
         <input
           type="number"
           class="form-control with-icon"
@@ -59,6 +72,7 @@
           placeholder="Prix/passager"
           min="4"
           max="80"
+          required
         />
       </div>
     </div>
