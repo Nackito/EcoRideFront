@@ -59,9 +59,6 @@ function getInfoUser() {
     credentials: "omit",
   };
 
-  console.log("URL de la requête:", `${apiUrl}/account/me`);
-  console.log("Token utilisé:", token);
-
   // Appeler l'API avec la bonne URL
   fetch(`${apiUrl}/account/me`, requestOptions)
     .then(async (response) => {
