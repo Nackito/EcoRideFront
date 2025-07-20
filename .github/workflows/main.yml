@@ -17,7 +17,6 @@ jobs:
           server-dir: /www/
           # Configuration pour résoudre l'erreur SSL
           protocol: ftp
-          port: 21
           # Désactiver complètement SSL pour éviter l'erreur
           security: strict
           # Paramètres de connexion robustes
