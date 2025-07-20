@@ -2,11 +2,11 @@ import Route from "./Route.js";
 //Définir ici vos routes
 export const allRoutes = [
   new Route("/", "Accueil", "/pages/home.html", []),
-  new Route("/offer-seats", "Publier un trajet", "/pages/offer-seats.html", []),
+  new Route("/offerseats", "Publier un trajet", "/pages/offerseats.html", []),
   new Route(
-    "/ride-sharing",
+    "/ridesharing",
     "Resultats de recherche",
-    "/pages/ride-sharing.html",
+    "/pages/ridesharing.html",
     []
   ),
   new Route(
@@ -30,35 +30,35 @@ export const allRoutes = [
     "employed",
     "admin",
   ]),
-  new Route("/detail-ride", "Détail du trajet", "/pages/detail-ride.html", []),
+  new Route("/detailride", "Détail du trajet", "/pages/detailride.html", []),
   new Route(
-    "/personal-info",
+    "/personalinfo",
     "Mes informations personnelles",
-    "/pages/profil/personal-info.html",
+    "/pages/profil/personalinfo.html",
     ["passenger", "driver", "employed", "driver_passenger" /*, "admin"*/]
   ),
   new Route(
-    "/carpooling-preferences",
+    "/carpoolingpreferences",
     "Préférences de covoiturage",
-    "/pages/profil/carpooling-preferences.html",
+    "/pages/profil/carpoolingpreferences.html",
     ["driver_passenger", "driver" /*, "admin"*/] // Autorisé aux conducteurs, passagers et employés
   ),
   new Route(
-    "/vehicle-management",
+    "/vehiclemanagement",
     "Gestion des véhicules",
-    "/pages/profil/vehicle-management.html",
+    "/pages/profil/vehiclemanagement.html",
     ["driver_passenger", "driver" /*, "admin"*/] // Autorisé aux conducteurs, passagers et employés
   ),
   new Route(
-    "/carpooling-history",
+    "/carpoolinghistory",
     "Historique de covoiturage",
-    "/pages/profil/carpooling-history.html",
+    "/pages/profil/carpoolinghistory.html",
     ["driver_passenger", "driver", "passenger" /*, "admin"*/] // Autorisé aux conducteurs, passagers et employés
   ),
   new Route(
-    "/carpooling-management",
+    "/carpoolingmanagement",
     "Gestion de covoiturage",
-    "/pages/profil/carpooling-management.html",
+    "/pages/profil/carpoolingmanagement.html",
     ["driver_passenger", "driver" /*, "admin"*/] // Autorisé aux conducteurs, passagers et employés
   ),
 ];
