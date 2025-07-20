@@ -74,7 +74,7 @@ const apiUrl = "http://localhost:8000/api";
 function createRide() {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  
+
   // Récupérer le token d'authentification
   const token = localStorage.getItem("authToken");
   if (!token) {
@@ -82,7 +82,7 @@ function createRide() {
     window.location.href = "/pages/auth/signin.html";
     return;
   }
-  
+
   myHeaders.append("Authorization", `Bearer ${token}`);
 
   // Construire les données du trajet
@@ -95,7 +95,7 @@ function createRide() {
     arrivalHour: "18:00", // Heure par défaut
     availableSeats: parseInt(inputNbreSeats.value),
     pricePerPerson: parseFloat(inputPrice.value),
-    status: "open" // Statut par défaut
+    status: "active", // Statut par défaut
   });
 
   const requestOptions = {
@@ -131,17 +131,17 @@ function createRide() {
 }
 
 // Initialiser le bouton comme désactivé au chargement
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   BtnPostOffer.disabled = true;
-  
+
   // Définir des valeurs par défaut
   if (inputDepartureTime) {
     inputDepartureTime.value = "09:00";
   }
-  
+
   // Définir la date minimum à aujourd'hui
   if (inputDate) {
-    const today = new Date().toISOString().split('T')[0];
-    inputDate.setAttribute('min', today);
+    const today = new Date().toISOString().split("T")[0];
+    inputDate.setAttribute("min", today);
   }
 });
