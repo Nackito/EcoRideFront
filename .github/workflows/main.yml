@@ -14,6 +14,7 @@ jobs:
           server: ftp-ecoridenack.alwaysdata.net
           username: ecoridenack
           password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
           exclude: |
             **/.git*
             **/.git*/**
