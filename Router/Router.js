@@ -34,7 +34,28 @@ const LoadContentPage = async () => {
       }
     } else {
       const roleUser = getRole();
-      if (!allRoleArray.includes(roleUser)) {
+      console.log("🔒 Vérification des autorisations:");
+      console.log("   Rôles requis:", allRoleArray);
+      console.log("   Rôles utilisateur:", roleUser);
+
+      // Vérifier si l'utilisateur a au moins un des rôles autorisés
+      if (roleUser) {
+        const userRolesArray = roleUser.split(",").map((role) => role.trim());
+        const hasAuthorizedRole = allRoleArray.some((requiredRole) =>
+          userRolesArray.includes(requiredRole)
+        );
+
+        console.log("   Rôles utilisateur (tableau):", userRolesArray);
+        console.log("   Accès autorisé:", hasAuthorizedRole);
+
+        if (!hasAuthorizedRole) {
+          console.log("❌ Accès refusé - redirection vers l'accueil");
+          window.location.replace("/");
+        } else {
+          console.log("✅ Accès autorisé");
+        }
+      } else {
+        console.log("❌ Aucun rôle trouvé - redirection vers l'accueil");
         window.location.replace("/");
       }
     }
