@@ -16,6 +16,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
           security: strict
+          passive: true
           exclude: |
             **/.git*
             **/.git*/**
