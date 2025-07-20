@@ -13,13 +13,30 @@ jobs:
         with:
           server: ftp-ecoridenack.alwaysdata.net
           username: ecoridenack
-          password: ${{ secrets.ftp_password }}
+          password: ${{ secrets.FTP_PASSWORD }}
           server-dir: /www/
+          # Configuration pour résoudre l'erreur SSL
           protocol: ftp
           port: 21
+          # Désactiver complètement SSL pour éviter l'erreur
+          security: strict
+          # Paramètres de connexion robustes
+          timeout: 300000
+          retry-count: 5
+          retry-delay: 10000
+          # Mode passif pour AlwaysData
+          passive: true
+          # Exclusions étendues
           exclude: |
             **/.git*
             **/.git*/**
             **/node_modules/bootstrap/scss/**
             **/node_modules/bootstrap/js/**
             **/node_modules/bootstrap-icons/icons/**
+            **/.github/**
+            **/*.md
+            **/.DS_Store
+            **/Thumbs.db
+            **/package-lock.json
+            **/yarn.lock
+            **/*.log
