@@ -8,37 +8,14 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
 
-      # Méthode principale : SFTP (plus fiable avec AlwaysData)
-      - name: 📂 Deploy via SFTP
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
-        with:
-          server: ssh-ecoridenack.alwaysdata.net
-          username: ecoridenack
-          password: ${{ secrets.FTP_PASSWORD }}
-          local_path: "./*"
-          remote_path: "/www/"
-          args: "-o ConnectTimeout=5"
-
-      # Fallback : FTP simple si SFTP échoue
-      - name: 📂 Fallback FTP Deploy
-        if: failure()
+      - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ftp-ecoridenack.alwaysdata.net
           username: ecoridenack
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: /www/
-          # FTP simple sans SSL
-          protocol: ftp
-          port: 21
-          security: loose
-          dangerous-allow-any-host: true
-          timeout: 300000
-          retry-count: 5
-          retry-delay: 10000
-          # Mode passif pour AlwaysData
-          passive: true
-          # Exclusions étendues
+          protocol: ftps
           exclude: |
             **/.git*
             **/.git*/**
