@@ -33,17 +33,28 @@ function validateForm() {
   const departureTimeOk = validateRequired(inputDepartureTime);
   const priceOk = validatePrice(inputPrice);
 
+  // Vérifier si l'utilisateur est connecté (utilise la fonction de script.js)
+  const isUserConnected =
+    typeof isConnected === "function" ? isConnected() : false;
+
   if (
     departureOk &&
     destinationOk &&
     dateOk &&
     nbreSeatsOk &&
     departureTimeOk &&
-    priceOk
+    priceOk &&
+    isUserConnected
   ) {
-    BtnPostOffer.disabled = false; // Si tous les champs sont valides, on active le bouton
+    BtnPostOffer.disabled = false; // Si tous les champs sont valides ET utilisateur connecté
+    BtnPostOffer.textContent = "Publier le trajet";
   } else {
     BtnPostOffer.disabled = true; // Sinon on le désactive
+    if (!isUserConnected) {
+      BtnPostOffer.textContent = "Connectez-vous pour publier";
+    } else {
+      BtnPostOffer.textContent = "Publier le trajet";
+    }
   }
 }
 
@@ -75,18 +86,27 @@ function validatePrice(input) {
 function createRide() {
   console.log("🚀 Fonction createRide() démarrée");
 
+  // Vérifier si l'utilisateur est connecté (utilise les fonctions de script.js)
+  if (typeof isConnected === "function" && !isConnected()) {
+    alert("Vous devez être connecté pour publier un trajet");
+    window.location.href = "/signin";
+    return;
+  }
+
+  // Récupérer le token (utilise la fonction de script.js)
+  const token = typeof getToken === "function" ? getToken() : null;
+  if (!token) {
+    alert("Session expirée. Veuillez vous reconnecter.");
+    window.location.href = "/signin";
+    return;
+  }
+
+  console.log("🔑 Token trouvé:", token.substring(0, 20) + "...");
+
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Authorization", `Bearer ${token}`);
   console.log("📤 Headers configurés:", myHeaders);
-
-  // TODO: Récupérer le token d'authentification plus tard
-  // const token = localStorage.getItem("authToken");
-  // if (!token) {
-  //   alert("Vous devez être connecté pour publier un trajet");
-  //   window.location.href = "/pages/auth/signin.html";
-  //   return;
-  // }
-  // myHeaders.append("Authorization", `Bearer ${token}`);
 
   // Récupérer les valeurs des champs du formulaire
   const raw = JSON.stringify({
@@ -133,15 +153,19 @@ function createRide() {
       console.log("🎉 Succès complet:", result);
       alert("Bravo ! Votre trajet a été publié avec succès !");
       // Rediriger vers la page d'accueil ou la liste des trajets
-      window.location.href = "/pages/home.html";
+      window.location.href = "/";
     })
     .catch((error) => {
       console.error("💥 Erreur capturée:", error);
       console.error("📄 Message d'erreur:", error.message);
       if (error.message.includes("401")) {
         alert("Session expirée. Veuillez vous reconnecter.");
-        localStorage.removeItem("authToken");
-        window.location.href = "/pages/auth/signin.html";
+        // Utiliser la fonction signout de script.js si disponible
+        if (typeof signout === "function") {
+          signout();
+        } else {
+          window.location.href = "/signin";
+        }
       } else {
         alert("Erreur lors de la création du trajet : " + error.message);
       }
@@ -163,6 +187,28 @@ document.addEventListener("DOMContentLoaded", function () {
   BtnPostOffer.disabled = true;
   console.log("🔒 Bouton désactivé par défaut");
 
+  // Vérifier le statut de connexion
+  const isUserConnected =
+    typeof isConnected === "function" ? isConnected() : false;
+  console.log(
+    "🔐 Statut de connexion:",
+    isUserConnected ? "Connecté" : "Non connecté"
+  );
+
+  // Afficher un message si l'utilisateur n'est pas connecté
+  if (!isUserConnected) {
+    console.warn("⚠️ Utilisateur non connecté - Le bouton sera désactivé");
+    // Optionnel : afficher un message sur la page
+    const alertDiv = document.createElement("div");
+    alertDiv.className = "alert alert-warning mt-3";
+    alertDiv.innerHTML =
+      '<i class="bi bi-exclamation-triangle"></i> Vous devez être <a href="/pages/auth/signin.html" class="alert-link">connecté</a> pour publier un trajet.';
+    const formContainer = document.querySelector(".form-container");
+    if (formContainer) {
+      formContainer.appendChild(alertDiv);
+    }
+  }
+
   // Définir des valeurs par défaut
   if (inputDepartureTime) {
     inputDepartureTime.value = "09:00";
@@ -175,4 +221,7 @@ document.addEventListener("DOMContentLoaded", function () {
     inputDate.setAttribute("min", today);
     console.log("📅 Date minimum définie:", today);
   }
+
+  // Déclencher la validation initiale pour mettre à jour l'état du bouton
+  validateForm();
 });
