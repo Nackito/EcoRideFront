@@ -15,7 +15,8 @@ jobs:
           username: ecoridenack
           password: ${{ secrets.ftp_password }}
           server-dir: /www/
-          protocol: ftps
+          protocol: ftp
+          port: 21
           exclude: |
             **/.git*
             **/.git*/**
