@@ -5,30 +5,33 @@ jobs:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
     steps:
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v4
-    
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-      with:
-        server: ftp-ecoridenack.alwaysdata.net
-        username: ecoridenack
-        password: ${{ secrets.ftp_password }}
-        server-dir: /www/
-        protocol: ftps
-        # Optimisations anti-timeout
-        timeout: 60000
-        retry-count: 2
-        retry-delay: 3000
-        security: loose
-        # Exclusions étendues
-        exclude: |
-          **/.git*
-          **/.git*/**
-          **/node_modules/bootstrap/scss/**
-          **/node_modules/bootstrap/js/**
-          **/node_modules/bootstrap-icons/icons/**
-          **/.github/**
-          **/*.md
-          **/.DS_Store
-          **/Thumbs.db
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v4
+
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ftp-ecoridenack.alwaysdata.net
+          username: ecoridenack
+          password: ${{ secrets.ftp_password }}
+          server-dir: /www/
+          protocol: ftps
+          # Optimisations anti-timeout
+          timeout: 120000
+          retry-count: 3
+          retry-delay: 5000
+          # Corrections SSL/TLS - Version alternative
+          security: loose
+          ssl-protocols: "TLSv1.2,TLSv1.3"
+          dangerous-allow-any-host: true
+          # Exclusions étendues
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/bootstrap/scss/**
+            **/node_modules/bootstrap/js/**
+            **/node_modules/bootstrap-icons/icons/**
+            **/.github/**
+            **/*.md
+            **/.DS_Store
+            **/Thumbs.db
