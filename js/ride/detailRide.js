@@ -16,31 +16,67 @@ document.addEventListener("DOMContentLoaded", function () {
   );
   const searchMessage = sessionStorage.getItem("searchMessage") || "";
 
-  console.log("📊 Résultats de recherche:", searchResults);
-  console.log("🔍 Critères de recherche:", searchCriteria);
-  console.log("💬 Message:", searchMessage);
+  console.log("📊 ===== RÉSULTATS DE RECHERCHE =====");
+  console.log("📊 Nombre de trajets trouvés:", searchResults.length);
+  console.log("📊 Résultats complets:", searchResults);
+  console.log("🔍 ===== CRITÈRES DE RECHERCHE =====");
+  console.log("🔍 Critères utilisés:", searchCriteria);
+  console.log("💬 ===== MESSAGE API =====");
+  console.log("💬 Message de l'API:", searchMessage);
 
+  // Afficher chaque trajet individuellement pour plus de clarté
   if (searchResults.length > 0) {
+    console.log("🚗 ===== DÉTAILS DE CHAQUE TRAJET =====");
+    searchResults.forEach((ride, index) => {
+      console.log(`🚗 Trajet ${index + 1}:`, {
+        id: ride.id,
+        origine: ride.origin,
+        destination: ride.destination,
+        dateDepart: ride.departureDate,
+        heureDepart: ride.departureHour,
+        placesDisponibles: ride.availableSeats,
+        placesRestantes: ride.remainingSeats,
+        prix: ride.price,
+        conducteur: ride.driver,
+        description: ride.description,
+        statut: ride.status,
+      });
+    });
+
     displaySearchResults(searchResults, searchCriteria, searchMessage);
   } else {
+    console.log("❌ Aucun résultat à afficher");
     displayNoResults(searchCriteria);
   }
 });
-
 function displaySearchResults(rides, criteria, message) {
-  console.log(`🎯 Affichage de ${rides.length} trajet(s)`);
+  console.log(`🎯 ===== AFFICHAGE DE ${rides.length} TRAJET(S) =====`);
+  console.log("🎯 Début du processus d'affichage...");
 
   // Conteneur principal pour les résultats
   const mainContainer = document.querySelector("body");
+  console.log("🎯 Conteneur principal trouvé:", !!mainContainer);
 
   // Créer le header avec les critères de recherche
   const headerHtml = createSearchHeader(criteria, message);
+  console.log("🎯 Header créé, longueur:", headerHtml.length);
 
   // Créer le contenu des résultats
-  const resultsHtml = rides.map((ride) => createRideCard(ride)).join("");
+  const resultsHtml = rides
+    .map((ride, index) => {
+      console.log(`🎯 Création de la carte pour le trajet ${index + 1}:`, {
+        id: ride.id,
+        origine: ride.origin,
+        destination: ride.destination,
+      });
+      return createRideCard(ride);
+    })
+    .join("");
+
+  console.log("🎯 HTML des résultats créé, longueur:", resultsHtml.length);
 
   // Remplacer le contenu existant
-  mainContainer.innerHTML = `
+  const finalHtml = `
     ${headerHtml}
     <div class="container my-4">
       <div class="row">
@@ -57,6 +93,12 @@ function displaySearchResults(rides, criteria, message) {
       </button>
     </div>
   `;
+
+  console.log("🎯 HTML final créé, longueur:", finalHtml.length);
+
+  mainContainer.innerHTML = finalHtml;
+
+  console.log("🎯 ✅ Affichage terminé avec succès!");
 }
 
 function createSearchHeader(criteria, message) {

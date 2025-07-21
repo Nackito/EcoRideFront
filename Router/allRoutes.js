@@ -1,19 +1,20 @@
 import Route from "./Route.js";
 //Définir ici vos routes
 export const allRoutes = [
-  new Route("/", "Accueil", "/pages/home.html", [], "/js/searchRide.js"),
+  new Route("/", "Accueil", "/pages/home.html", [], "/js/ride/searchRide.js"),
   new Route(
     "/offerseats",
     "Publier un trajet",
     "/pages/offerseats.html",
     [],
-    "/js/ride.js"
+    "/js/ride/ride.js"
   ),
   new Route(
     "/ridesharing",
     "Resultats de recherche",
     "/pages/ridesharing.html",
-    []
+    [],
+    "/js/ride/resultSearch.js"
   ),
   new Route(
     "/signin",
@@ -41,7 +42,7 @@ export const allRoutes = [
     "Détail du trajet",
     "/pages/detailride.html",
     [],
-    "/js/detailRide.js"
+    "/js/ride/detailRide.js"
   ),
   new Route(
     "/personalinfo",

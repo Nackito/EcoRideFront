@@ -222,7 +222,7 @@ function performSearch() {
       sessionStorage.setItem("searchMessage", data.message || "");
 
       // Rediriger vers la page de détail
-      console.log("🔄 Redirection vers detailride.html");
+      console.log("🔄 Redirection vers ridesharing.html");
       window.location.href = "/ridesharing";
     })
     .catch((error) => {

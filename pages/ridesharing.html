@@ -1,132 +1,27 @@
-<div class="bg-secondary">
-  <div class="container p-5">
-    <div class="row align-items-center bg-white p-3 rounded-5 mx-auto">
-      <div class="col d-flex flex-column">
-        <p class="mb-1 fw-bold">
-          Paris <i class="bi bi-arrow-right-short"></i> Marseille
-        </p>
-        <p class="mb-0 small text-secondary">Mar. 15 juil. 1 passager</p>
-      </div>
-      <div class="col-auto">
-        <p class="mb-0 text-primary">Filtrer</p>
-      </div>
-    </div>
-  </div>
+<!-- Header avec critères de recherche - sera rempli dynamiquement -->
+<div id="search-header-container">
+  <!-- Le contenu sera injecté par JavaScript -->
 </div>
 
-<div class="container mt-3 mb-3">
-  <div class="ps-2">
-    <p class="mb-1 fw-bold">
-      Paris <i class="bi bi-arrow-right-short"></i> Marseille
-    </p>
-    <p class="mb-0 small text-secondary">Mar. 15 juil. 1 passager</p>
+<!-- Message de chargement -->
+<div id="loading-container" class="container text-center my-5">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Chargement...</span>
   </div>
+  <p class="mt-3">Chargement des résultats...</p>
 </div>
 
-<div class="container">
-  <p class="ps-2">
-    <i class="bi bi-clock"></i> Les trajets sont triés chronologiquement par
-    heure de depart
-  </p>
+<!-- Conteneur pour les résultats de recherche -->
+<div id="search-results-container">
+  <!-- Les résultats seront injectés ici par JavaScript -->
 </div>
 
-<div class="container">
-  <div class="card h-100 w-75 mb-3 rounded-5 elevation-5 mx-auto">
-    <div class="card-body">
-      <p class="card-text">
-        08:30 Villejuif
-        <i class="bi bi-arrow-right-short"></i>
-        12:00 Marseille
-      </p>
-      <div class="row align-items-center">
-        <div class="col d-flex flex-column">
-          <p class="mb-0 small text-secondary">2 places disponibles</p>
-        </div>
-        <div class="col-auto">
-          <p class="mb-0">20$/pers</p>
-        </div>
-      </div>
-      <hr class="my-3" />
-      <div class="container pt-2 pb-2 hover-bg">
-        <div class="row align-items-center">
-          <div class="col d-flex align-items-center">
-            <i class="bi bi-person-circle me-3 profile-icon"></i>
-            <h3 class="mb-0">Frank</h3>
-          </div>
-          <div class="col-auto">
-            <i class="bi bi-car-front"></i>
-            <p>Electric</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card h-100 w-75 mb-3 rounded-5 elevation-5 mx-auto">
-    <div class="card-body">
-      <p class="card-text">
-        08:30 Villejuif
-        <i class="bi bi-arrow-right-short"></i>
-        12:00 Marseille
-      </p>
-      <div class="row align-items-center">
-        <div class="col d-flex flex-column">
-          <p class="mb-0 small text-secondary">2 places disponibles</p>
-        </div>
-        <div class="col-auto">
-          <p class="mb-0">20$/pers</p>
-        </div>
-      </div>
-      <hr class="my-3" />
-      <div class="container pt-2 pb-2 hover-bg">
-        <div class="row align-items-center">
-          <div class="col d-flex align-items-center">
-            <i class="bi bi-person-circle me-3 profile-icon"></i>
-            <h3 class="mb-0">Frank</h3>
-          </div>
-          <div class="col-auto">
-            <i class="bi bi-car-front"></i>
-            <p>Electric</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card h-100 w-75 mb-3 rounded-5 elevation-5 mx-auto">
-    <div class="card-body">
-      <p class="card-text">
-        08:30 Villejuif
-        <i class="bi bi-arrow-right-short"></i>
-        12:00 Marseille
-      </p>
-      <div class="row align-items-center">
-        <div class="col d-flex flex-column">
-          <p class="mb-0 small text-secondary">2 places disponibles</p>
-        </div>
-        <div class="col-auto">
-          <p class="mb-0">20$/pers</p>
-        </div>
-      </div>
-      <hr class="my-3" />
-      <div class="container pt-2 pb-2 hover-bg">
-        <div class="row align-items-center">
-          <div class="col d-flex align-items-center">
-            <i class="bi bi-person-circle me-3 profile-icon"></i>
-            <h3 class="mb-0">Frank</h3>
-          </div>
-          <div class="col-auto">
-            <i class="bi bi-car-front"></i>
-            <p>Electric</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- Conteneur pour le message "aucun résultat" -->
+<div id="no-results-container" style="display: none">
+  <!-- Le message sera injecté ici par JavaScript si aucun résultat -->
 </div>
 
-<div class="text-center rounded-5 p-5 mb-5">
-  <button class="btn btn-secondary" type="button">
-    <i class="bi bi-plus-circle me-2"></i> Charger plus de resultats
-  </button>
+<!-- Boutons d'actions -->
+<div id="actions-container" class="text-center mb-5" style="display: none">
+  <!-- Les boutons seront injectés ici par JavaScript -->
 </div>
