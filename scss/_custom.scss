@@ -1215,6 +1215,56 @@ footer {
   }
 }
 
+// Bouton "Charger plus" pour la pagination
+#load-more-container {
+  .btn {
+    transition: all 0.3s ease;
+    border-radius: 25px;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  p.text-muted {
+    font-size: 0.9rem;
+
+    #displayed-count {
+      font-weight: 600;
+      color: $primary;
+    }
+
+    #total-count {
+      font-weight: 600;
+      color: $secondary;
+    }
+  }
+
+  // Animation d'apparition
+  &.fade-in {
+    animation: fadeInUp 0.5s ease-out;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .ride-result-card {
   // Dimensions fixes pour éviter les débordements
   max-width: 600px;

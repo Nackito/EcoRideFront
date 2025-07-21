@@ -1,5 +1,14 @@
 // Script pour afficher les résultats de recherche sur la page resultSearch
 console.log("🔄 Script resultSearch.js chargé");
+console.log("📄 État du document:", document.readyState);
+
+// Variables globales pour la pagination
+let allRidesData = [];
+let currentDisplayedCount = 0;
+const RIDES_PER_PAGE = 4;
+
+// Note: apiUrl est déjà défini dans script.jsript pour afficher les résultats de recherche sur la page resultSearch
+console.log("🔄 Script resultSearch.js chargé");
 console.log("🔄 État du document actuel:", document.readyState);
 
 // Note: apiUrl est déjà défini dans script.js
@@ -71,6 +80,9 @@ function initializeResultsPage() {
       });
     });
 
+    // Sauvegarder les données pour la pagination
+    allRidesData = searchResults;
+    currentDisplayedCount = 0;
     displaySearchResults(searchResults, searchCriteria, searchMessage);
   } else {
     console.log("❌ Aucun résultat à afficher");
@@ -115,39 +127,15 @@ function displaySearchResults(rides, criteria, message) {
   });
 
   // Créer et injecter le header avec les critères de recherche
-  const headerHtml = createSearchHeader(criteria, message);
+  const headerHtml = createSearchHeader(criteria, message, rides.length);
   console.log("🎯 Header créé, longueur:", headerHtml.length);
 
   if (headerContainer) {
     headerContainer.innerHTML = headerHtml;
   }
 
-  // Créer et injecter le contenu des résultats
-  const resultsHtml = rides
-    .map((ride, index) => {
-      console.log(`🎯 Création de la carte pour le trajet ${index + 1}:`, {
-        id: ride.id,
-        origine: ride.origin,
-        destination: ride.destination,
-      });
-      return createRideCard(ride);
-    })
-    .join("");
-
-  console.log("🎯 HTML des résultats créé, longueur:", resultsHtml.length);
-
-  if (resultsContainer) {
-    resultsContainer.innerHTML = `
-      <div class="container">
-        <p class="ps-2 mb-4">
-          <i class="bi bi-clock"></i> Les trajets sont triés chronologiquement par heure de départ
-        </p>
-        <div class="search-results-list">
-          ${resultsHtml}
-        </div>
-      </div>
-    `;
-  }
+  // Afficher les premiers résultats avec pagination
+  displayRidesPaginated(rides, resultsContainer);
 
   // Créer et injecter les boutons d'actions
   if (actionsContainer) {
@@ -165,7 +153,127 @@ function displaySearchResults(rides, criteria, message) {
   console.log("🎯 ✅ Affichage terminé avec succès!");
 }
 
-function createSearchHeader(criteria, message) {
+// Fonction pour afficher les résultats avec pagination
+function displayRidesPaginated(rides, resultsContainer) {
+  console.log(
+    `📄 Affichage paginé - Total: ${rides.length}, Déjà affichés: ${currentDisplayedCount}`
+  );
+
+  if (!resultsContainer) {
+    console.error("❌ Conteneur de résultats introuvable");
+    return;
+  }
+
+  // Si c'est le premier affichage, créer la structure complète
+  if (currentDisplayedCount === 0) {
+    resultsContainer.innerHTML = `
+      <div class="container">
+        <p class="ps-2 mb-4">
+          <i class="bi bi-clock"></i> Les trajets sont triés chronologiquement par heure de départ
+        </p>
+        <div class="search-results-list" id="rides-list">
+          <!-- Les cartes seront ajoutées ici -->
+        </div>
+        <div class="text-center mt-4" id="load-more-container" style="display: none;">
+          <button class="btn btn-secondary btn-lg" onclick="loadMoreRides()">
+            <i class="bi bi-plus-circle me-2"></i>Charger plus de résultats
+          </button>
+          <p class="text-muted mt-2 mb-0">
+            <span id="displayed-count">0</span> sur <span id="total-count">${rides.length}</span> trajets affichés
+          </p>
+        </div>
+      </div>
+    `;
+  }
+
+  // Calculer les trajets à afficher
+  const startIndex = currentDisplayedCount;
+  const endIndex = Math.min(startIndex + RIDES_PER_PAGE, rides.length);
+  const ridesToShow = rides.slice(startIndex, endIndex);
+
+  console.log(`📄 Affichage des trajets ${startIndex + 1} à ${endIndex}`);
+
+  // Créer le HTML des nouvelles cartes
+  const newRidesHtml = ridesToShow
+    .map((ride, index) => {
+      console.log(
+        `🎯 Création de la carte pour le trajet ${startIndex + index + 1}:`,
+        {
+          id: ride.id,
+          origine: ride.origin,
+          destination: ride.destination,
+        }
+      );
+      return createRideCard(ride);
+    })
+    .join("");
+
+  // Ajouter les nouvelles cartes à la liste existante
+  const ridesList = document.getElementById("rides-list");
+  if (ridesList) {
+    // Créer un conteneur temporaire pour les nouvelles cartes
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = newRidesHtml;
+
+    // Ajouter chaque carte avec une petite animation
+    Array.from(tempDiv.children).forEach((card, index) => {
+      card.style.opacity = "0";
+      card.style.transform = "translateY(20px)";
+      ridesList.appendChild(card);
+
+      // Animation d'apparition avec délai échelonné
+      setTimeout(() => {
+        card.style.transition = "all 0.5s ease-out";
+        card.style.opacity = "1";
+        card.style.transform = "translateY(0)";
+      }, index * 100); // 100ms de délai entre chaque carte
+    });
+  }
+
+  // Mettre à jour le compteur
+  currentDisplayedCount = endIndex;
+
+  // Gérer l'affichage du bouton "Charger plus"
+  updateLoadMoreButton(rides.length);
+
+  console.log(
+    `📄 ✅ ${ridesToShow.length} nouveaux trajets affichés. Total affiché: ${currentDisplayedCount}/${rides.length}`
+  );
+}
+
+// Fonction pour mettre à jour le bouton "Charger plus"
+function updateLoadMoreButton(totalRides) {
+  const loadMoreContainer = document.getElementById("load-more-container");
+  const displayedCountSpan = document.getElementById("displayed-count");
+
+  if (loadMoreContainer && displayedCountSpan) {
+    // Mettre à jour le compteur
+    displayedCountSpan.textContent = currentDisplayedCount;
+
+    // Afficher ou masquer le bouton selon s'il reste des trajets
+    if (currentDisplayedCount < totalRides) {
+      loadMoreContainer.style.display = "block";
+    } else {
+      loadMoreContainer.style.display = "none";
+    }
+  }
+}
+
+// Fonction appelée par le bouton "Charger plus"
+function loadMoreRides() {
+  console.log("🔄 Chargement de plus de trajets...");
+
+  if (currentDisplayedCount < allRidesData.length) {
+    const resultsContainer = document.getElementById(
+      "search-results-container"
+    );
+    displayRidesPaginated(allRidesData, resultsContainer);
+  } else {
+    console.log("📄 Tous les trajets sont déjà affichés");
+  }
+}
+
+function createSearchHeader(criteria, message, totalCount) {
   const formatDate = (dateStr) => {
     if (!dateStr) return "";
     const date = new Date(dateStr);
@@ -183,14 +291,25 @@ function createSearchHeader(criteria, message) {
   if (criteria.date) searchInfo.push(`Le: ${formatDate(criteria.date)}`);
   if (criteria.seats) searchInfo.push(`${criteria.seats} passager(s)`);
 
+  // Message avec le nombre de résultats
+  const resultMessage =
+    totalCount > 1
+      ? `${totalCount} trajets trouvés`
+      : `${totalCount} trajet trouvé`;
+
   return `
     <div class="bg-primary text-white py-4 mb-4">
       <div class="container">
         <div class="row align-items-center">
           <div class="col">
-            <h1 class="mb-2">Résultats de recherche</h1>
+            <h1 class="mb-2">
+              <i class="bi bi-search me-2"></i>Résultats de recherche
+            </h1>
             <p class="mb-1 fs-5">${searchInfo.join(" • ")}</p>
-            <p class="mb-0 opacity-75">${message}</p>
+            <p class="mb-0 opacity-75">
+              <i class="bi bi-check-circle me-1"></i>${resultMessage}
+              ${message ? ` • ${message}` : ""}
+            </p>
           </div>
           <div class="col-auto">
             <button class="btn btn-light" onclick="goBack()">
