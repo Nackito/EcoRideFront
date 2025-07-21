@@ -30,13 +30,13 @@ export const allRoutes = [
     ["disconnected"],
     "/js/auth/signup.js"
   ),
-  new Route("/account", "Mon profil", "/pages/auth/account.html", [
-    "driver_passenger",
-    "driver",
-    "passenger",
-    "employed",
-    "admin",
-  ]),
+  new Route(
+    "/account",
+    "Mon profil",
+    "/pages/auth/account.html",
+    ["driver_passenger", "driver", "passenger", "employed", "admin"],
+    "/js/auth/account.js"
+  ),
   new Route(
     "/detailride",
     "Détail du trajet",
