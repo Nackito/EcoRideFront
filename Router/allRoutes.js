@@ -1,7 +1,7 @@
 import Route from "./Route.js";
 //Définir ici vos routes
 export const allRoutes = [
-  new Route("/", "Accueil", "/pages/home.html", []),
+  new Route("/", "Accueil", "/pages/home.html", [], "/js/searchRide.js"),
   new Route(
     "/offerseats",
     "Publier un trajet",
@@ -36,7 +36,13 @@ export const allRoutes = [
     "employed",
     "admin",
   ]),
-  new Route("/detailride", "Détail du trajet", "/pages/detailride.html", []),
+  new Route(
+    "/detailride",
+    "Détail du trajet",
+    "/pages/detailride.html",
+    [],
+    "/js/detailRide.js"
+  ),
   new Route(
     "/personalinfo",
     "Mes informations personnelles",
