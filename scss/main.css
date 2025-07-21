@@ -12887,6 +12887,155 @@ footer .col-6:last-child {
   background: #a8a8a8;
 }
 
+.filters-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  border: 1px solid #e9ecef;
+}
+.filters-container .filters-header {
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border-radius: 12px 12px 0 0;
+  padding: 1rem;
+  border-bottom: 1px solid #dee2e6;
+}
+.filters-container .filters-header .btn-filter-toggle {
+  font-weight: 600;
+  color: #267917;
+  text-decoration: none;
+}
+.filters-container .filters-header .btn-filter-toggle:hover {
+  color: #45e928;
+}
+.filters-container .filters-header .btn-filter-toggle .bi {
+  transition: transform 0.3s ease;
+}
+.filters-container .filters-header .filters-count {
+  background: #45e928;
+  color: white;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+}
+.filters-container .filters-body {
+  padding: 1.5rem;
+}
+.filters-container .filters-body .filter-group {
+  margin-bottom: 1.5rem;
+}
+.filters-container .filters-body .filter-group .filter-label {
+  font-weight: 600;
+  color: #267917;
+  margin-bottom: 0.75rem;
+  display: block;
+  font-size: 0.9rem;
+}
+.filters-container .filters-body .filter-group .ecological-options .form-check {
+  margin-bottom: 0.5rem;
+}
+.filters-container .filters-body .filter-group .ecological-options .form-check .form-check-input:checked {
+  background-color: #45e928;
+  border-color: #45e928;
+}
+.filters-container .filters-body .filter-group .ecological-options .form-check .form-check-label {
+  font-size: 0.9rem;
+  color: #495057;
+}
+.filters-container .filters-body .filter-group .ecological-options .form-check .form-check-label .eco-icon {
+  color: #28a745;
+  margin-right: 0.5rem;
+}
+.filters-container .filters-body .filter-group .price-range .form-range::-webkit-slider-thumb {
+  background-color: #45e928;
+}
+.filters-container .filters-body .filter-group .price-range .form-range::-webkit-slider-track {
+  background-color: #dee2e6;
+}
+.filters-container .filters-body .filter-group .price-range .form-range::-moz-range-thumb {
+  background-color: #45e928;
+  border: none;
+}
+.filters-container .filters-body .filter-group .price-range .price-display {
+  background: #f8f9fa;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  text-align: center;
+  font-weight: 600;
+  color: #45e928;
+  border: 2px solid #e9ecef;
+}
+.filters-container .filters-body .filter-group .rating-stars .star-rating {
+  display: inline-flex;
+  gap: 0.25rem;
+  margin-right: 1rem;
+}
+.filters-container .filters-body .filter-group .rating-stars .star-rating .star {
+  color: #dee2e6;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: color 0.2s ease;
+}
+.filters-container .filters-body .filter-group .rating-stars .star-rating .star.active, .filters-container .filters-body .filter-group .rating-stars .star-rating .star:hover {
+  color: #ffc107;
+}
+.filters-container .filters-body .filter-group .rating-stars .rating-text {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+.filters-container .filters-body .filters-actions {
+  border-top: 1px solid #dee2e6;
+  padding-top: 1rem;
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.filters-container .filters-body .filters-actions .btn-clear {
+  color: #6c757d;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.filters-container .filters-body .filters-actions .btn-clear:hover {
+  color: #267917;
+  text-decoration: underline;
+}
+.filters-container .filters-body .filters-actions .btn-apply {
+  background: #45e928;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  border-radius: 20px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.filters-container .filters-body .filters-actions .btn-apply:hover {
+  background: #267917;
+  transform: translateY(-1px);
+}
+
+.filters-collapse {
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .filters-container {
+    margin: 0 1rem 2rem 1rem;
+  }
+  .filters-container .filters-body {
+    padding: 1rem;
+  }
+  .filters-container .filters-body .filter-group {
+    margin-bottom: 1rem;
+  }
+  .filters-container .filters-body .filters-actions {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .filters-container .filters-body .filters-actions .btn-apply {
+    width: 100%;
+  }
+}
 #load-more-container .btn {
   transition: all 0.3s ease;
   border-radius: 25px;
