@@ -142,10 +142,8 @@ function displaySearchResults(rides, criteria, message) {
         <p class="ps-2 mb-4">
           <i class="bi bi-clock"></i> Les trajets sont triés chronologiquement par heure de départ
         </p>
-        <div class="row">
-          <div class="col-12">
-            ${resultsHtml}
-          </div>
+        <div class="search-results-list">
+          ${resultsHtml}
         </div>
       </div>
     `;
@@ -233,9 +231,9 @@ function createRideCard(ride) {
     ride.driver?.firstName || ride.driver?.name || "Conducteur";
 
   return `
-    <div class="card h-100 w-75 mb-3 rounded-5 elevation-5 mx-auto">
+    <div class="card mb-3 rounded-5 elevation-5 mx-auto ride-result-card">
       <div class="card-body">
-        <p class="card-text fw-bold">
+        <p class="card-text">
           ${departureTime} ${origin}
           <i class="bi bi-arrow-right-short"></i>
           ${arrivalTime} ${destination}
@@ -245,39 +243,28 @@ function createRideCard(ride) {
             <p class="mb-0 small text-secondary">${availableSeats} place(s) disponible(s)</p>
           </div>
           <div class="col-auto">
-            <p class="mb-0 fw-bold">${price}€/pers</p>
+            <p class="mb-0">${price}€/pers</p>
           </div>
         </div>
         <hr class="my-3" />
-        <div class="container pt-2 pb-2 hover-bg" style="cursor: pointer;" onclick="requestBooking(${
+        <div class="container pt-2 pb-2 hover-bg" onclick="requestBooking(${
           ride.id
         })">
           <div class="row align-items-center">
             <div class="col d-flex align-items-center">
-              <i class="bi bi-person-circle me-3 profile-icon" style="font-size: 2.5rem;"></i>
-              <div>
-                <h5 class="mb-1">${driverName}</h5>
-                <small class="text-secondary">
-                  <i class="bi bi-star-fill text-warning"></i>
-                  ${ride.driver?.rating || "5.0"}/5 
-                  ${
-                    ride.driver?.reviewsCount
-                      ? `- ${ride.driver.reviewsCount} avis`
-                      : ""
-                  }
-                </small>
-              </div>
+              <i class="bi bi-person-circle me-3 profile-icon"></i>
+              <h3 class="mb-0">${driverName}</h3>
             </div>
             <div class="col-auto">
-              <i class="bi bi-chevron-right text-secondary"></i>
+              <i class="bi bi-car-front"></i>
+              <p class="mb-0">Electric</p>
             </div>
           </div>
         </div>
-        
         ${
           ride.description
             ? `
-        <div class="mt-3">
+        <div class="mt-2">
           <small class="text-muted">Description:</small>
           <p class="mb-0 small">${ride.description}</p>
         </div>
@@ -378,7 +365,7 @@ function displayNoResults(criteria) {
 
 // Fonction pour retourner à la recherche
 function goBack() {
-  window.location.href = "/pages/home.html";
+  window.location.href = "/";
 }
 
 // Fonction pour demander une réservation
@@ -388,7 +375,7 @@ function requestBooking(rideId) {
   // Vérifier si l'utilisateur est connecté
   if (typeof isConnected === "function" && !isConnected()) {
     alert("Vous devez être connecté pour faire une réservation");
-    window.location.href = "/pages/auth/signin.html";
+    window.location.href = "/signin";
     return;
   }
 

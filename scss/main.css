@@ -12866,4 +12866,103 @@ footer .col-6:last-child {
   background: linear-gradient(135deg, rgba(13, 110, 253, 0.1) 0%, rgba(13, 110, 253, 0.05) 100%);
   border-left: 4px solid #0d6efd;
   color: #084298;
+}
+
+.search-results-list {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.search-results-list::-webkit-scrollbar {
+  width: 8px;
+}
+.search-results-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+.search-results-list::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+.search-results-list::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+.ride-result-card {
+  max-width: 600px;
+  width: 75%;
+  min-height: auto;
+}
+@media (min-width: 768px) {
+  .ride-result-card {
+    max-width: 600px !important;
+    width: 75% !important;
+  }
+}
+@media (max-width: 767.98px) {
+  .ride-result-card {
+    width: 95% !important;
+    max-width: none !important;
+  }
+  .ride-result-card .card-body {
+    padding: 1rem !important;
+  }
+  .ride-result-card .card-text {
+    font-size: 0.9rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+  .ride-result-card .card-text .bi-arrow-right-short {
+    margin: 0 0.25rem !important;
+  }
+  .ride-result-card .row {
+    margin: 0 !important;
+  }
+  .ride-result-card .col,
+  .ride-result-card .col-auto {
+    padding: 0 0.25rem !important;
+  }
+  .ride-result-card p {
+    margin-bottom: 0.25rem !important;
+    font-size: 0.85rem !important;
+  }
+  .ride-result-card hr {
+    margin: 0.75rem 0 !important;
+  }
+  .ride-result-card .hover-bg {
+    padding: 0.75rem !important;
+    margin: 0 -0.25rem !important;
+  }
+  .ride-result-card .hover-bg .profile-icon {
+    font-size: 2rem !important;
+  }
+  .ride-result-card .hover-bg h3, .ride-result-card .hover-bg .h3 {
+    font-size: 1rem !important;
+    margin-bottom: 0 !important;
+  }
+  .ride-result-card .hover-bg .bi-car-front {
+    font-size: 1.25rem !important;
+  }
+  .ride-result-card .hover-bg p {
+    font-size: 0.75rem !important;
+    margin-bottom: 0 !important;
+  }
+  .ride-result-card .mt-2 {
+    margin-top: 0.5rem !important;
+  }
+  .ride-result-card .mt-2 small, .ride-result-card .mt-2 .small {
+    font-size: 0.7rem !important;
+  }
+  .ride-result-card .mt-2 p {
+    font-size: 0.75rem !important;
+  }
+}
+.ride-result-card .hover-bg {
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+.ride-result-card .hover-bg:hover {
+  background-color: #f8f9fa;
+}
+.ride-result-card .profile-icon {
+  font-size: 2.5rem;
 }/*# sourceMappingURL=main.css.map */
