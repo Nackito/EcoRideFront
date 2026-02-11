@@ -1,4 +1,5 @@
 # Protection XSS et sécurité HTTP
+
 Header always set X-Content-Type-Options "nosniff"
 Header always set X-Frame-Options "DENY"
 Header always set X-XSS-Protection "1; mode=block"
@@ -6,15 +7,18 @@ Header always set Referrer-Policy "strict-origin-when-cross-origin"
 Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
 
 # Content Security Policy (CSP) - À adapter selon vos besoins
+
 Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' http://localhost:8000"
 
 # Empêcher l'exécution de scripts dans les uploads
+
 <FilesMatch "\.(php|phtml|php3|php4|php5|pl|py|jsp|asp|sh|cgi)$">
-    Order Deny,Allow
-    Deny from all
+Order Deny,Allow
+Deny from all
 </FilesMatch>
 
 # Protection contre les injections
+
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteCond %{QUERY_STRING} (\<|%3C).*script.*(\>|%3E) [NC,OR]
@@ -23,4 +27,17 @@ Header always set Content-Security-Policy "default-src 'self'; script-src 'self'
     RewriteCond %{QUERY_STRING} javascript\: [NC,OR]
     RewriteCond %{QUERY_STRING} (\<|%3C).*iframe.*(\>|%3E) [NC]
     RewriteRule ^(.*)$ - [F,L]
+</IfModule>
+
+# SPA routing fallback: redirect all non-file/dir requests to index.html
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    # Serve existing files or directories
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+    # Fallback to SPA entry
+    RewriteRule . /index.html [L]
 </IfModule>

@@ -1,21 +1,37 @@
 {
   "name": "ecoridefront",
   "version": "1.0.0",
-  "description": "Ce site est un site de covoiturage",
-  "main": "index.js",
+  "description": "Frontend de l'application de covoiturage écologique EcoRide - Interface utilisateur moderne développée en JavaScript vanilla avec Bootstrap 5",
+  "main": "index.html",
   "scripts": {
-    "start": "live-server --port=3000",
-    "build": "sass scss/main.scss styles/main.css --style compressed",
-    "watch": "sass scss/main.scss styles/main.css --watch",
-    "serve": "http-server -p 3000",
+    "start": "live-server --port=3010 --entry-file=index.html",
+    "dev": "concurrently \"npm run sass:watch\" \"npm run start\"",
+    "sass": "sass scss/main.scss styles/main.css",
+    "sass:watch": "sass scss/main.scss styles/main.css --watch",
+    "sass:prod": "sass scss/main.scss styles/main.css --style compressed",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "covoiturage",
+    "ecologie",
+    "javascript",
+    "spa",
+    "bootstrap",
+    "scss"
+  ],
+  "author": "EcoRide Team",
+  "license": "MIT",
   "dependencies": {
     "bootstrap": "^5.3.7",
-    "bootstrap-icons": "^1.13.1",
-    "cors": "^2.8.5"
+    "bootstrap-icons": "^1.13.1"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "live-server": "^1.2.0",
+    "sass": "^1.70.0"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
   }
 }

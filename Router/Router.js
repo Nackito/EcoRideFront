@@ -42,7 +42,7 @@ const LoadContentPage = async () => {
       if (roleUser) {
         const userRolesArray = roleUser.split(",").map((role) => role.trim());
         const hasAuthorizedRole = allRoleArray.some((requiredRole) =>
-          userRolesArray.includes(requiredRole)
+          userRolesArray.includes(requiredRole),
         );
 
         console.log("   Rôles utilisateur (tableau):", userRolesArray);
@@ -93,5 +93,30 @@ const routeEvent = (event) => {
 window.onpopstate = LoadContentPage;
 // Assignation de la fonction routeEvent à la propriété route de la fenêtre
 window.route = routeEvent;
+
+// Interception globale des clics sur les liens internes pour la navigation SPA
+document.addEventListener("click", (e) => {
+  const anchor = e.target.closest("a[href]");
+  if (!anchor) return;
+
+  const href = anchor.getAttribute("href");
+  // Ignorer liens externes, ancres, fichiers ou modificateurs clavier
+  const isExternal = anchor.host && anchor.host !== window.location.host;
+  const hasModifier = e.metaKey || e.ctrlKey || e.shiftKey || e.altKey;
+  if (
+    hasModifier ||
+    isExternal ||
+    href.startsWith("#") ||
+    href.startsWith("http")
+  )
+    return;
+
+  // Ne gérer que les routes internes de l'app
+  if (href.startsWith("/")) {
+    e.preventDefault();
+    window.history.pushState({}, "", href);
+    LoadContentPage();
+  }
+});
 // Chargement du contenu de la page au chargement initial
 LoadContentPage();
