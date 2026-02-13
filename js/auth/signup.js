@@ -36,6 +36,12 @@ btnValidationInscription.addEventListener("click", function (event) {
   registerUser();
 });
 
+// Intercepter la soumission du formulaire (Entrée clavier, submit natif)
+signupForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+  registerUser();
+});
+
 function validateForm() {
   const pseudoOk = validateRequired(inputPseudo);
   const mailOk = validateMail(inputMail);
