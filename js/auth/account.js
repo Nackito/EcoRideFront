@@ -8,7 +8,7 @@ function initializeAccountPage() {
   // Vérifier si l'utilisateur est connecté
   if (!isConnected()) {
     console.warn(
-      "❌ Utilisateur non connecté - redirection vers la page de connexion"
+      "❌ Utilisateur non connecté - redirection vers la page de connexion",
     );
     window.location.href = "/signin";
     return;
@@ -16,6 +16,9 @@ function initializeAccountPage() {
 
   // Charger les informations utilisateur
   loadUserAccountInfo();
+
+  // Préparer le sélecteur de statut (chauffeur/passager)
+  setupRoleSelector();
 }
 
 // Fonction pour charger les informations de l'utilisateur
@@ -82,6 +85,77 @@ async function loadUserAccountInfo() {
   }
 }
 
+// Configuration du sélecteur de rôle chauffeur/passager
+function setupRoleSelector() {
+  const select = document.querySelector(".form-select");
+  if (!select) return;
+
+  // Déterminer la valeur initiale selon les rôles actuels
+  const rolesString = getRole();
+  const roles = rolesString ? rolesString.split(",").map((r) => r.trim()) : [];
+
+  let initialValue = "1"; // Passager par défaut
+  if (roles.includes("driver_passenger")) {
+    initialValue = "3";
+  } else if (roles.includes("driver")) {
+    initialValue = "2";
+  } else if (roles.includes("passenger")) {
+    initialValue = "1";
+  }
+  select.value = initialValue;
+
+  // Sauvegarde du choix côté backend
+  select.addEventListener("change", async (e) => {
+    const value = e.target.value;
+    const driver = value === "2" || value === "3";
+    const passenger = value === "1" || value === "3";
+
+    const token = getToken();
+    if (!token) {
+      console.warn("Token manquant - redirection vers la connexion");
+      window.location.href = "/signin";
+      return;
+    }
+
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("Accept", "application/json");
+    headers.append("Authorization", `Bearer ${token}`);
+
+    try {
+      const resp = await fetch(`${apiUrl}/account/role`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ driver, passenger }),
+      });
+
+      if (!resp.ok) {
+        const txt = await resp.text();
+        console.error("❌ Erreur enregistrement du statut:", txt);
+        alert("Erreur lors de l'enregistrement du statut");
+        return;
+      }
+
+      // Rafraîchir les rôles/cookies via la même logique que script.js
+      if (typeof getInfoUser === "function") {
+        getInfoUser();
+      }
+      // Mettre à jour la visibilité des éléments
+      showAndHideElementsForRoles();
+      console.log(
+        "✅ Statut mis à jour (driver:",
+        driver,
+        "passenger:",
+        passenger,
+        ")",
+      );
+    } catch (err) {
+      console.error("❌ Erreur réseau lors du changement de statut:", err);
+      alert("Erreur réseau");
+    }
+  });
+}
+
 // Fonction pour mettre à jour l'interface avec les données utilisateur
 function updateAccountInterface(userInfo) {
   console.log("🎨 Mise à jour de l'interface avec les données utilisateur");
@@ -144,7 +218,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // Si le DOM est déjà chargé, exécuter immédiatement
 if (document.readyState === "loading") {
   console.log(
-    "⏳ Document en cours de chargement, attente de DOMContentLoaded"
+    "⏳ Document en cours de chargement, attente de DOMContentLoaded",
   );
 } else {
   console.log("✅ Document déjà chargé, initialisation immédiate");
