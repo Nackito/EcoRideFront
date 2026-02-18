@@ -105,6 +105,7 @@ function createRide() {
 
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
   myHeaders.append("Authorization", `Bearer ${token}`);
   console.log("📤 Headers configurés:", myHeaders);
 
@@ -132,20 +133,49 @@ function createRide() {
   console.log("🌐 URL de l'API:", apiUrl + "/rides");
 
   fetch(apiUrl + "/rides", requestOptions)
-    .then((response) => {
+    .then(async (response) => {
       console.log("📡 Réponse reçue:", response);
       console.log("📊 Status:", response.status);
       console.log("✅ OK?", response.ok);
 
       if (!response.ok) {
-        return response.json().then((errorData) => {
-          console.error("❌ Données d'erreur:", errorData);
-          throw new Error(
-            `HTTP error! status: ${response.status}, details: ${JSON.stringify(
-              errorData
-            )}`
+        let details = "";
+        let errorJson = null;
+        try {
+          const ct = response.headers.get("Content-Type") || "";
+          if (ct.includes("application/json")) {
+            errorJson = await response.json();
+            details = JSON.stringify(errorJson);
+          } else {
+            details = await response.text();
+          }
+        } catch (e) {
+          details = "(impossible de parser la réponse d'erreur)";
+        }
+        console.error("❌ Détails d'erreur:", details);
+
+        // Notification pro si aucun véhicule
+        if (
+          response.status === 400 &&
+          errorJson &&
+          (errorJson.error || "").toLowerCase().includes("véhicule")
+        ) {
+          showProNotification(
+            "Action requise",
+            errorJson.details ||
+              "Aucun véhicule enregistré. Vous devez enregistrer un véhicule avant de publier un trajet.",
+            errorJson.redirect || "/vehiclemanagement",
           );
-        });
+        }
+        throw new Error(`HTTP ${response.status}: ${details}`);
+      }
+
+      const ct = response.headers.get("Content-Type") || "";
+      if (!ct.includes("application/json")) {
+        const text = await response.text();
+        throw new Error(
+          "Réponse non-JSON du serveur: " + text.slice(0, 200) + "...",
+        );
       }
       return response.json();
     })
@@ -167,6 +197,8 @@ function createRide() {
           window.location.href = "/signin";
         }
       } else {
+        // Éviter l'alerte si la notification pro est affichée
+        if (document.getElementById("pro-notice")) return;
         alert("Erreur lors de la création du trajet : " + error.message);
       }
     });
@@ -192,7 +224,7 @@ document.addEventListener("DOMContentLoaded", function () {
     typeof isConnected === "function" ? isConnected() : false;
   console.log(
     "🔐 Statut de connexion:",
-    isUserConnected ? "Connecté" : "Non connecté"
+    isUserConnected ? "Connecté" : "Non connecté",
   );
 
   // Afficher un message si l'utilisateur n'est pas connecté
@@ -225,3 +257,64 @@ document.addEventListener("DOMContentLoaded", function () {
   // Déclencher la validation initiale pour mettre à jour l'état du bouton
   validateForm();
 });
+
+/**
+ * Affiche une notification professionnelle en haut à droite
+ * @param {string} title
+ * @param {string} message
+ * @param {string} redirectHref
+ */
+function showProNotification(
+  title,
+  message,
+  redirectHref = "/vehiclemanagement",
+) {
+  try {
+    // Supprimer une notification existante
+    const old = document.getElementById("pro-notice");
+    if (old && old.parentElement) old.parentElement.removeChild(old);
+
+    const wrapper = document.createElement("div");
+    wrapper.id = "pro-notice";
+    wrapper.className = "position-fixed top-0 end-0 p-3";
+    wrapper.style.zIndex = "1080";
+
+    const safeTitle =
+      typeof escapeHtml === "function" ? escapeHtml(title) : title;
+    const safeMsg =
+      typeof escapeHtml === "function" ? escapeHtml(message) : message;
+
+    wrapper.innerHTML = `
+      <div class="card shadow-lg border-0" style="width: 360px;">
+        <div class="card-header d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-info-circle-fill text-primary"></i>
+            <strong>${safeTitle}</strong>
+          </div>
+          <button type="button" class="btn btn-sm btn-outline-primary" id="pro-notice-close">Fermer</button>
+        </div>
+        <div class="card-body">
+          <p class="mb-3">${safeMsg}</p>
+          <div class="d-flex justify-content-end">
+            <a href="/vehiclemanagement" class="btn btn-primary">
+              <i class="bi bi-gear me-2"></i>Aller à l'ajout de véhicule
+            </a>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(wrapper);
+
+    const closeBtn = document.getElementById("pro-notice-close");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", () => {
+        window.location.href = redirectHref || "/vehiclemanagement";
+      });
+    }
+  } catch (e) {
+    console.error("Erreur affichage notification:", e);
+    alert(message + "\nRedirection vers la gestion des véhicules.");
+    window.location.href = redirectHref || "/vehiclemanagement";
+  }
+}
