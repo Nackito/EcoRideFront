@@ -48,7 +48,13 @@ export const allRoutes = [
     "/personalinfo",
     "Mes informations personnelles",
     "/pages/profil/personalinfo.html",
-    ["passenger", "driver", "employed", "driver_passenger", "user" /*, "admin"*/],
+    [
+      "passenger",
+      "driver",
+      "employed",
+      "driver_passenger",
+      "user" /*, "admin"*/,
+    ],
     "/js/profil/personalinfo.js",
   ),
   new Route(
@@ -76,6 +82,7 @@ export const allRoutes = [
     "Gestion de covoiturage",
     "/pages/profil/carpoolingmanagement.html",
     ["driver_passenger", "driver" /*, "admin"*/], // Autorisé aux conducteurs, passagers et employés
+    "/js/profil/carpoolingmanagement.js",
   ),
 ];
 //Le titre s'affiche comme ceci : Route.titre - websitename
