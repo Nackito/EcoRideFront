@@ -94,6 +94,15 @@ function mapEnergy(ui) {
   }
 }
 
+function updateSaveButtonState() {
+  const form = document.getElementById("vehicleForm");
+  const btn = document.getElementById("saveVehicleBtn");
+  if (!form || !btn) return;
+  // Utiliser la validation native HTML5
+  const valid = form.checkValidity();
+  btn.disabled = !valid;
+}
+
 async function saveVehicle() {
   try {
     const token = requireAuth();
@@ -104,6 +113,14 @@ async function saveVehicle() {
     const seats = document.getElementById("seats").value;
     const color = document.getElementById("color").value.trim();
     const license = document.getElementById("license").value.trim();
+
+    // Validation immédiate côté front
+    const form = document.getElementById("vehicleForm");
+    if (form && !form.checkValidity()) {
+      form.reportValidity();
+      updateSaveButtonState();
+      return;
+    }
 
     const energy = mapEnergy(fuelType);
     const registrationDate = year ? `${year}-01-01` : null;
@@ -124,8 +141,19 @@ async function saveVehicle() {
       body: JSON.stringify(payload),
     });
     if (!resp.ok) {
-      const txt = await resp.text();
-      throw new Error(`HTTP ${resp.status}: ${txt}`);
+      // Essayer de donner un message d'erreur clair
+      const ct = resp.headers.get("Content-Type") || "";
+      let msg = `HTTP ${resp.status}`;
+      if (ct.includes("application/json")) {
+        const data = await resp.json().catch(() => null);
+        if (data && (data.error || data.details)) {
+          msg = data.error || data.details;
+        }
+      } else {
+        const txt = await resp.text().catch(() => "");
+        if (txt) msg = txt;
+      }
+      throw new Error(msg);
     }
     // Fermer le modal si présent
     const modalEl = document.getElementById("vehicleModal");
@@ -138,7 +166,7 @@ async function saveVehicle() {
     fetchVehicles();
   } catch (e) {
     console.error("Erreur saveVehicle:", e);
-    alert("Erreur lors de l'enregistrement du véhicule");
+    alert(`Erreur lors de l'enregistrement du véhicule: ${e.message}`);
   }
 }
 
@@ -149,8 +177,19 @@ function initVehiclePage() {
       const modalEl = document.getElementById("vehicleModal");
       if (modalEl) {
         new bootstrap.Modal(modalEl).show();
+        // Mise à jour de l'état du bouton au moment de l'ouverture
+        setTimeout(updateSaveButtonState, 50);
       }
     });
+  }
+  // Brancher la validation sur les champs
+  const form = document.getElementById("vehicleForm");
+  if (form) {
+    ["input", "change"].forEach((ev) => {
+      form.addEventListener(ev, updateSaveButtonState);
+    });
+    // État initial
+    updateSaveButtonState();
   }
   fetchVehicles();
 }
@@ -160,4 +199,5 @@ if (typeof window !== "undefined") {
   window.saveVehicle = saveVehicle;
 }
 
-document.addEventListener("DOMContentLoaded", initVehiclePage);
+// Pour SPA: appeler directement après injection
+initVehiclePage();
