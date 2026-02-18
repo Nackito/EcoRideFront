@@ -48,19 +48,22 @@ export const allRoutes = [
     "/personalinfo",
     "Mes informations personnelles",
     "/pages/profil/personalinfo.html",
-    ["passenger", "driver", "employed", "driver_passenger" /*, "admin"*/],
+    ["passenger", "driver", "employed", "driver_passenger", "user" /*, "admin"*/],
+    "/js/profil/personalinfo.js",
   ),
   new Route(
     "/carpoolingpreferences",
     "Préférences de covoiturage",
     "/pages/profil/carpoolingpreferences.html",
     ["driver_passenger", "driver" /*, "admin"*/], // Autorisé aux conducteurs, passagers et employés
+    "/js/profil/carpoolingpreferences.js",
   ),
   new Route(
     "/vehiclemanagement",
     "Gestion des véhicules",
     "/pages/profil/vehiclemanagement.html",
     ["driver_passenger", "driver" /*, "admin"*/], // Autorisé aux conducteurs, passagers et employés
+    "/js/profil/vehiclemanagement.js",
   ),
   new Route(
     "/carpoolinghistory",
