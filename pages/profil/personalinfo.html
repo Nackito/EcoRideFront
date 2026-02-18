@@ -116,120 +116,8 @@
       <h4 class="fw-bold text-primary mb-4 d-none d-md-block">
         <i class="bi bi-car-front me-2"></i>Mon véhicule
       </h4>
-
-      <!-- Version mobile compacte -->
-      <div class="d-block d-md-none">
-        <div class="text-center mb-2">
-          <i class="bi bi-car-front fs-1 text-secondary"></i>
-        </div>
-        <div class="row g-2">
-          <div class="col-6">
-            <div class="text-center p-2 bg-light rounded-2">
-              <small class="text-secondary d-block">Véhicule</small>
-              <strong class="small">Tesla Model 3</strong>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="text-center p-2 bg-light rounded-2">
-              <small class="text-secondary d-block">Places</small>
-              <strong class="small">4 passagers</strong>
-            </div>
-          </div>
-        </div>
-        <div class="row g-2">
-          <div class="col-6">
-            <div class="text-center p-2 bg-light rounded-2">
-              <small class="text-secondary d-block">Type</small>
-              <strong class="small">Electric</strong>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="text-center p-2 bg-light rounded-2">
-              <small class="text-secondary d-block">Année</small>
-              <strong class="small">2022</strong>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Version desktop complète -->
-      <div class="d-none d-md-block">
-        <div class="row align-items-center">
-          <div class="col-md-3 text-center mb-3 mb-md-0">
-            <i class="bi bi-car-front display-4 text-secondary"></i>
-          </div>
-          <div class="col-md-9">
-            <div class="row mb-2">
-              <div class="col-12 col-sm-4">
-                <h6 class="fw-semibold text-secondary">Marque</h6>
-              </div>
-              <div class="col-12 col-sm-8">
-                <p class="mb-0">Tesla</p>
-              </div>
-            </div>
-            <hr class="my-2" />
-
-            <div class="row mb-2">
-              <div class="col-12 col-sm-4">
-                <h6 class="fw-semibold text-secondary">Modèle</h6>
-              </div>
-              <div class="col-12 col-sm-8">
-                <p class="mb-0">Model 3</p>
-              </div>
-            </div>
-            <hr class="my-2" />
-
-            <div class="row mb-2">
-              <div class="col-12 col-sm-4">
-                <h6 class="fw-semibold text-secondary">Année</h6>
-              </div>
-              <div class="col-12 col-sm-8">
-                <p class="mb-0">2022</p>
-              </div>
-            </div>
-            <hr class="my-2" />
-
-            <div class="row mb-2">
-              <div class="col-12 col-sm-4">
-                <h6 class="fw-semibold text-secondary">Couleur</h6>
-              </div>
-              <div class="col-12 col-sm-8">
-                <p class="mb-0">Gris</p>
-              </div>
-            </div>
-            <hr class="my-2" />
-
-            <div class="row mb-2">
-              <div class="col-12 col-sm-4">
-                <h6 class="fw-semibold text-secondary">Type</h6>
-              </div>
-              <div class="col-12 col-sm-8">
-                <span class="badge bg-success">Électrique</span>
-              </div>
-            </div>
-            <hr class="my-2" />
-
-            <div class="row mb-2">
-              <div class="col-12 col-sm-4">
-                <h6 class="fw-semibold text-secondary">Matricule</h6>
-              </div>
-              <div class="col-12 col-sm-8">
-                <span class="mb-0">PE-526-ML</span>
-              </div>
-            </div>
-            <hr class="my-2" />
-
-            <div class="row mb-2">
-              <div class="col-12 col-sm-4">
-                <h6 class="fw-semibold text-secondary">Nombre de places</h6>
-              </div>
-              <div class="col-12 col-sm-8">
-                <p class="mb-0">4 passagers</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <!-- Contenu dynamique injecté par JS -->
+      <div id="pi-vehicles-container"></div>
     </div>
   </div>
 
@@ -237,7 +125,7 @@
   <div class="text-center">
     <!-- Version mobile -->
     <div class="d-block d-md-none">
-      <button class="btn btn-primary w-100 mb-2">
+      <button class="btn btn-primary w-100 mb-2" id="pi-edit-global-mobile">
         <i class="bi bi-pencil me-2"></i>Modifier
       </button>
       <button class="btn btn-outline-secondary w-100">
@@ -247,7 +135,7 @@
 
     <!-- Version desktop -->
     <div class="d-none d-md-block">
-      <button class="btn btn-primary me-3 px-4 mb-2 mb-md-0">
+      <button class="btn btn-primary me-3 px-4 mb-2 mb-md-0" id="pi-edit-global-desktop">
         <i class="bi bi-pencil me-2"></i>Modifier mes informations
       </button>
       <button class="btn btn-outline-secondary px-4">

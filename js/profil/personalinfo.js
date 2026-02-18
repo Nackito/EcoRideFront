@@ -187,7 +187,17 @@ function computeAge(dateStr) {
 }
 
 function initPersonalInfoPage() {
+  // Relier les boutons globaux
+  const globalMobileBtn = document.getElementById("pi-edit-global-mobile");
+  if (globalMobileBtn)
+    globalMobileBtn.addEventListener("click", enableEditMode);
+  const globalDesktopBtn = document.getElementById("pi-edit-global-desktop");
+  if (globalDesktopBtn)
+    globalDesktopBtn.addEventListener("click", enableEditMode);
+
+  // Charger informations utilisateur + véhicules
   loadAccount();
+  loadVehicles();
 }
 
 async function saveProfile() {
@@ -260,4 +270,95 @@ function enableEditMode() {
   );
   const saveBtn = document.getElementById("pi-save");
   if (saveBtn) saveBtn.classList.remove("d-none");
+}
+
+async function loadVehicles() {
+  try {
+    const token = requireAuth();
+    const resp = await fetch(`${apiUrl}/account/vehicles`, {
+      method: "GET",
+      headers: apiHeaders(token),
+    });
+    if (!resp.ok) {
+      const txt = await resp.text();
+      throw new Error(`HTTP ${resp.status}: ${txt}`);
+    }
+    const vehicles = await resp.json();
+    renderVehicles(Array.isArray(vehicles) ? vehicles : []);
+  } catch (e) {
+    console.error("Erreur loadVehicles:", e);
+    renderVehicles([]);
+  }
+}
+
+function renderVehicles(vehicles) {
+  const container = document.getElementById("pi-vehicles-container");
+  if (!container) return;
+
+  if (!vehicles || vehicles.length === 0) {
+    container.innerHTML = `
+      <div class="text-center p-3 bg-light rounded-3">
+        <p class="mb-2 text-muted">Aucun véhicule enregistré pour le moment.</p>
+        <a href="/vehiclemanagement" class="btn btn-primary"><i class="bi bi-plus-lg me-2"></i>Ajouter un véhicule</a>
+      </div>
+    `;
+    return;
+  }
+
+  const rows = vehicles
+    .map((v) => {
+      const brand = escapeHtml(v.brand || "");
+      const model = escapeHtml(v.model || "");
+      const color = escapeHtml(v.color || "");
+      const energy = escapeHtml(v.energy || "");
+      const plate = escapeHtml(v.plate_number || "");
+      const seats = typeof v.seats === "number" ? v.seats : "";
+      const regDate = v.registration_date
+        ? new Date(v.registration_date)
+        : null;
+      const year =
+        regDate && !isNaN(regDate.getTime()) ? regDate.getFullYear() : "—";
+
+      return `
+        <div class="row align-items-center mb-3">
+          <div class="col-md-3 text-center mb-2 mb-md-0">
+            <i class="bi bi-car-front display-6 text-secondary"></i>
+          </div>
+          <div class="col-md-9">
+            <div class="row mb-2">
+              <div class="col-12 col-sm-4"><h6 class="fw-semibold text-secondary">Véhicule</h6></div>
+              <div class="col-12 col-sm-8"><p class="mb-0">${brand} ${model}</p></div>
+            </div>
+            <hr class="my-2" />
+            <div class="row mb-2">
+              <div class="col-12 col-sm-4"><h6 class="fw-semibold text-secondary">Année</h6></div>
+              <div class="col-12 col-sm-8"><p class="mb-0">${escapeHtml(String(year))}</p></div>
+            </div>
+            <hr class="my-2" />
+            <div class="row mb-2">
+              <div class="col-12 col-sm-4"><h6 class="fw-semibold text-secondary">Couleur</h6></div>
+              <div class="col-12 col-sm-8"><p class="mb-0">${color || "—"}</p></div>
+            </div>
+            <hr class="my-2" />
+            <div class="row mb-2">
+              <div class="col-12 col-sm-4"><h6 class="fw-semibold text-secondary">Type</h6></div>
+              <div class="col-12 col-sm-8"><span class="badge bg-info">${energy || "—"}</span></div>
+            </div>
+            <hr class="my-2" />
+            <div class="row mb-2">
+              <div class="col-12 col-sm-4"><h6 class="fw-semibold text-secondary">Immatriculation</h6></div>
+              <div class="col-12 col-sm-8"><p class="mb-0">${plate || "—"}</p></div>
+            </div>
+            <hr class="my-2" />
+            <div class="row mb-2">
+              <div class="col-12 col-sm-4"><h6 class="fw-semibold text-secondary">Nombre de places</h6></div>
+              <div class="col-12 col-sm-8"><p class="mb-0">${escapeHtml(String(seats || "—"))}</p></div>
+            </div>
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+
+  container.innerHTML = rows;
 }
