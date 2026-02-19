@@ -75,7 +75,8 @@ export const allRoutes = [
     "/carpoolinghistory",
     "Historique de covoiturage",
     "/pages/profil/carpoolinghistory.html",
-    ["driver_passenger", "driver", "passenger" /*, "admin"*/], // Autorisé aux conducteurs, passagers et employés
+    ["driver_passenger", "driver", "passenger", "user" /*, "admin"*/], // Autorisé aux conducteurs, passagers et employés
+    "/js/profil/carpoolinghistory.js",
   ),
   new Route(
     "/carpoolingmanagement",
