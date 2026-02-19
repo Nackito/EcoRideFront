@@ -46,23 +46,23 @@ function initializeResultsPage() {
   console.log("🔧 Vérification du sessionStorage...");
   console.log(
     "🔧 searchResults brut:",
-    sessionStorage.getItem("searchResults")
+    sessionStorage.getItem("searchResults"),
   );
   console.log(
     "🔧 searchCriteria brut:",
-    sessionStorage.getItem("searchCriteria")
+    sessionStorage.getItem("searchCriteria"),
   );
   console.log(
     "🔧 searchMessage brut:",
-    sessionStorage.getItem("searchMessage")
+    sessionStorage.getItem("searchMessage"),
   );
 
   // Récupérer les données de recherche depuis sessionStorage
   const searchResults = JSON.parse(
-    sessionStorage.getItem("searchResults") || "[]"
+    sessionStorage.getItem("searchResults") || "[]",
   );
   const searchCriteria = JSON.parse(
-    sessionStorage.getItem("searchCriteria") || "{}"
+    sessionStorage.getItem("searchCriteria") || "{}",
   );
   const searchMessage = sessionStorage.getItem("searchMessage") || "";
 
@@ -74,10 +74,18 @@ function initializeResultsPage() {
   console.log("💬 ===== MESSAGE API =====");
   console.log("💬 Message de l'API:", searchMessage);
 
+  const currentUserId = getCurrentUserIdFromToken();
+  const visibleResults =
+    currentUserId !== null
+      ? searchResults.filter(
+          (ride) => Number(ride?.driver?.id) !== Number(currentUserId),
+        )
+      : searchResults;
+
   // Afficher chaque trajet individuellement pour plus de clarté
-  if (searchResults.length > 0) {
+  if (visibleResults.length > 0) {
     console.log("🚗 ===== DÉTAILS DE CHAQUE TRAJET =====");
-    searchResults.forEach((ride, index) => {
+    visibleResults.forEach((ride, index) => {
       console.log(`🚗 Trajet ${index + 1}:`, {
         id: ride.id,
         origine: ride.origin,
@@ -94,13 +102,27 @@ function initializeResultsPage() {
     });
 
     // Sauvegarder les données pour la pagination et les filtres
-    allRidesData = searchResults;
-    filteredRidesData = searchResults; // Initialement, pas de filtres appliqués
+    allRidesData = visibleResults;
+    filteredRidesData = visibleResults; // Initialement, pas de filtres appliqués
     currentDisplayedCount = 0;
-    displaySearchResults(searchResults, searchCriteria, searchMessage);
+    displaySearchResults(visibleResults, searchCriteria, searchMessage);
   } else {
     console.log("❌ Aucun résultat à afficher");
     displayNoResults(searchCriteria);
+  }
+}
+
+function getCurrentUserIdFromToken() {
+  try {
+    const token = typeof getToken === "function" ? getToken() : null;
+    if (!token) return null;
+    const decoded = atob(token);
+    const parts = decoded.split(":");
+    if (parts.length < 1) return null;
+    const userId = Number(parts[0]);
+    return Number.isFinite(userId) ? userId : null;
+  } catch (e) {
+    return null;
   }
 }
 
@@ -113,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // Si le DOM est déjà chargé, exécuter immédiatement
 if (document.readyState === "loading") {
   console.log(
-    "⏳ Document en cours de chargement, attente de DOMContentLoaded"
+    "⏳ Document en cours de chargement, attente de DOMContentLoaded",
   );
 } else {
   console.log("✅ Document déjà chargé, initialisation immédiate");
@@ -178,7 +200,7 @@ function displayRidesPaginated(rides, resultsContainer) {
   // Utiliser les données filtrées au lieu des données brutes
   const ridesToUse = filteredRidesData;
   console.log(
-    `📄 Affichage paginé - Total filtré: ${ridesToUse.length}, Déjà affichés: ${currentDisplayedCount}`
+    `📄 Affichage paginé - Total filtré: ${ridesToUse.length}, Déjà affichés: ${currentDisplayedCount}`,
   );
 
   if (!resultsContainer) {
@@ -224,7 +246,7 @@ function displayRidesPaginated(rides, resultsContainer) {
           id: ride.id,
           origine: ride.origin,
           destination: ride.destination,
-        }
+        },
       );
       return createRideCard(ride);
     })
@@ -259,7 +281,7 @@ function displayRidesPaginated(rides, resultsContainer) {
   updateLoadMoreButton(ridesToUse.length);
 
   console.log(
-    `📄 ✅ ${ridesToShow.length} nouveaux trajets affichés. Total affiché: ${currentDisplayedCount}/${ridesToUse.length}`
+    `📄 ✅ ${ridesToShow.length} nouveaux trajets affichés. Total affiché: ${currentDisplayedCount}/${ridesToUse.length}`,
   );
 }
 
@@ -287,7 +309,7 @@ function loadMoreRides() {
 
   if (currentDisplayedCount < filteredRidesData.length) {
     const resultsContainer = document.getElementById(
-      "search-results-container"
+      "search-results-container",
     );
     displayRidesPaginated(filteredRidesData, resultsContainer);
   } else {
@@ -382,7 +404,7 @@ function createRideCard(ride) {
       (_, i) =>
         `<i class="bi bi-star${i < stars ? "-fill" : ""} ${
           i < stars ? "text-warning" : "text-muted"
-        }"></i>`
+        }"></i>`,
     ).join("");
 
     return `${starsHtml} <span class="ms-1 small">(${rating}/5)</span>`;
@@ -398,6 +420,13 @@ function createRideCard(ride) {
     ride.driver?.firstName || ride.driver?.name || "Conducteur";
   const vehicleType = ride.vehicleType || "thermal";
   const driverRating = ride.driver?.rating || null;
+  const currentUserId = getCurrentUserIdFromToken();
+  const isOwnRide =
+    currentUserId !== null &&
+    Number(ride?.driver?.id) === Number(currentUserId);
+  const clickAction = isOwnRide
+    ? "showOwnRideNotice()"
+    : `requestBooking(${ride.id})`;
 
   return `
     <div class="card mb-3 rounded-5 elevation-5 mx-auto ride-result-card">
@@ -416,9 +445,9 @@ function createRideCard(ride) {
           </div>
         </div>
         <hr class="my-3" />
-        <div class="container pt-2 pb-2 hover-bg" onclick="requestBooking(${
-          ride.id
-        })">
+        <div class="container pt-2 pb-2 hover-bg ${
+          isOwnRide ? "bg-light" : ""
+        }" onclick="${clickAction}">
           <div class="row align-items-center mb-2">
             <div class="col d-flex align-items-center">
               <i class="bi bi-person-circle me-3 profile-icon"></i>
@@ -433,6 +462,11 @@ function createRideCard(ride) {
               <div class="vehicle-type">
                 ${getVehicleTypeDisplay(vehicleType)}
               </div>
+              ${
+                isOwnRide
+                  ? '<div class="small text-muted mt-1"><i class="bi bi-person-check me-1"></i>Votre trajet</div>'
+                  : '<div class="small text-primary mt-1"><i class="bi bi-send me-1"></i>Cliquer pour réserver</div>'
+              }
             </div>
           </div>
         </div>
@@ -449,6 +483,10 @@ function createRideCard(ride) {
       </div>
     </div>
   `;
+}
+
+function showOwnRideNotice() {
+  alert("C'est votre propre trajet. Gérez-le depuis votre espace conducteur.");
 }
 
 function displayNoResults(criteria) {
@@ -554,9 +592,64 @@ function requestBooking(rideId) {
     return;
   }
 
-  // Rediriger vers la page de réservation (à créer)
-  alert(`Fonctionnalité de réservation à implémenter pour le trajet ${rideId}`);
-  // window.location.href = `/pages/booking.html?ride=${rideId}`;
+  const token = typeof getToken === "function" ? getToken() : null;
+  if (!token) {
+    alert("Session expirée. Veuillez vous reconnecter.");
+    window.location.href = "/signin";
+    return;
+  }
+
+  const headers = new Headers();
+  headers.append("Accept", "application/json");
+  headers.append("Authorization", `Bearer ${token}`);
+
+  fetch(`${apiUrl}/rides/${rideId}/book`, {
+    method: "POST",
+    headers,
+  })
+    .then(async (response) => {
+      const ct = response.headers.get("Content-Type") || "";
+      const payload = ct.includes("application/json")
+        ? await response.json().catch(() => null)
+        : null;
+
+      if (!response.ok) {
+        const msg =
+          (payload && (payload.error || payload.details)) ||
+          `HTTP ${response.status}`;
+        throw new Error(msg);
+      }
+
+      return payload || { success: true };
+    })
+    .then((result) => {
+      alert(result.message || "Demande de réservation envoyée !");
+
+      // Mettre à jour localement la carte (places restantes) si possible
+      try {
+        const idx = allRidesData.findIndex(
+          (r) => Number(r.id) === Number(rideId),
+        );
+        if (idx >= 0 && typeof result.seatsLeft === "number") {
+          allRidesData[idx].availableSeats = result.seatsLeft;
+          allRidesData[idx].remainingSeats = result.seatsLeft;
+          filteredRidesData = allRidesData;
+          currentDisplayedCount = 0;
+          const resultsContainer = document.getElementById(
+            "search-results-container",
+          );
+          if (resultsContainer) {
+            displayRidesPaginated(filteredRidesData, resultsContainer);
+          }
+        }
+      } catch (e) {
+        console.warn("Mise à jour locale des places impossible:", e);
+      }
+    })
+    .catch((error) => {
+      console.error("💥 Erreur réservation:", error);
+      alert(`Erreur lors de la réservation: ${error.message}`);
+    });
 }
 
 // ===== FONCTIONS POUR LES FILTRES =====
@@ -648,7 +741,7 @@ function createFiltersSection() {
                     star <= currentFilters.minRating ? "-fill" : ""
                   } star ${star <= currentFilters.minRating ? "active" : ""}" 
                      onclick="updateRatingFilter(${star})"></i>
-                `
+                `,
                   )
                   .join("")}
               </div>
@@ -782,7 +875,7 @@ function applyFilters() {
 
     // Filtre écologique
     const hasEcoFilter = Object.values(currentFilters.ecological).some(
-      (value) => value
+      (value) => value,
     );
     if (hasEcoFilter) {
       let passesEcoFilter = false;
@@ -817,7 +910,7 @@ function applyFilters() {
   });
 
   console.log(
-    `🎯 ${filteredRidesData.length} trajets après filtrage (sur ${allRidesData.length} initiaux)`
+    `🎯 ${filteredRidesData.length} trajets après filtrage (sur ${allRidesData.length} initiaux)`,
   );
 
   // Réinitialiser l'affichage
@@ -860,7 +953,7 @@ function updateSearchHeaderCount(newCount) {
       const currentText = resultParagraph.innerHTML;
       const updatedText = currentText.replace(
         /\d+\s+trajet[s]?\s+trouvé[s]?/,
-        resultMessage
+        resultMessage,
       );
       resultParagraph.innerHTML = updatedText;
     }
@@ -879,7 +972,7 @@ function updateFiltersIndicator() {
       if (!existingBadge) {
         toggleButton.insertAdjacentHTML(
           "afterend",
-          `<span class="filters-count ms-2">${activeCount}</span>`
+          `<span class="filters-count ms-2">${activeCount}</span>`,
         );
       } else {
         existingBadge.textContent = activeCount;
