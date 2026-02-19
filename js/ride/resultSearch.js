@@ -426,7 +426,7 @@ function createRideCard(ride) {
     Number(ride?.driver?.id) === Number(currentUserId);
   const clickAction = isOwnRide
     ? "showOwnRideNotice()"
-    : `requestBooking(${ride.id})`;
+    : `requestBooking(${ride.id}, ${availableSeats})`;
 
   return `
     <div class="card mb-3 rounded-5 elevation-5 mx-auto ride-result-card">
@@ -582,13 +582,35 @@ function goBack() {
 }
 
 // Fonction pour demander une réservation
-function requestBooking(rideId) {
+function requestBooking(rideId, maxSeats = 1) {
   console.log(`📝 Demande de réservation pour le trajet ${rideId}`);
 
   // Vérifier si l'utilisateur est connecté
   if (typeof isConnected === "function" && !isConnected()) {
     alert("Vous devez être connecté pour faire une réservation");
     window.location.href = "/signin";
+    return;
+  }
+
+  if (!maxSeats || Number(maxSeats) < 1) {
+    alert("Ce trajet n'a plus de places disponibles.");
+    return;
+  }
+
+  const requestedRaw = prompt(
+    `Combien de places souhaitez-vous réserver ? (1 à ${maxSeats})`,
+    "1",
+  );
+  if (requestedRaw === null) {
+    return;
+  }
+  const requestedSeats = Number.parseInt(requestedRaw, 10);
+  if (
+    !Number.isFinite(requestedSeats) ||
+    requestedSeats < 1 ||
+    requestedSeats > Number(maxSeats)
+  ) {
+    alert(`Nombre invalide. Saisissez une valeur entre 1 et ${maxSeats}.`);
     return;
   }
 
@@ -600,12 +622,14 @@ function requestBooking(rideId) {
   }
 
   const headers = new Headers();
+  headers.append("Content-Type", "application/json");
   headers.append("Accept", "application/json");
   headers.append("Authorization", `Bearer ${token}`);
 
   fetch(`${apiUrl}/rides/${rideId}/book`, {
     method: "POST",
     headers,
+    body: JSON.stringify({ seatsRequested: requestedSeats }),
   })
     .then(async (response) => {
       const ct = response.headers.get("Content-Type") || "";

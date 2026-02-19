@@ -16,9 +16,48 @@ function initializeAccountPage() {
 
   // Charger les informations utilisateur
   loadUserAccountInfo();
+  loadPendingRequestsBadge();
 
   // Préparer le sélecteur de statut (chauffeur/passager)
   setupRoleSelector();
+}
+
+async function loadPendingRequestsBadge() {
+  const badge = document.getElementById("pending-requests-badge");
+  if (!badge) return;
+
+  try {
+    const token = getToken();
+    if (!token) return;
+
+    const headers = new Headers();
+    headers.append("Accept", "application/json");
+    headers.append("Authorization", `Bearer ${token}`);
+
+    const resp = await fetch(`${apiUrl}/rides/driver/requests`, {
+      method: "GET",
+      headers,
+    });
+
+    if (!resp.ok) {
+      badge.classList.add("d-none");
+      return;
+    }
+
+    const data = await resp.json();
+    const requests = Array.isArray(data?.requests) ? data.requests : [];
+    const pendingCount = requests.filter((r) => r.status === "pending").length;
+
+    if (pendingCount > 0) {
+      badge.textContent = String(pendingCount);
+      badge.classList.remove("d-none");
+    } else {
+      badge.classList.add("d-none");
+    }
+  } catch (error) {
+    console.warn("Impossible de charger le badge des demandes:", error);
+    badge.classList.add("d-none");
+  }
 }
 
 // Fonction pour charger les informations de l'utilisateur
