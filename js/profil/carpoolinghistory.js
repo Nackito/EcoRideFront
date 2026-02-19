@@ -1,5 +1,6 @@
 // Historique passager: afficher toutes les demandes de réservation + annulation si trajet non démarré
 console.log("📚 carpoolinghistory.js chargé");
+const PASSENGER_HISTORY_REFRESH_MS = 30000;
 
 function requireAuthToken() {
   const token = typeof getToken === "function" ? getToken() : null;
@@ -53,14 +54,16 @@ function updatePassengerPendingBadge(pendingCount) {
   });
 }
 
-async function fetchPassengerRequests() {
+async function fetchPassengerRequests(showLoading = true) {
   const list = document.getElementById("tripsList");
   if (!list) return;
 
   ensurePassengerPendingBadge();
 
-  list.innerHTML =
-    '<div class="alert alert-info">Chargement des demandes...</div>';
+  if (showLoading) {
+    list.innerHTML =
+      '<div class="alert alert-info">Chargement des demandes...</div>';
+  }
 
   try {
     const token = requireAuthToken();
@@ -95,6 +98,24 @@ async function fetchPassengerRequests() {
     updatePassengerPendingBadge(0);
     updateNoTripsMessage(true);
   }
+}
+
+function startPassengerHistoryAutoRefresh() {
+  if (typeof window === "undefined") return;
+
+  if (window.__passengerHistoryRefreshTimer) {
+    clearInterval(window.__passengerHistoryRefreshTimer);
+  }
+
+  window.__passengerHistoryRefreshTimer = setInterval(() => {
+    // En SPA, stopper le timer quand on quitte cette page
+    if (!document.querySelector(".carpooling-history")) {
+      clearInterval(window.__passengerHistoryRefreshTimer);
+      window.__passengerHistoryRefreshTimer = null;
+      return;
+    }
+    fetchPassengerRequests(false);
+  }, PASSENGER_HISTORY_REFRESH_MS);
 }
 
 function mapCardStatus(r) {
@@ -241,7 +262,12 @@ if (typeof window !== "undefined") {
   window.cancelPassengerRequest = cancelPassengerRequest;
 }
 
-document.addEventListener("DOMContentLoaded", fetchPassengerRequests);
+function initPassengerHistoryPage() {
+  fetchPassengerRequests(true);
+  startPassengerHistoryAutoRefresh();
+}
+
+document.addEventListener("DOMContentLoaded", initPassengerHistoryPage);
 if (document.readyState !== "loading") {
-  fetchPassengerRequests();
+  initPassengerHistoryPage();
 }
